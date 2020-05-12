@@ -4,7 +4,7 @@
 
 Godot Visual Effects is a Free and Open-Source set of polished visual effects from our course **Godot VFX Secrets**.
 
-ℹ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news. You can support our work on Free Software by [getting one of our courses](https://gdquest.mavenseed.com/).
+➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news! Get one of our [Godot game creation courses](https://gdquest.mavenseed.com/) to support our work on Free Software.
 
 ![Laser effect](./img/laser.png)
 
@@ -19,7 +19,7 @@ All available effects are currently 2D-only.
 - Explosion
 - Laser beam
 - Ghost trail or after image
-- Star field
+- Starfield
 - Trail that follows the character
 
 ![Trail effect](./img/trail.png)
@@ -28,7 +28,7 @@ All available effects are currently 2D-only.
 
 Download the Godot project. Each effect is in a self-contained directory with all its dependencies.
 
-To add an effect to your own project, copy its directory to the root of your project, and move it from Godot's _FileSystem_ tab. That's it!
+To add an effect to your project, copy its directory to the root of your project, and move it from Godot's _FileSystem_ tab. That's it!
 
 ![Explosion effect](./img/explosion_1.png)
 
