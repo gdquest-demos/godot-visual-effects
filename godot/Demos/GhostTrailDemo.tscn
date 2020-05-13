@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/topdown-player.svg" type="Texture" id=1]
-[ext_resource path="res://StarField/StarFieldDemo.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Demos/StarFieldDemo.tscn" type="PackedScene" id=2]
 [ext_resource path="res://GhostTrail/GhostTrail.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
