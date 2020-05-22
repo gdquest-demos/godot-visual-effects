@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/asteroid.svg-eca243ae5a2d26805376206206297e5c.stex"
+path="res://.import/puff_smooth.png-a528029c1c4588a6b4bf920e401ee634.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/asteroid.svg"
-dest_files=[ "res://.import/asteroid.svg-eca243ae5a2d26805376206206297e5c.stex" ]
+source_file="res://Assets/puff_smooth.png"
+dest_files=[ "res://.import/puff_smooth.png-a528029c1c4588a6b4bf920e401ee634.stex" ]
 
 [params]
 

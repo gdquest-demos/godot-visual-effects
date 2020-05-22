@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/glowing_circle.png-49ab3290464f5a6dcf55fd0e057ae670.stex"
+path="res://.import/glowing_circle.png-4d9e783f3065e7277425288fdb8bdc47.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/glowing_circle.png"
-dest_files=[ "res://.import/glowing_circle.png-49ab3290464f5a6dcf55fd0e057ae670.stex" ]
+source_file="res://Assets/glowing_circle.png"
+dest_files=[ "res://.import/glowing_circle.png-4d9e783f3065e7277425288fdb8bdc47.stex" ]
 
 [params]
 

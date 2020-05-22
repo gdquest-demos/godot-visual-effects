@@ -1,8 +1,9 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://StarField/StarFieldBackground.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/planets.svg" type="Texture" id=2]
-[ext_resource path="res://assets/asteroid.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/planets.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=3]
+
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Camera2D

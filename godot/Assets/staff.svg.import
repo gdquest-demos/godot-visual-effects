@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sparkle.png-af136f5f90e6793ac717cc01398cdab8.stex"
+path="res://.import/staff.svg-50432ca13ae5064d405801c455db4d14.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sparkle.png"
-dest_files=[ "res://.import/sparkle.png-af136f5f90e6793ac717cc01398cdab8.stex" ]
+source_file="res://Assets/staff.svg"
+dest_files=[ "res://.import/staff.svg-50432ca13ae5064d405801c455db4d14.stex" ]
 
 [params]
 
