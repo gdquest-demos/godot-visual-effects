@@ -74,7 +74,7 @@ func add_timed_point(point: Vector2, time: float) -> void:
 
 # Calculates the offset of the trail from its target.
 func calculate_offset() -> Vector2:
-	return -polar2cartesian(1.0, target.rotation) * _offset
+	return - 1.0 * polar2cartesian(1.0, target.rotation).rotated(- PI / 2) * _offset
 
 
 # Removes the first point in the line and the corresponding time.
