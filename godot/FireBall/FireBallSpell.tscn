@@ -12,7 +12,7 @@ onready var explosion_container: Node = self
 onready var effect := $FireBallEffect
 onready var effect_animator := $FireBallEffect/AnimationPlayer
 
-func _on_Area2D_area_entered(area: Area2D) -> void:
+func _on_Area2D_area_entered(_area: Area2D) -> void:
 	linear_velocity = Vector2.ZERO
 	$Area2D.set_deferred(\"monitorable\", false)
 	explode()

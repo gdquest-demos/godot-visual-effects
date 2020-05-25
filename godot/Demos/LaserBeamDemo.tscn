@@ -6,7 +6,6 @@
 [ext_resource path="res://LaserBeam/LaserBeam.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=5]
 
-
 [sub_resource type="CircleShape2D" id=1]
 radius = 52.7564
 

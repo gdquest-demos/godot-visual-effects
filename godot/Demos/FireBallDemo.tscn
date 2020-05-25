@@ -8,11 +8,10 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
-
-onready var animator := $AnimationPlayer
+onready var anim_player := $AnimationPlayer
 onready var spawner := $Sprite/CoreSparkles/FireBallSpawner
 
-var _is_cast_finished := false
+var is_casting := false setget set_is_casting
 
 
 func _process(delta: float) -> void:
@@ -20,17 +19,24 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed(\"fire_weapon\"):
-		_is_cast_finished = false
-		animator.play(\"Cast\")
+	if event.is_action_pressed(\"fire_weapon\") and not is_casting:
+		self.is_casting = true
+
 	elif event.is_action_released(\"fire_weapon\"):
-		if _is_cast_finished:
+		if anim_player.assigned_animation == \"Cast\" and not anim_player.is_playing():
 			spawner.throw()
-			animator.play(\"Rest\")
+		self.is_casting = false
 
 
-func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	_is_cast_finished = anim_name == \"Cast\"
+func set_is_casting(value: bool) -> void:
+	is_casting = value
+	if not anim_player:
+		yield(self, \"ready\")
+
+	if is_casting:
+		anim_player.play(\"Cast\")
+	else:
+		anim_player.play(\"Rest\")
 "
 
 [sub_resource type="Gradient" id=2]
@@ -184,6 +190,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite/CoreSparkles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="GDScript" id=11]
 script/source = "extends Position2D
@@ -203,9 +221,9 @@ func spawn() -> void:
 [sub_resource type="GDScript" id=12]
 script/source = "extends Timer
 
-
 export var min_wait_time := 0.5
 export var max_wait_time := 2.0
+
 
 func _ready() -> void:
 	randomize()
@@ -222,7 +240,6 @@ func _on_timeout() -> void:
 	randomize_wait_time()
 	if not one_shot:
 		start()
-
 "
 
 [sub_resource type="Animation" id=13]
@@ -253,12 +270,12 @@ script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="FireStaff"]
 position = Vector2( 0, 144 )
-rotation = -1.57079
+rotation = -1.0472
 texture = ExtResource( 1 )
 offset = Vector2( 104, 0 )
 
 [node name="CoreSparkles" type="Particles2D" parent="FireStaff/Sprite"]
-self_modulate = Color( 1.3, 1.3, 1.3, 1 )
+self_modulate = Color( 1.11, 1.11, 1.11, 1 )
 position = Vector2( 160, -0.000358582 )
 rotation = 1.57079
 emitting = false
@@ -273,14 +290,12 @@ script = ExtResource( 4 )
 explosion_container_path = NodePath("../../../..")
 
 [node name="ProgressBar" type="ProgressBar" parent="FireStaff"]
-visible = false
-margin_left = -80.0
+margin_left = -66.491
 margin_top = 176.0
-margin_right = 92.0
+margin_right = 105.509
 margin_bottom = 190.0
 custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 8 )
-value = 100.0
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -304,6 +319,5 @@ max_wait_time = 4.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AsteroidSpawner"]
 autoplay = "Idle"
 anims/Idle = SubResource( 13 )
-[connection signal="animation_finished" from="FireStaff/AnimationPlayer" to="FireStaff" method="_on_AnimationPlayer_animation_finished"]
-[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner" method="spawn"]
 [connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner/RandomTimer" method="_on_timeout"]
+[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner" method="spawn"]
