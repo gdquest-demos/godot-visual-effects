@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://assets/2d_environment.tres" type="Environment" id=1]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=1]
 [ext_resource path="res://Explosion/Explosion.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/topdown-player.svg" type="Texture" id=3]
+[ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=3]
 [ext_resource path="res://StarField/StarField.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/asteroid.svg" type="Texture" id=5]
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=5]
 
 [sub_resource type="Curve" id=1]
 _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.241936, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.0482635 ), 0.0, 0.0, 0, 0, Vector2( 0.745161, 0.990571 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]

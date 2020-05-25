@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planets.svg-d841eda3ef3fecf8c8336304152de084.stex"
+path="res://.import/white_glowing_circle.png-7c5c907c5a64a7177f91ac956fb5b0ee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/planets.svg"
-dest_files=[ "res://.import/planets.svg-d841eda3ef3fecf8c8336304152de084.stex" ]
+source_file="res://Assets/white_glowing_circle.png"
+dest_files=[ "res://.import/white_glowing_circle.png-7c5c907c5a64a7177f91ac956fb5b0ee.stex" ]
 
 [params]
 

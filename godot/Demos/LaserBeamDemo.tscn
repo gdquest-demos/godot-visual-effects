@@ -1,10 +1,10 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/asteroid.svg" type="Texture" id=1]
-[ext_resource path="res://assets/topdown-player.svg" type="Texture" id=2]
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=2]
 [ext_resource path="res://StarField/StarFieldBackground.tscn" type="PackedScene" id=3]
 [ext_resource path="res://LaserBeam/LaserBeam.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/2d_environment.tres" type="Environment" id=5]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 52.7564
