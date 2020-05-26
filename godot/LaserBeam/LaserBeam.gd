@@ -49,9 +49,7 @@ func cast_beam() -> void:
 
 	if is_colliding():
 		cast_point = to_local(get_collision_point())
-		collision_particles.process_material.direction = Vector3(
-			get_collision_normal().x, get_collision_normal().y, 0
-		)
+		collision_particles.global_rotation = get_collision_normal().angle()
 		collision_particles.position = cast_point
 
 	fill.points[1] = cast_point
