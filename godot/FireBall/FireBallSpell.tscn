@@ -23,7 +23,7 @@ func explode() -> void:
 	
 	explosion_container.add_child(explosion)
 	explosion.global_position = global_position
-	effect_animator.play(\"FadeOut\")
+	effect_animator.play(\"Fade\")
 
 	yield(effect_animator, \"animation_finished\")
 	queue_free()

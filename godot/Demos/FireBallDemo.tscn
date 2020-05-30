@@ -270,7 +270,7 @@ script = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="FireStaff"]
 position = Vector2( 0, 144 )
-rotation = -1.0472
+rotation = -1.57079
 texture = ExtResource( 1 )
 offset = Vector2( 104, 0 )
 
@@ -290,6 +290,7 @@ script = ExtResource( 4 )
 explosion_container_path = NodePath("../../../..")
 
 [node name="ProgressBar" type="ProgressBar" parent="FireStaff"]
+visible = false
 margin_left = -66.491
 margin_top = 176.0
 margin_right = 105.509
@@ -319,5 +320,5 @@ max_wait_time = 4.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AsteroidSpawner"]
 autoplay = "Idle"
 anims/Idle = SubResource( 13 )
-[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner/RandomTimer" method="_on_timeout"]
 [connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner" method="spawn"]
+[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner/RandomTimer" method="_on_timeout"]
