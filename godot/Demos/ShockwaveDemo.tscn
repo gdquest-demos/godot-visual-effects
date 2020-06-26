@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Shockwave/displacement_material.tres" type="Material" id=1]
+[ext_resource path="res://Shockwave/displacement_shader.shader" type="Shader" id=1]
 [ext_resource path="res://Shockwave/ShockwaveWorld.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/white_ring.png" type="Texture" id=3]
+[ext_resource path="res://Shockwave/Shockwave.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -12,33 +12,20 @@ glow_intensity = 0.3
 glow_blend_mode = 0
 glow_bicubic_upscale = true
 
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0.640927, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Mask")
 
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/displacement_amount = 8.0
+shader_param/displacement_mask = SubResource( 2 )
 
-[sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 0 ), 0.0, 2.02287, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-flag_disable_z = true
-gravity = Vector3( 0, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 5.0
-scale_curve = SubResource( 5 )
-color_ramp = SubResource( 3 )
-
-[sub_resource type="ViewportTexture" id=7]
+[sub_resource type="ViewportTexture" id=4]
 flags = 5
 viewport_path = NodePath("World")
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 length = 14.0
 loop = true
 step = 0.05
@@ -169,6 +156,9 @@ render_target_update_mode = 3
 
 [node name="ShockwaveWorld" parent="World" instance=ExtResource( 2 )]
 
+[node name="Camera" parent="World/ShockwaveWorld" index="5"]
+shake_amount = 0.0
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource( 1 )
 
@@ -179,19 +169,16 @@ transparent_bg = true
 usage = 0
 render_target_update_mode = 3
 
-[node name="Shockwave" type="Particles2D" parent="Mask"]
-position = Vector2( 305.99, 387.387 )
+[node name="Shockwave" parent="Mask" instance=ExtResource( 3 )]
+position = Vector2( 293.313, 393.491 )
 emitting = false
-amount = 3
-lifetime = 2.0
-process_material = SubResource( 6 )
-texture = ExtResource( 3 )
+speed_scale = 0.8
 
-[node name="PostProcessedWorld" type="TextureRect" parent="."]
-material = ExtResource( 1 )
+[node name="PostProcessedScreen" type="TextureRect" parent="."]
+material = SubResource( 3 )
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = SubResource( 7 )
+texture = SubResource( 4 )
 expand = true
 flip_v = true
 __meta__ = {
@@ -200,6 +187,6 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Shockwave"
-anims/Shockwave = SubResource( 8 )
+anims/Shockwave = SubResource( 5 )
 
 [editable path="World/ShockwaveWorld"]

@@ -1,13 +1,8 @@
-[gd_resource type="ShaderMaterial" load_steps=3 format=2]
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
 [ext_resource path="res://Shockwave/displacement_shader.shader" type="Shader" id=1]
-
-[sub_resource type="ViewportTexture" id=7]
-flags = 5
-viewport_path = NodePath("Mask")
 
 [resource]
 resource_local_to_scene = true
 shader = ExtResource( 1 )
-shader_param/displacement_amount = 8.0
-shader_param/displacement_mask = SubResource( 7 )
+shader_param/displacement_amount = 5.0

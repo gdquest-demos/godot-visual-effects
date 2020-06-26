@@ -365,7 +365,7 @@ tracks/5/loop_wrap = true
 tracks/5/imported = false
 tracks/5/enabled = true
 tracks/5/keys = {
-"times": PoolRealArray( 0, 7, 8, 10.75 ),
+"times": PoolRealArray( 0, 7.2, 8.2, 10.75 ),
 "transitions": PoolRealArray( 0.5, 0.5, 4, 0.5 ),
 "update": 0,
 "values": [ 0.0, 0.0, 0.2, 0.0 ]
@@ -533,3 +533,4 @@ anims/Collision = SubResource( 29 )
 [node name="Camera" parent="." instance=ExtResource( 5 )]
 anchor_mode = 0
 zoom = Vector2( 1, 1 )
+shake_amount = 0.0720001
