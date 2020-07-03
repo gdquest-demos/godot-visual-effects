@@ -20,37 +20,38 @@ radial_accel_random = 0.3
 scale = 0.5
 scale_random = 0.3
 scale_curve = SubResource( 2 )
+color = Color( 1.1, 1.1, 1.1, 1 )
 
 [sub_resource type="Animation" id=4]
 resource_name = "Charge"
 length = 2.0
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
+tracks/0/path = NodePath(".:speed_scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
+"transitions": PoolRealArray( 2, 1 ),
 "update": 0,
-"values": [ Color( 1.1, 1.1, 1.1, 1 ), Color( 1.5, 1.5, 1.5, 1 ) ]
+"values": [ 0.5, 4.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath(".:speed_scale")
+tracks/1/path = NodePath(".:self_modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 2, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 0.5, 4.0 ]
+"values": [ Color( 1.1, 1.1, 1.1, 1 ), Color( 1.5, 1.5, 1.5, 1 ) ]
 }
 
 [node name="ChargingParticles" type="Particles2D"]
-modulate = Color( 1.5, 1.5, 1.5, 1 )
+self_modulate = Color( 1.5, 1.5, 1.5, 1 )
 amount = 16
 speed_scale = 4.0
 local_coords = false

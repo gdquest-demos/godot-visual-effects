@@ -27,7 +27,7 @@ orbit_velocity_random = 0.0
 scale_random = 1.0
 scale_curve = SubResource( 2 )
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 length = 5.0
 tracks/0/type = "method"
 tracks/0/path = NodePath("LaserBeam2D")
@@ -93,7 +93,7 @@ tracks/4/keys = {
 "values": [ true, false ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath("ChargingParticles:emitting")
 tracks/0/interp = 1
@@ -133,10 +133,10 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="CircleShape2D" id=9]
+[sub_resource type="CircleShape2D" id=6]
 radius = 52.7564
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=7]
 length = 2.0
 loop = true
 tracks/0/type = "value"
@@ -152,7 +152,7 @@ tracks/0/keys = {
 "values": [ 360.0, 0.0 ]
 }
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=8]
 length = 5.0
 step = 0.05
 tracks/0/type = "value"
@@ -202,7 +202,7 @@ tracks/3/keys = {
 "values": [ false, true ]
 }
 
-[sub_resource type="Animation" id=12]
+[sub_resource type="Animation" id=9]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:visible")
 tracks/0/interp = 1
@@ -240,7 +240,7 @@ tracks/2/keys = {
 "values": [ false ]
 }
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=10]
 length = 10.0
 loop = true
 step = 0.05
@@ -324,8 +324,8 @@ texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerShip"]
 autoplay = "Setup"
-anims/Charging = SubResource( 7 )
-anims/Setup = SubResource( 8 )
+anims/Charging = SubResource( 4 )
+anims/Setup = SubResource( 5 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 2 )
@@ -334,7 +334,7 @@ environment = ExtResource( 2 )
 position = Vector2( 551.716, 297.578 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid"]
-shape = SubResource( 9 )
+shape = SubResource( 6 )
 disabled = true
 
 [node name="Sprite" type="Sprite" parent="Asteroid"]
@@ -346,12 +346,12 @@ texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid/Sprite"]
 autoplay = "Spin"
-anims/Spin = SubResource( 10 )
+anims/Spin = SubResource( 7 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid"]
 autoplay = "Setup"
-anims/Explode = SubResource( 11 )
-anims/Setup = SubResource( 12 )
+anims/Explode = SubResource( 8 )
+anims/Setup = SubResource( 9 )
 
 [node name="Explosion" parent="Asteroid" instance=ExtResource( 7 )]
 
@@ -378,7 +378,7 @@ shake_amount = 0.3
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Demo"
 playback_process_mode = 0
-anims/Demo = SubResource( 13 )
+anims/Demo = SubResource( 10 )
 [connection signal="screen_exited" from="Asteroid/VisibilityNotifier2D" to="Asteroid" method="_on_VisibilityNotifier2D_screen_exited"]
 
 [editable path="Asteroid/Explosion"]
