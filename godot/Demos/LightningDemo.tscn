@@ -46,7 +46,7 @@ tracks/0/keys = {
 "values": [ Vector2( 78.683, 70.8108 ), Vector2( 938, 70.8108 ) ]
 }
 
-[node name="LaserBeamScene" type="Node2D"]
+[node name="LightningDemo" type="Node2D"]
 
 [node name="StarFieldBackground" parent="." instance=ExtResource( 3 )]
 
@@ -109,7 +109,7 @@ scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
 
 [node name="LightningBeam2D" parent="PlayerShip" instance=ExtResource( 4 )]
-lightning_container_path = NodePath("../..")
+lightning_container_path = NodePath("../../../LightningDemo")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerShip"]
 autoplay = "patrol"
