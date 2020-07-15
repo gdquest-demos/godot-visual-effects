@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://LightningBeam/LightningBeam.gd" type="Script" id=1]
+
+[node name="LightningBeam2D" type="Node2D"]
+script = ExtResource( 1 )
