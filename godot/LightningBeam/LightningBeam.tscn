@@ -2,5 +2,7 @@
 
 [ext_resource path="res://LightningBeam/LightningBeam.gd" type="Script" id=1]
 
-[node name="LightningBeam2D" type="Node2D"]
+[node name="LightningBeam2D" type="RayCast2D"]
+enabled = true
+cast_to = Vector2( 50, 0 )
 script = ExtResource( 1 )
