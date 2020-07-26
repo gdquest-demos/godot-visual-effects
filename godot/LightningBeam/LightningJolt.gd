@@ -1,11 +1,12 @@
 extends Line2D
 
-export (float, 1.0, 3.0) var spread_angle := 1.5
-export (int, 1, 20) var segments := 12
+export (float, 0.5, 3.0) var spread_angle := 1.5
+export (int, 1, 36) var segments := 12
 
 var point_end := Vector2.ZERO
 
 onready var sparks := $Sparks
+onready var ray_cast := $RayCast2D
 
 
 func _ready() -> void:
@@ -13,6 +14,14 @@ func _ready() -> void:
 
 
 func create(start: Vector2, end: Vector2) -> void:
+	ray_cast.global_position = start
+
+	ray_cast.cast_to = end - start
+	ray_cast.force_raycast_update()
+
+	if ray_cast.is_colliding():
+		end = ray_cast.get_collision_point()
+
 	point_end = end
 
 	var _points := []
