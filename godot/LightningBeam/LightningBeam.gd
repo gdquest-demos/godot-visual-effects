@@ -7,7 +7,6 @@ export var lightning_jolt: PackedScene = preload("res://LightningBeam/LightningJ
 
 var target_point := Vector2.ZERO
 
-onready var collider := $Collider
 onready var jump_area := $JumpArea
 
 
@@ -19,14 +18,13 @@ func _physics_process(delta):
 	if is_colliding():
 		target_point = get_collision_point()
 
-	collider.global_position = target_point
 	jump_area.global_position = target_point
 
 
 func shoot() -> void:
 	var _target_point = target_point
 
-	var _primary_body = collider.get_overlapping_bodies().front()
+	var _primary_body = get_collider()
 	var _secondary_bodies = jump_area.get_overlapping_bodies()
 
 	if _primary_body:
