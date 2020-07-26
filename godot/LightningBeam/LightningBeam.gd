@@ -26,12 +26,12 @@ func _physics_process(delta):
 func shoot() -> void:
 	var _target_point = target_point
 
-	var _primary_body = collider.get_overlapping_bodies()
+	var _primary_body = collider.get_overlapping_bodies().front()
 	var _secondary_bodies = jump_area.get_overlapping_bodies()
 
-	if _primary_body.size() > 0:
-		_target_point = _primary_body.front().global_position
-		_secondary_bodies.erase(collider.get_overlapping_bodies()[0])
+	if _primary_body:
+		_target_point = _primary_body.global_position
+		_secondary_bodies.erase(_primary_body)
 
 	for flash in range(flashes):
 		var _start = global_position
