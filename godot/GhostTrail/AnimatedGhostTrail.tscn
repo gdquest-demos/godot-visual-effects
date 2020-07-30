@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GhostTrail/AnimatedGhostTrail.gd" type="Script" id=3]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_stand.png" type="Texture" id=6]
+
+[node name="AnimatedGhostTrail" type="Sprite"]
+position = Vector2( -1.81096, -1.43222 )
+texture = ExtResource( 6 )
+offset = Vector2( 0, -46 )
+script = ExtResource( 3 )
+ghost_spawn_time = 0.1
+
+[node name="GhostSpawnTimer" type="Timer" parent="."]
+wait_time = 0.05
+[connection signal="timeout" from="GhostSpawnTimer" to="." method="_on_Timer_timeout"]
