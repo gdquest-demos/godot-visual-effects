@@ -90,7 +90,7 @@ func _update_direction() -> void:
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 24, 40 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/path = NodePath("./Sprite:texture")
@@ -105,7 +105,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 4 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("./Sprite:texture")
@@ -120,7 +120,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 2 ) ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath("./Sprite:texture")
@@ -135,7 +135,7 @@ tracks/0/keys = {
 "values": [ ExtResource( 5 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=6]
 length = 0.3
 loop = true
 step = 0.05
@@ -166,6 +166,7 @@ script = SubResource( 1 )
 [node name="Sprite" parent="Player" instance=ExtResource( 1 )]
 position = Vector2( 0, -0.45 )
 texture = ExtResource( 2 )
+is_emitting = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( 0, -40 )
@@ -174,10 +175,10 @@ shape = SubResource( 2 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
 autoplay = "idle"
 playback_speed = 0.8
-anims/idle = SubResource( 5 )
-anims/jump = SubResource( 6 )
-anims/land = SubResource( 3 )
-anims/walk = SubResource( 4 )
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/land = SubResource( 5 )
+anims/walk = SubResource( 6 )
 
 [node name="Floor" type="StaticBody2D" parent="."]
 
