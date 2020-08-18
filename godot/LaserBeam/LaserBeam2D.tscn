@@ -1,8 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://LaserBeam/LaserBeam.gd" type="Script" id=1]
+[ext_resource path="res://LaserBeam/LaserBeam2D.gd" type="Script" id=1]
 [ext_resource path="res://Assets/glowing_circle.png" type="Texture" id=2]
-
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.582915, 1 )
