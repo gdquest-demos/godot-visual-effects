@@ -7,7 +7,7 @@ radius = 128.0
 
 [node name="LightningBeam2D" type="RayCast2D"]
 enabled = true
-cast_to = Vector2( 50, 0 )
+cast_to = Vector2( 600, 0 )
 script = ExtResource( 1 )
 
 [node name="JumpArea" type="Area2D" parent="."]
