@@ -26,23 +26,23 @@ func shoot() -> void:
 	var _secondary_bodies = jump_area.get_overlapping_bodies()
 
 	if _primary_body:
-		_target_point = _primary_body.global_position
 		_secondary_bodies.erase(_primary_body)
+		_target_point = _primary_body.global_position
 
 	for flash in range(flashes):
 		var _start = global_position
 
-		var _new_jolt = lightning_jolt.instance()
-		add_child(_new_jolt)
-		_new_jolt.create(_start, target_point)
+		var jolt = lightning_jolt.instance()
+		add_child(jolt)
+		jolt.create(_start, target_point)
 
 		_start = _target_point
 		for _i in range(min(bounces_max, _secondary_bodies.size())):
 			var _body = _secondary_bodies[_i]
 
-			_new_jolt = lightning_jolt.instance()
-			add_child(_new_jolt)
-			_new_jolt.create(_start, _body.global_position)
+			jolt = lightning_jolt.instance()
+			add_child(jolt)
+			jolt.create(_start, _body.global_position)
 
 			_start = _body.global_position
 

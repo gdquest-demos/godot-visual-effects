@@ -5,7 +5,7 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 128.0
 
-[node name="LightningBeam2D" type="RayCast2D"]
+[node name="LightningBeam" type="RayCast2D"]
 enabled = true
 cast_to = Vector2( 600, 0 )
 script = ExtResource( 1 )
