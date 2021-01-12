@@ -2,7 +2,7 @@
 
 ![project banner](./img/banner-vfx-secrets.png)
 
-Godot Visual Effects is a Free and Open-Source set of polished visual effects from our course [Godot VFX Secrets](https://gdquest.mavenseed.com/courses/vfx-secrets-design-2d-visual-effects-for-games-in-godot).
+Godot Visual Effects is a Free and Open-Source set of polished visual effects from our course [Godot VFX Secrets](https://gdquest.mavenseed.com/courses/godot-vfx-secrets).
 
 ➡ Follow us on [Twitter](https://twitter.com/NathanGDQuest) and [YouTube](https://www.youtube.com/c/gdquest/) for free game creation tutorials, tips, and news! Get one of our [Godot game creation courses](https://gdquest.mavenseed.com/) to support our work on Free Software.
 
