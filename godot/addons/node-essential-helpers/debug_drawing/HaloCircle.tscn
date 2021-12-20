@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/node-essential-helpers/white_square.svg" type="Texture" id=1]
+[ext_resource path="res://addons/node-essential-helpers/debug_drawing/halo_circle.shader" type="Shader" id=2]
+[ext_resource path="res://addons/node-essential-helpers/debug_drawing/HaloCircle.gd" type="Script" id=3]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 2 )
+shader_param/halo_color = Color( 1, 1, 1, 1 )
+shader_param/bounds_half_length = 50.0
+shader_param/halo_radius = 12.0
+
+[node name="HaloCircle" type="Sprite"]
+material = SubResource( 1 )
+scale = Vector2( 3.125, 3.125 )
+texture = ExtResource( 1 )
+script = ExtResource( 3 )

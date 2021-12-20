@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://addons/node-essential-helpers/debug_drawing/halo_mesh.shader" type="Shader" id=1]
+[ext_resource path="res://addons/node-essential-helpers/debug_drawing/HaloMesh.gd" type="Script" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/halo_color = Color( 0, 0, 1, 1 )
+shader_param/fresnel_power = 1.0
+shader_param/edge_intensity = 0.5
+
+[sub_resource type="CubeMesh" id=2]
+
+[node name="HaloMesh" type="MeshInstance"]
+material_override = SubResource( 1 )
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 2 )
+halo_color = Color( 0, 0, 1, 1 )
