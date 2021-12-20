@@ -1,0 +1,36 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://common/UI/fonts/TitleFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://addons/node-essential-helpers/TopLabel.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.313726 )
+
+[node name="TopLabel" type="CanvasLayer"]
+layer = 100
+script = ExtResource( 2 )
+
+[node name="Background" type="Panel" parent="."]
+anchor_right = 1.0
+margin_bottom = 120.0
+rect_min_size = Vector2( 0, 120 )
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Background"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.431373 )
+custom_constants/shadow_offset_y = 3
+text = "Test label"
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

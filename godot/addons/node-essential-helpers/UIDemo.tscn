@@ -1,0 +1,119 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://common/UI/arrowRight.png" type="Texture" id=1]
+[ext_resource path="res://common/UI/arrowRightPressed.png" type="Texture" id=2]
+[ext_resource path="res://common/UI/TextButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://common/UI/arrowLeft.png" type="Texture" id=4]
+[ext_resource path="res://addons/node-essential-helpers/UIDemo.gd" type="Script" id=5]
+[ext_resource path="res://common/UI/ui_theme.tres" type="Theme" id=6]
+[ext_resource path="res://common/UI/arrowLeftPressed.png" type="Texture" id=7]
+
+[sub_resource type="InputEventAction" id=1]
+action = "toggle_debug"
+pressed = true
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[sub_resource type="InputEventAction" id=3]
+action = "reset_screen"
+pressed = true
+
+[sub_resource type="ShortCut" id=4]
+shortcut = SubResource( 3 )
+
+[node name="UIDemo" type="CanvasLayer"]
+layer = 100
+script = ExtResource( 5 )
+
+[node name="UI" type="Control" parent="."]
+anchor_top = -0.00196194
+anchor_right = 1.0
+anchor_bottom = 0.998038
+mouse_filter = 2
+theme = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 8.0
+margin_top = -47.9999
+margin_right = -8.0
+margin_bottom = 48.0001
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PreviousButton" type="TextureButton" parent="UI/HBoxContainer2"]
+margin_right = 96.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+focus_mode = 0
+size_flags_horizontal = 2
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NextButton" type="TextureButton" parent="UI/HBoxContainer2"]
+margin_left = 1808.0
+margin_right = 1904.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+focus_mode = 0
+size_flags_horizontal = 10
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -525.0
+margin_top = -144.0
+margin_right = -34.0
+margin_bottom = -29.9999
+mouse_filter = 2
+custom_constants/separation = 32
+alignment = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShowDebugButton" parent="UI/HBoxContainer" instance=ExtResource( 3 )]
+margin_right = 259.0
+margin_bottom = 114.0
+rect_min_size = Vector2( 0, 96 )
+focus_mode = 0
+custom_colors/font_color = Color( 0.760784, 0.760784, 0.819608, 1 )
+custom_colors/font_color_hover = Color( 0.760784, 0.760784, 0.819608, 1 )
+custom_colors/font_color_pressed = Color( 0.494118, 0.494118, 0.560784, 1 )
+toggle_mode = true
+pressed = true
+shortcut = SubResource( 2 )
+text = "SHOW DEBUG"
+
+[node name="ResetButton" parent="UI/HBoxContainer" instance=ExtResource( 3 )]
+margin_left = 291.0
+margin_right = 491.0
+margin_bottom = 114.0
+rect_min_size = Vector2( 200, 96 )
+focus_mode = 0
+shortcut = SubResource( 4 )
+text = "RESET"

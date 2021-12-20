@@ -1,0 +1,26 @@
+{
+  "categories": {
+    "2d": [
+      "AfterImageDemo",
+      "ChargingDemo",
+      "ExplosionDemo",
+      "FireBallDemo",
+      "GhostTrailDemo",
+      "LaserBeamDemo",
+	  "LightningDemo",
+      "ShockwaveDemo",
+      "StarFieldDemo",
+      "Trail2DDemo"
+    ],
+    "3d": [
+      ""
+    ]
+  },
+  "search_terms": {
+    "Lights": ["DirectionalLight", "BakedLightmap", "OmniLight", "SpotLight", "GIProbe"],
+    "Button": ["CheckBox", "CheckButton", "OptionButton"],
+    "HBoxContainer": ["VBoxContainer"],
+    "ProgressBar": ["TextureProgress"],
+    "AudioStreamPlayer": ["AudioStreamPlayer2D", "AudioStreamPlayer3D"]
+  }
+}
