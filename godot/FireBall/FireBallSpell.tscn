@@ -12,6 +12,7 @@ onready var explosion_container: Node = self
 onready var effect := $FireBallEffect
 onready var effect_animator := $FireBallEffect/AnimationPlayer
 
+
 func _on_Area2D_area_entered(_area: Area2D) -> void:
 	linear_velocity = Vector2.ZERO
 	$Area2D.set_deferred(\"monitorable\", false)
@@ -49,4 +50,5 @@ shape = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 3 )
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]

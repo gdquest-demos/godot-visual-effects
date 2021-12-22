@@ -9,13 +9,13 @@ extends Node2D
 signal screen_changed
 
 const UIDemo := preload("UIDemo.tscn")
-const Background := preload("res://common/Background.tscn")
+#const Background := preload("res://common/Background.tscn")
 
 var areas_visible := true setget set_areas_visible
 var do_show_label := true setget set_do_show_label
 
 var _active_screen: DemoScreen = null
-var _background: Background = null
+#var _background: Background = null
 var _current_screen_index: int setget _set_current_screen_index
 ## Scenes to cycle through in the slideshow.
 var _screens := []
@@ -32,8 +32,8 @@ func _ready() -> void:
 	_ui.button_visible_shapes.connect("toggled", self, "set_areas_visible")
 	_ui.button_reset.connect("pressed", self, "reset_current_screen")
 
-	_background = Background.instance()
-	add_child(_background)
+	#_background = Background.instance()
+	#add_child(_background)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -83,7 +83,7 @@ func _update_mouse_mode(use_captured_mode: bool) -> void:
 func _on_screen_changed() -> void:
 	var is_screen_3d := _active_screen.get_child(0) is Spatial
 	_update_mouse_mode(is_screen_3d and not _active_screen.force_confined_mouse_mode)
-	_background.visible = not is_screen_3d
+	#_background.visible = not is_screen_3d
 	_update_controls_display()
 	_create_debug_drawing_nodes()
 	_active_screen.set_label_visible(do_show_label)
