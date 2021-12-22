@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CanvasLayer",
+"class": "Background",
+"language": "GDScript",
+"path": "res://common/Background.gd"
+}, {
 "base": "Reference",
 "class": "Constants",
 "language": "GDScript",
@@ -95,6 +100,7 @@ _global_script_classes=[ {
 "path": "res://addons/node-essential-helpers/UIDemo.gd"
 } ]
 _global_script_class_icons={
+"Background": "",
 "Constants": "",
 "DebugDrawCollisionShape": "res://addons/node-essential-helpers/debug_drawing/DebugDrawCollisionShape.svg",
 "DebugDrawCollisionShape2D": "res://addons/node-essential-helpers/debug_drawing/DebugDrawCollisionShape.svg",
@@ -220,6 +226,15 @@ toggle_help={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":47,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
  ]
 }
+toggle_mouse_confined={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777217,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[locale]
+
+translations=PoolStringArray( "res://Demos/labels/demo_labels.en.translation" )
 
 [rendering]
 
