@@ -4,7 +4,6 @@
 [ext_resource path="res://Assets/planets.svg" type="Texture" id=2]
 [ext_resource path="res://Assets/asteroid.svg" type="Texture" id=3]
 
-
 [sub_resource type="GDScript" id=1]
 script/source = "extends Camera2D
 
