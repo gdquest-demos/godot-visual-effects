@@ -4,3 +4,8 @@ charging_chargingdemo,"Using radial accellation on a particle system can be used
 explosion_explosiondemo,"Creating complex effects is easy using multiple particle systems, timed with an animation player."
 fireball_fireballdemo,"Simulate a fireball that emits 2D light with multiple particle systems. Click and hold the left mouse button to charge a firebolt with your staff."
 ghosttrail_ghosttraildemo,"Using a viewport and a directional blur post processing effect, we can create a high quality motion blur effect on the background."
+laserbeam_laserbeamdemo,"Using multiple, particle systems, Line2D and glow post processing makes for a powerful laser."
+lightning_lightningdemo,"Using Line2D with a script to procedurally generate lightning shapes that spread to additional targets."
+shockwave_shockwavedemo,"Using a viewport to render a dynamic shockwave mask that distorts the UVs of the screen."
+starfield_starfielddemo,"Use particles to create a dynamic background."
+trail2d_trail2ddemo,"A dynamic trail can easily be achieved using Line2D."
