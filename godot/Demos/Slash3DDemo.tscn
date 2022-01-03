@@ -1,0 +1,230 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Slash3D/Slash3D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=2]
+
+[sub_resource type="GDScript" id=16]
+script/source = "extends Spatial
+
+onready var _animation : AnimationPlayer = $AnimationPlayer
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action(\"ui_accept\") and _animation.current_animation != \"Attack\":
+		_animation.play(\"Attack\")
+"
+
+[sub_resource type="CubeMesh" id=8]
+size = Vector3( 0.2, 0.05, 0.05 )
+
+[sub_resource type="SpatialMaterial" id=17]
+albedo_color = Color( 0.494118, 0.494118, 0.560784, 1 )
+metallic = 1.0
+roughness = 0.2
+
+[sub_resource type="CubeMesh" id=9]
+size = Vector3( 0.114, 0.8, 0.02 )
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 0.760784, 0.760784, 0.819608, 1 )
+metallic = 1.0
+roughness = 0.2
+
+[sub_resource type="PrismMesh" id=10]
+size = Vector3( 0.114, 0.08, 0.02 )
+
+[sub_resource type="CylinderMesh" id=11]
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.2
+
+[sub_resource type="SpatialMaterial" id=19]
+albedo_color = Color( 0.729412, 0.380392, 0.337255, 1 )
+roughness = 0.7
+
+[sub_resource type="Animation" id=13]
+resource_name = "Attack"
+length = 2.0
+step = 0.05
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Sword:translation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -0.496318, -0.25, -1.61161, 0.0640764, 0.413064, 0.346049, -0.0595084, -0.0642764, 0.0525644, 0.056776, 0.46764, -0.0942282, 0.027291, 0.0420254, -0.0121717, 0.46764, -0.0877507, -0.00128564, 0.155772, 0.00228223, -0.299493, -0.25, 0, 0.25, 0, -0.496318, -0.125883, 0.00241512, 0.124116, -0.00238122 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.75, 1.5, 2 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Sword:translation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0.782001, -0.25, 1.13312, 0.1, -0.453247, -0.0588746, -0.0638526, 0.107246, 0.0638659, -0.107268, -0.250765, -0.1, -0.0603221, 0.0497213, 0.0299929, -0.250765, -0.0531197, -0.00135884, 0.15, 0.0038371, 0.151141, -0.25, 0, 0.25, 0, 0.782001, -0.185503, 0.00195354, 0.1, -0.0010531 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.75, 1.5, 2 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Sword:translation:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( -0.077718, -0.25, -0.827888, 0.0970921, 0.321526, 0.355182, -0.107294, 0.00239486, 0.115996, -0.00258908, 0.1606, -0.1, -0.039666, 0.05, 0.019833, 0.1606, -0.0550436, -0.000578344, 0.25, 0.00262675, -0.43655, -0.25, 0, 0.25, 0, -0.077718, -0.176868, -0.0089558, 0.0970921, 0.00491631 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.75, 1.5, 2 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Sword:rotation_degrees:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 41.7995, -0.25, 0, 0.25, 0, 41.7995, -0.2, 0.00160762, 0.7, -0.00562668, 41.7995, -0.2, 0.00160762, 0.7, -0.00562668, -10.1367, -0.25, 0, 0.25, 0, 41.7995, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 0.75, 1.5, 2 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("Sword:rotation_degrees:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( -82.3074, -0.25, 0, 0.25, 0, -82.3074, -0.25, 0.115764, 0.65, -0.300987, -82.3074, -0.25, 0.115764, 0.65, -0.300987, -136.488, -0.25, 0, 0.211634, 0.069931, -82.3074, -0.188366, -0.259102, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4, 0.75, 1.5, 2 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("Sword:rotation_degrees:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 42.8575, -0.243268, 396.081, 0.0658141, -107.156, -143.447, -0.199999, -14.8511, 0.05, 3.71278, -143.447, -0.05, -1.7061, 0.100003, 3.4123, -122.568, -0.25, 0, 0.25, 0, 42.8575, -0.180671, -1.3904, 0.0658141, -107.156 ),
+"times": PoolRealArray( 0, 0.4, 0.75, 1.5, 2 )
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sword/Slash3D:material/0:shader_param/alpha_offset")
+tracks/6/interp = 2
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.75 ),
+"transitions": PoolRealArray( 0.2, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0, 1.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "Idle"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sword:translation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( -0.496318, 0.782001, -0.077718 ), Vector3( -0.496318, 0.739882, -0.077718 ), Vector3( -0.496318, 0.782001, -0.077718 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sword:rotation_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 41.7995, -82.3074, 42.8575 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sword:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sword:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sword/Slash3D:material/0:shader_param/alpha_offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[node name="Slash3DDemo" type="Spatial"]
+script = SubResource( 16 )
+
+[node name="Sword" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="Guard" type="MeshInstance" parent="Sword"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.100049, 0 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 17 )
+
+[node name="Blade" type="MeshInstance" parent="Sword"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500049, 0 )
+mesh = SubResource( 9 )
+material/0 = SubResource( 18 )
+
+[node name="BladeTip" type="MeshInstance" parent="Sword"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.939842, 0 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 18 )
+
+[node name="Handle" type="MeshInstance" parent="Sword"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00165308, 0 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 19 )
+
+[node name="Slash3D" parent="Sword" instance=ExtResource( 1 )]
+transform = Transform( 1, -1.47689e-07, 2.06245e-08, 1.47689e-07, 1, 4.03836e-08, -2.06245e-08, -4.03836e-08, 1, -0.0709701, -0.457618, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Idle"
+anims/Attack = SubResource( 13 )
+anims/Idle = SubResource( 14 )
+anims/RESET = SubResource( 15 )
+next/Attack = "Idle"
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 2, 1.6, 2 )

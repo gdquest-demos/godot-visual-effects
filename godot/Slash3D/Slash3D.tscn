@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Slash3D/Slash3D.gdshader" type="Shader" id=1]
+[ext_resource path="res://Slash3D/slash_pattern.png" type="Texture" id=2]
+
+[sub_resource type="QuadMesh" id=5]
+size = Vector2( 3, 3 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.611765, 0.882353, 1, 1 )
+shader_param/emission_energy = 2.0
+shader_param/alpha_offset = 1.0
+shader_param/texture_albedo = ExtResource( 2 )
+
+[node name="Slash" type="MeshInstance"]
+transform = Transform( 1, -1.47689e-07, 2.06245e-08, 1.47689e-07, 1, 4.03836e-08, -2.06245e-08, -4.03836e-08, 1, 0, 0, 0 )
+mesh = SubResource( 5 )
+skeleton = NodePath("")
+material/0 = SubResource( 7 )
