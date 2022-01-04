@@ -10,5 +10,5 @@ uniform float alpha_offset : hint_range(0,1);
 void fragment() {
 	vec4 albedo_tex = texture(texture_albedo, UV);
 	ALBEDO = albedo.rgb * albedo_tex.rgb * emission_energy;
-	ALPHA = max(albedo_tex.a - alpha_offset, 0.0);
+	ALPHA = max(albedo_tex.r - alpha_offset, 0.0);
 }

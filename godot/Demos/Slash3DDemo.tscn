@@ -10,7 +10,7 @@ onready var _animation : AnimationPlayer = $Sword/AnimationPlayer
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action(\"ui_accept\") and _animation.current_animation != \"Attack\":
+	if event.is_action(\"ui_accept\"):
 		_animation.play(\"Attack\")
 "
 
@@ -18,7 +18,6 @@ func _unhandled_input(event: InputEvent) -> void:
 script = SubResource( 16 )
 
 [node name="Sword" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 2 )
