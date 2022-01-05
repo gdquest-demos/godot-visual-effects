@@ -18,6 +18,7 @@ func _unhandled_input(event: InputEvent) -> void:
 script = SubResource( 16 )
 
 [node name="Sword" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 2 )
