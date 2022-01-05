@@ -1,0 +1,212 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Shockwave/displacement_shader.shader" type="Shader" id=1]
+[ext_resource path="res://Shockwave/ShockwaveWorld.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Shockwave/Shockwave.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+glow_enabled = true
+glow_levels/4 = true
+glow_intensity = 0.3
+glow_blend_mode = 0
+glow_bicubic_upscale = true
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Mask")
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/displacement_amount = 8.0
+shader_param/displacement_mask = SubResource( 2 )
+
+[sub_resource type="ViewportTexture" id=4]
+flags = 5
+viewport_path = NodePath("World")
+
+[sub_resource type="Animation" id=5]
+length = 14.0
+loop = true
+step = 0.05
+tracks/0/type = "animation"
+tracks/0/path = NodePath("World/ShockwaveWorld/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "Collision" ),
+"times": PoolRealArray( 2 )
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Mask/Shockwave:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6.4, 8.55 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("World/ShockwaveWorld/Explosion/SparkleParticles2D:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("World/ShockwaveWorld/Explosion/FireBurstParticles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("World/ShockwaveWorld/Explosion/FireTrails/FireTrailParticles2D5:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("World/ShockwaveWorld/Explosion/FireTrails/FireTrailParticles2D4:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("World/ShockwaveWorld/Explosion/FireTrails/FireTrailParticles2D3:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("World/ShockwaveWorld/Explosion/FireTrails/FireTrailParticles2D2:emitting")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("World/ShockwaveWorld/Explosion/FireTrails/FireTrailParticles2D:emitting")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("World/ShockwaveWorld/Explosion/SmokeParticles2D:emitting")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[node name="ShockwaveDemo" type="Node"]
+
+[node name="World" type="Viewport" parent="."]
+size = Vector2( 1920, 1080 )
+render_target_update_mode = 3
+
+[node name="ShockwaveWorld" parent="World" instance=ExtResource( 2 )]
+
+[node name="SmokeParticles2D" parent="World/ShockwaveWorld/Explosion" index="0"]
+emitting = false
+
+[node name="FireTrailParticles2D" parent="World/ShockwaveWorld/Explosion/FireTrails" index="0"]
+emitting = false
+
+[node name="FireTrailParticles2D2" parent="World/ShockwaveWorld/Explosion/FireTrails" index="1"]
+emitting = false
+
+[node name="FireTrailParticles2D3" parent="World/ShockwaveWorld/Explosion/FireTrails" index="2"]
+emitting = false
+
+[node name="FireTrailParticles2D4" parent="World/ShockwaveWorld/Explosion/FireTrails" index="3"]
+emitting = false
+
+[node name="FireTrailParticles2D5" parent="World/ShockwaveWorld/Explosion/FireTrails" index="4"]
+emitting = false
+
+[node name="FireBurstParticles2D" parent="World/ShockwaveWorld/Explosion" index="2"]
+emitting = false
+
+[node name="SparkleParticles2D" parent="World/ShockwaveWorld/Explosion" index="3"]
+emitting = false
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
+environment = SubResource( 1 )
+
+[node name="Mask" type="Viewport" parent="."]
+size = Vector2( 1920, 1080 )
+own_world = true
+transparent_bg = true
+usage = 0
+render_target_update_mode = 3
+
+[node name="Shockwave" parent="Mask" instance=ExtResource( 3 )]
+position = Vector2( 543, 651 )
+speed_scale = 0.8
+
+[node name="PostProcessedScreen" type="TextureRect" parent="."]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 4 )
+expand = true
+flip_v = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Shockwave"
+anims/Shockwave = SubResource( 5 )
+
+[editable path="World/ShockwaveWorld"]

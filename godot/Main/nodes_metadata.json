@@ -1,0 +1,26 @@
+{
+  "categories": {
+    "2d": [
+      "AfterImage",
+      "Charging",
+      "Explosion",
+      "FireBall",
+      "GhostTrail",
+      "LaserBeam",
+	  "Lightning",
+      "Shockwave",
+      "StarField",
+      "Trail2D"
+    ],
+    "3d": [
+      "Slash3D"
+    ]
+  },
+  "search_terms": {
+    "Lights": ["DirectionalLight", "BakedLightmap", "OmniLight", "SpotLight", "GIProbe"],
+    "Button": ["CheckBox", "CheckButton", "OptionButton"],
+    "HBoxContainer": ["VBoxContainer"],
+    "ProgressBar": ["TextureProgress"],
+    "AudioStreamPlayer": ["AudioStreamPlayer2D", "AudioStreamPlayer3D"]
+  }
+}

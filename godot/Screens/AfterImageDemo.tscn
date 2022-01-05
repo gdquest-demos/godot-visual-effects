@@ -1,0 +1,209 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://GhostTrail/AnimatedGhostTrail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_jump.png" type="Texture" id=2]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_walk1.png" type="Texture" id=3]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_stand.png" type="Texture" id=4]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_duck.png" type="Texture" id=5]
+[ext_resource path="res://GhostTrail/Alien/alienGreen_walk2.png" type="Texture" id=6]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+const FLOOR_NORMAL := Vector2.UP
+const SNAP_DIRECTION := Vector2.DOWN
+const SNAP_LENGTH := 32.0
+const SLOPE_LIMIT := deg2rad(45.0)
+
+export(float) var speed := 500.0
+export(float) var gravity := 2000.0
+export(float) var jump_strength := 800.0
+
+var direction := Vector2.ZERO
+var velocity := Vector2.ZERO
+var snap_vector := SNAP_DIRECTION * SNAP_LENGTH
+
+onready var sprite := $Sprite
+onready var anim_player := $AnimationPlayer
+
+
+func _physics_process(delta:float) -> void:
+	_move(delta)
+	_animate()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	_handle_input(event)
+
+
+func _animate() -> void:
+	var animation := \"idle\"
+	if not is_on_floor():
+		if velocity.y >= 0.0:
+			animation = \"land\"
+		elif velocity.y < 0.0:
+			animation = \"jump\"
+	else:
+		if velocity.x != 0.0:
+			animation = \"walk\"
+		else:
+			animation = \"idle\"
+	anim_player.play(animation)
+
+
+func _handle_input(event: InputEvent) -> void:
+	if event.is_action(\"left\") or event.is_action(\"right\"):
+		_update_direction()
+	if event.is_action_pressed(\"jump\"):
+		_jump()
+	elif event.is_action_released(\"jump\"):
+		_cancel_jump()
+
+
+func _move(delta: float) -> void:
+	velocity.y += gravity * delta
+	velocity.y = move_and_slide_with_snap(velocity, snap_vector, FLOOR_NORMAL).y
+	if is_on_floor():
+		snap_vector = SNAP_DIRECTION * SNAP_LENGTH
+		sprite.is_emitting = false
+
+
+func _jump() -> void:
+	if is_on_floor():
+		snap_vector = Vector2.ZERO
+		velocity.y = -jump_strength
+		sprite.is_emitting = true
+
+
+func _cancel_jump() -> void:
+	if not is_on_floor() and velocity.y < 0.0:
+		velocity.y = 0.0
+
+
+func _update_direction() -> void:
+	direction.x = Input.get_action_strength(\"right\") - Input.get_action_strength(\"left\") 
+	velocity.x = direction.x * speed
+	if not velocity.x == 0:
+		sprite.flip_h = velocity.x < 0
+"
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 24, 40 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath("./Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 4 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("./Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 2 ) ]
+}
+
+[sub_resource type="Animation" id=5]
+length = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("./Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 5 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.3
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("./Sprite:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ), ExtResource( 6 ) ]
+}
+
+[sub_resource type="LineShape2D" id=7]
+
+[sub_resource type="LineShape2D" id=8]
+normal = Vector2( -2.22127e-06, 1 )
+
+[node name="Demo" type="Node2D"]
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 160, 120 )
+script = SubResource( 1 )
+
+[node name="Sprite" parent="Player" instance=ExtResource( 1 )]
+position = Vector2( 0, -0.45 )
+is_emitting = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, -40 )
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+autoplay = "idle"
+playback_speed = 0.8
+anims/idle = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/land = SubResource( 5 )
+anims/walk = SubResource( 6 )
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
+position = Vector2( 0, 622 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/CollisionPolygon2D"]
+color = Color( 0.294118, 0.356863, 0.670588, 1 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Floor"]
+position = Vector2( 1019, 622 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor/CollisionPolygon2D2"]
+color = Color( 0.294118, 0.356863, 0.670588, 1 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+rotation = 1.57079
+shape = SubResource( 7 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2( 1920, 0 )
+rotation = 1.57079
+shape = SubResource( 8 )

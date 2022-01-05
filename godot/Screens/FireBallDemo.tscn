@@ -1,0 +1,325 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Assets/staff.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=2]
+[ext_resource path="res://Assets/sparkle.png" type="Texture" id=3]
+[ext_resource path="res://FireBall/FireBallSpawner.gd" type="Script" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+onready var anim_player := $AnimationPlayer
+onready var spawner := $Sprite/CoreSparkles/FireBallSpawner
+
+var is_casting := false setget set_is_casting
+
+
+func _process(delta: float) -> void:
+	global_position.y = lerp(global_position.y, get_global_mouse_position().y, 5.0 * delta)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"fire_weapon\") and not is_casting:
+		self.is_casting = true
+
+	elif event.is_action_released(\"fire_weapon\"):
+		if anim_player.assigned_animation == \"Cast\" and not anim_player.is_playing():
+			spawner.throw()
+		self.is_casting = false
+
+
+func set_is_casting(value: bool) -> void:
+	is_casting = value
+	if not anim_player:
+		yield(self, \"ready\")
+
+	if is_casting:
+		anim_player.play(\"Cast\")
+	else:
+		anim_player.play(\"Rest\")
+"
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.130909, 0.345455, 0.607273, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 0.648972, 0.164062, 1, 1, 0.475624, 0.136719, 1, 0.888672, 0.17704, 0.17704, 1, 0.203922, 0.203922, 0.203922, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.483222, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 0.6
+emission_shape = 1
+emission_sphere_radius = 50.0
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.2
+radial_accel = -100.0
+scale = 0.1
+scale_random = 0.3
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.921569, 0.337255, 0.294118, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.294118, 0.196078, 0.329412, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="Animation" id=9]
+length = 1.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 0.5, 1, 1 ),
+"update": 0,
+"values": [ -89.9999, -55.0, -60.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite/CoreSparkles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 1.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ProgressBar:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ProgressBar:value")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.25, 1.4 ),
+"transitions": PoolRealArray( 1, 2, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 100.0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Sprite/CoreSparkles:self_modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.4, 1.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1.1, 1.1, 1.1, 1 ), Color( 1.3, 1.3, 1.3, 1 ) ]
+}
+tracks/5/type = "method"
+tracks/5/path = NodePath("Sprite/CoreSparkles/FireBallSpawner")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 1.4 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "spawn"
+} ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Rest"
+length = 0.35
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.15, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 0.5 ),
+"update": 0,
+"values": [ -60.0, -95.0, -89.9999 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ProgressBar:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite/CoreSparkles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Position2D
+
+
+export var asteroid_scene: PackedScene = preload(\"res://FireBall/FlyingAsteroid.tscn\")
+
+
+func spawn() -> void:
+	var asteroid := asteroid_scene.instance()
+	
+	add_child(asteroid)
+	asteroid.set_as_toplevel(true)
+	asteroid.global_position = global_position
+"
+
+[sub_resource type="GDScript" id=12]
+script/source = "extends Timer
+
+export var min_wait_time := 0.5
+export var max_wait_time := 2.0
+
+
+func _ready() -> void:
+	randomize()
+	randomize_wait_time()
+	if autostart:
+		start()
+
+
+func randomize_wait_time():
+	wait_time = rand_range(min_wait_time, max_wait_time)
+
+
+func _on_timeout() -> void:
+	randomize_wait_time()
+	if not one_shot:
+		start()
+"
+
+[sub_resource type="Animation" id=13]
+resource_name = "Idle"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1920, 0 ), Vector2( 1920, 1080 ) ]
+}
+
+[node name="FireBallDemo" type="Node2D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="FireStaff" type="Node2D" parent="."]
+position = Vector2( 88, 336 )
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="FireStaff"]
+position = Vector2( 0, 144 )
+rotation = -1.57079
+texture = ExtResource( 1 )
+offset = Vector2( 104, 0 )
+
+[node name="CoreSparkles" type="Particles2D" parent="FireStaff/Sprite"]
+self_modulate = Color( 1.11, 1.11, 1.11, 1 )
+position = Vector2( 160, -0.000358582 )
+rotation = 1.57079
+emitting = false
+amount = 32
+randomness = 1.0
+local_coords = false
+process_material = SubResource( 6 )
+texture = ExtResource( 3 )
+
+[node name="FireBallSpawner" type="Position2D" parent="FireStaff/Sprite/CoreSparkles"]
+script = ExtResource( 4 )
+explosion_container_path = NodePath("../../../..")
+
+[node name="ProgressBar" type="ProgressBar" parent="FireStaff"]
+visible = false
+margin_left = -66.491
+margin_top = 176.0
+margin_right = 105.509
+margin_bottom = 190.0
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="FireStaff"]
+playback_speed = 2.0
+anims/Cast = SubResource( 9 )
+anims/Rest = SubResource( 10 )
+
+[node name="AsteroidSpawner" type="Position2D" parent="."]
+position = Vector2( 1920, 0 )
+script = SubResource( 11 )
+
+[node name="RandomTimer" type="Timer" parent="AsteroidSpawner"]
+autostart = true
+script = SubResource( 12 )
+min_wait_time = 2.0
+max_wait_time = 4.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AsteroidSpawner"]
+autoplay = "Idle"
+anims/Idle = SubResource( 13 )
+
+[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner" method="spawn"]
+[connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner/RandomTimer" method="_on_timeout"]

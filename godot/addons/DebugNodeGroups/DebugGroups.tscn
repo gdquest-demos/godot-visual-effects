@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://addons/DebugNodeGroups/DebugGroups.gd" type="Script" id=1]
+
+[node name="DebugGroups" type="VBoxContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 1920.0
+margin_bottom = 14.0
+text = "Set debug groups:"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 18.0
+margin_right = 1920.0
+margin_bottom = 22.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CollisionShapeOptions" type="VBoxContainer" parent="."]
+margin_top = 26.0
+margin_right = 1920.0
+margin_bottom = 166.0
+
+[node name="ToggleDrawButton" type="Button" parent="."]
+margin_top = 170.0
+margin_right = 1920.0
+margin_bottom = 190.0
+text = "Toggle Draw"
+
+[node name="InstructionsLabel" type="Label" parent="."]
+margin_top = 194.0
+margin_right = 1920.0
+margin_bottom = 208.0
+text = "Please select a collision or ray cast node."
+align = 1
+autowrap = true

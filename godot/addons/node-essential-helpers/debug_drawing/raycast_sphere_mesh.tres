@@ -1,0 +1,14 @@
+[gd_resource type="SphereMesh" load_steps=3 format=2]
+
+[ext_resource path="res://addons/node-essential-helpers/unshaded_color.shader" type="Shader" id=1]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 1 )
+shader_param/color = Color( 1, 1, 1, 1 )
+
+[resource]
+material = SubResource( 1 )
+radius = 0.1
+height = 0.2
+radial_segments = 16
+rings = 8

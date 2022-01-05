@@ -3,7 +3,7 @@
 [ext_resource path="res://LightningBeam/LightningBeam.gd" type="Script" id=1]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 128.0
+radius = 192.0
 
 [node name="LightningBeam" type="RayCast2D"]
 enabled = true

@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Slash3D/Sword.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=2]
+
+[sub_resource type="GDScript" id=16]
+script/source = "extends Spatial
+
+onready var _animation : AnimationPlayer = $Sword/AnimationPlayer
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action(\"ui_accept\"):
+		_animation.play(\"Attack\")
+"
+
+[node name="Slash3DDemo" type="Spatial"]
+script = SubResource( 16 )
+
+[node name="Sword" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 2, 1.6, 2 )

@@ -1,0 +1,412 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://LaserBeam/LaserBeam2D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=2]
+[ext_resource path="res://StarField/StarField.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=4]
+[ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=5]
+[ext_resource path="res://Charging/ChargingParticles.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Explosion/Explosion.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Shockwave/ShakingCamera.tscn" type="PackedScene" id=8]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.241936, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.0482635 ), 0.0, 0.0, 0, 0, Vector2( 0.745161, 0.990571 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 960, 540, 0 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_random = 1.0
+scale_curve = SubResource( 2 )
+
+[sub_resource type="Animation" id=4]
+length = 5.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("LaserBeam2D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 3, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ true ],
+"method": "set_is_casting"
+}, {
+"args": [ false ],
+"method": "set_is_casting"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2.3, 2.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1.3, 1.3, 1.3, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 3, 3.1, 3.5 ),
+"transitions": PoolRealArray( 1, 0.353554, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( -20, 0 ), Vector2( 0, 0 ) ]
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("ChargingParticles/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Charge" ),
+"times": PoolRealArray( 0 )
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("ChargingParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=5]
+tracks/0/type = "value"
+tracks/0/path = NodePath("ChargingParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("LaserBeam2D")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ false ],
+"method": "set_is_casting"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="CircleShape2D" id=6]
+radius = 52.7564
+
+[sub_resource type="Animation" id=7]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 360.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+length = 5.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 1.6 ),
+"transitions": PoolRealArray( 2, 0.5, 2 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 5, 1, 1, 1 ), Color( 1.1, 1, 1, 1 ) ]
+}
+tracks/1/type = "animation"
+tracks/1/path = NodePath("Explosion/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.5 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.55 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=9]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 10.0
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Asteroid:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2, 6.7 ),
+"transitions": PoolRealArray( 1, 1, 0 ),
+"update": 0,
+"values": [ Vector2( 1637, 280 ), Vector2( 1637, 280 ), Vector2( 225.453, 297.578 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerShip:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.9, 2, 2.5, 6.7, 6.8, 7.3, 7.45, 8.2, 8.3 ),
+"transitions": PoolRealArray( 1, 0.5, 0.5, 0.861524, 0.5, 0.5, 0.5, 0.5, 0.5, -2 ),
+"update": 0,
+"values": [ -90.0, -90.0, -90.0, -45.0, -145.0, -140.0, -140.0, -145.0, -85.0, -90.0 ]
+}
+tracks/2/type = "animation"
+tracks/2/path = NodePath("Asteroid/AnimationPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"clips": PoolStringArray( "Setup", "Explode" ),
+"times": PoolRealArray( 0, 5 )
+}
+tracks/3/type = "animation"
+tracks/3/path = NodePath("PlayerShip/AnimationPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": PoolStringArray( "Charging" ),
+"times": PoolRealArray( 2 )
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Camera:shake_amount")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 2, 4, 4.05, 5, 7 ),
+"transitions": PoolRealArray( 1, 1, 0, 0, 0, 0 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.2, 0.0, 0.2, 0.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Asteroid:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1637, 280 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerShip:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -45.0 ]
+}
+
+[node name="ChargingDemo" type="Node2D"]
+
+[node name="StarField" parent="." instance=ExtResource( 3 )]
+process_material = SubResource( 3 )
+
+[node name="PlayerShip" type="Node2D" parent="."]
+position = Vector2( 954, 848 )
+rotation = -0.785398
+
+[node name="LaserBeam2D" parent="PlayerShip" instance=ExtResource( 1 )]
+position = Vector2( 24, 0 )
+cast_to = Vector2( 1000, 0 )
+
+[node name="ChargingParticles" parent="PlayerShip" instance=ExtResource( 6 )]
+emitting = false
+
+[node name="Sprite" type="Sprite" parent="PlayerShip"]
+rotation = 1.5708
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerShip"]
+autoplay = "Setup"
+anims/Charging = SubResource( 4 )
+anims/Setup = SubResource( 5 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="Asteroid" type="KinematicBody2D" parent="."]
+position = Vector2( 1637, 280 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid"]
+shape = SubResource( 6 )
+disabled = true
+
+[node name="Sprite" type="Sprite" parent="Asteroid"]
+visible = false
+self_modulate = Color( 1.1, 1, 1, 1 )
+rotation = 6.28319
+scale = Vector2( 0.486244, 0.486244 )
+texture = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid/Sprite"]
+autoplay = "Spin"
+anims/Spin = SubResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid"]
+autoplay = "Setup"
+anims/Explode = SubResource( 8 )
+anims/Setup = SubResource( 9 )
+
+[node name="Explosion" parent="Asteroid" instance=ExtResource( 7 )]
+
+[node name="FireTrails" parent="Asteroid/Explosion" index="1"]
+modulate = Color( 1.4, 1.4, 1.4, 1 )
+
+[node name="FireBurstParticles2D" parent="Asteroid/Explosion" index="2"]
+modulate = Color( 1.4, 1.4, 1.4, 1 )
+
+[node name="SparkleParticles2D" parent="Asteroid/Explosion" index="3"]
+modulate = Color( 1.4, 1.4, 1.4, 1 )
+
+[node name="AnimationPlayer" parent="Asteroid/Explosion" index="4"]
+autoplay = ""
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Asteroid"]
+scale = Vector2( 5.31207, 5.31207 )
+
+[node name="Camera" parent="." instance=ExtResource( 8 )]
+anchor_mode = 0
+zoom = Vector2( 1, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Demo"
+playback_process_mode = 0
+anims/Demo = SubResource( 10 )
+anims/RESET = SubResource( 11 )
+
+[connection signal="screen_exited" from="Asteroid/VisibilityNotifier2D" to="Asteroid" method="_on_VisibilityNotifier2D_screen_exited"]
+
+[editable path="Asteroid/Explosion"]

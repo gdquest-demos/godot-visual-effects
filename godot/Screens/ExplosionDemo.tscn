@@ -1,0 +1,205 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=2]
+[ext_resource path="res://StarField/StarField.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Explosion/Explosion.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=5]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.241936, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.0482635 ), 0.0, 0.0, 0, 0, Vector2( 0.745161, 0.990571 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 960, 540, 0 )
+flag_disable_z = true
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 50.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_random = 1.0
+scale_curve = SubResource( 2 )
+
+[sub_resource type="Animation" id=4]
+resource_name = "Collide"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.95 ),
+"transitions": PoolRealArray( 3.605, 0.5 ),
+"update": 0,
+"values": [ Vector2( 223, 1195 ), Vector2( 1418, 296 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 0, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 0.5 ),
+"update": 0,
+"values": [ 53.1619 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("GhostTrail:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1418, 296 ) ]
+}
+
+[sub_resource type="Gradient" id=5]
+colors = PoolColorArray( 1, 1, 1, 0.435294, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+flag_align_y = true
+flag_rotate_y = true
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color_ramp = SubResource( 6 )
+
+[sub_resource type="Animation" id=8]
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 360.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Explosion"
+length = 5.0
+loop = true
+step = 0.05
+tracks/0/type = "animation"
+tracks/0/path = NodePath("Player/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"clips": PoolStringArray( "Collide" ),
+"times": PoolRealArray( 0.3 )
+}
+tracks/1/type = "animation"
+tracks/1/path = NodePath("Explosion/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"clips": PoolStringArray( "Explode" ),
+"times": PoolRealArray( 1.15 )
+}
+
+[node name="ExplosionSampleScene" type="Node2D"]
+
+[node name="StarField" parent="." instance=ExtResource( 3 )]
+modulate = Color( 1.05, 1.05, 1.05, 1 )
+process_material = SubResource( 3 )
+
+[node name="StarField2" parent="." instance=ExtResource( 3 )]
+modulate = Color( 1.05, 1.05, 1.05, 1 )
+process_material = SubResource( 3 )
+
+[node name="Player" type="Sprite" parent="."]
+position = Vector2( 1418, 296 )
+rotation = 0.92785
+z_index = 1
+texture = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+anims/Collide = SubResource( 4 )
+anims/RESET = SubResource( 10 )
+
+[node name="GhostTrail" type="Particles2D" parent="Player"]
+show_behind_parent = true
+rotation = 3.14159
+amount = 16
+lifetime = 0.5
+local_coords = false
+draw_order = 1
+process_material = SubResource( 7 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid" type="Sprite" parent="."]
+position = Vector2( 1471, 261 )
+scale = Vector2( 1.61719, 1.61719 )
+texture = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid"]
+autoplay = "Spin"
+anims/Spin = SubResource( 8 )
+
+[node name="Explosion" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1389.16, 324.831 )
+scale = Vector2( 1.5, 1.5 )
+z_index = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Explosion"
+anims/Explosion = SubResource( 9 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 5 )
+
+[editable path="Explosion"]

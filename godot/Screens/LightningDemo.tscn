@@ -1,0 +1,140 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/asteroid.svg" type="Texture" id=1]
+[ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=2]
+[ext_resource path="res://StarField/StarFieldBackground.tscn" type="PackedScene" id=3]
+[ext_resource path="res://LightningBeam/LightningBeam.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 80.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 103.5
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 160.0
+
+[sub_resource type="GDScript" id=4]
+script/source = "extends Node2D
+
+onready var lightning := $LightningBeam2D
+
+
+func _process(_delta: float) -> void:
+	look_at(get_global_mouse_position())
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(\"fire_weapon\"):
+		lightning.shoot()
+"
+
+[node name="LightningDemo" type="Node2D"]
+
+[node name="StarFieldBackground" parent="." instance=ExtResource( 3 )]
+
+[node name="Asteroid" type="StaticBody2D" parent="."]
+position = Vector2( 1334, 580 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid"]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid6" type="StaticBody2D" parent="."]
+position = Vector2( 922, 584 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid6"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid6"]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid7" type="StaticBody2D" parent="."]
+position = Vector2( 645, 959 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid7"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid7"]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid8" type="StaticBody2D" parent="."]
+position = Vector2( 1293, 933 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid8"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid8"]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid9" type="StaticBody2D" parent="."]
+position = Vector2( 329, 549 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid9"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid9"]
+scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid2" type="StaticBody2D" parent="."]
+position = Vector2( 981, 886 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid2"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid2"]
+scale = Vector2( 0.95, 0.95 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid4" type="StaticBody2D" parent="."]
+position = Vector2( 202, 886 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid4"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid4"]
+scale = Vector2( 0.95, 0.95 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid5" type="StaticBody2D" parent="."]
+position = Vector2( 570, 745 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid5"]
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid5"]
+scale = Vector2( 0.95, 0.95 )
+texture = ExtResource( 1 )
+
+[node name="Asteroid3" type="StaticBody2D" parent="."]
+position = Vector2( 1634, 740 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid3"]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="Asteroid3"]
+scale = Vector2( 1.51457, 1.51457 )
+texture = ExtResource( 1 )
+
+[node name="PlayerShip" type="Node2D" parent="."]
+position = Vector2( 1005, 221 )
+script = SubResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="PlayerShip"]
+rotation = 1.5708
+texture = ExtResource( 2 )
+
+[node name="LightningBeam2D" parent="PlayerShip" instance=ExtResource( 4 )]
+position = Vector2( 42, 0 )
+cast_to = Vector2( 900, 0 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 5 )
