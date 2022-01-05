@@ -5,7 +5,6 @@
 [ext_resource path="res://Assets/planets.svg" type="Texture" id=4]
 [ext_resource path="res://Assets/asteroid.svg" type="Texture" id=5]
 
-
 [sub_resource type="Animation" id=1]
 resource_name = "spin"
 length = 3.0
@@ -145,6 +144,7 @@ tracks/0/keys = {
 [node name="Trail2DDemo" type="Node"]
 
 [node name="ShipWithTrail" parent="." instance=ExtResource( 1 )]
+position = Vector2( 960, 540 )
 
 [node name="Background" type="CanvasLayer" parent="."]
 
@@ -156,19 +156,22 @@ motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 3328, 0 )
 
 [node name="Sprite" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer"]
-position = Vector2( 432, 264 )
+position = Vector2( 439, 443 )
+scale = Vector2( 1.25405, 1.25405 )
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 30, 10, 370, 380 )
 
 [node name="Sprite2" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer"]
-position = Vector2( 1608, 440 )
+position = Vector2( 1513, 705 )
+scale = Vector2( 1.41212, 1.41212 )
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 610, 30, 380, 330 )
 
 [node name="Sprite3" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer"]
-position = Vector2( 2768, 224 )
+position = Vector2( 2891, 420 )
+scale = Vector2( 1.41579, 1.41579 )
 texture = ExtResource( 4 )
 region_enabled = true
 region_rect = Rect2( 130, 470, 760, 380 )
@@ -178,16 +181,16 @@ motion_scale = Vector2( 0.5, 0.5 )
 motion_mirroring = Vector2( 3328, 0 )
 
 [node name="Sprite4" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 1868, 99.9999 )
-scale = Vector2( 0.40625, 0.40625 )
+position = Vector2( 1787, 233 )
+scale = Vector2( 0.65625, 0.65625 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background/RepeatingBackground/ParallaxLayer2/Sprite4"]
 anims/spin = SubResource( 1 )
 
 [node name="Sprite5" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 1130, 434 )
-scale = Vector2( 0.546875, 0.546875 )
+position = Vector2( 1048, 823 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background/RepeatingBackground/ParallaxLayer2/Sprite5"]
@@ -195,8 +198,8 @@ playback_speed = 0.8
 anims/spin = SubResource( 2 )
 
 [node name="Sprite6" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 749, 117 )
-scale = Vector2( 0.398437, 0.398437 )
+position = Vector2( 735.5, 248.5 )
+scale = Vector2( 0.597656, 0.597656 )
 z_index = -1
 texture = ExtResource( 5 )
 
@@ -205,8 +208,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 3 )
 
 [node name="Sprite7" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 7.62939e-06, 512 )
-scale = Vector2( 0.480469, 0.480469 )
+position = Vector2( 61, 844 )
+scale = Vector2( 0.63086, 0.63086 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background/RepeatingBackground/ParallaxLayer2/Sprite7"]
@@ -214,8 +217,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 4 )
 
 [node name="Sprite8" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2276.62, 124.625 )
-scale = Vector2( 0.401367, 0.401367 )
+position = Vector2( 2289.69, 379.313 )
+scale = Vector2( 0.552246, 0.552246 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background/RepeatingBackground/ParallaxLayer2/Sprite8"]
@@ -223,8 +226,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 5 )
 
 [node name="Sprite9" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2048, 528 )
-scale = Vector2( 0.302733, 0.302733 )
+position = Vector2( 2079.13, 671.875 )
+scale = Vector2( 0.452148, 0.452148 )
 z_index = -1
 texture = ExtResource( 5 )
 
@@ -233,8 +236,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 6 )
 
 [node name="Sprite10" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 3288, 96 )
-scale = Vector2( 0.401367, 0.401367 )
+position = Vector2( 3275.19, 167.812 )
+scale = Vector2( 0.501465, 0.501465 )
 z_index = -1
 texture = ExtResource( 5 )
 
@@ -243,8 +246,9 @@ playback_speed = 1.2
 anims/spin = SubResource( 7 )
 
 [node name="Sprite11" type="Sprite" parent="Background/RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2656.62, 528.625 )
-scale = Vector2( 0.245116, 0.245116 )
+position = Vector2( 2662.8, 645.2 )
+rotation = 6.28319
+scale = Vector2( 0.277926, 0.277926 )
 texture = ExtResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Background/RepeatingBackground/ParallaxLayer2/Sprite11"]

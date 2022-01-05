@@ -151,27 +151,47 @@ tracks/9/keys = {
 [node name="ShockwaveDemo" type="Node"]
 
 [node name="World" type="Viewport" parent="."]
-size = Vector2( 1024, 600 )
+size = Vector2( 1920, 1080 )
 render_target_update_mode = 3
 
 [node name="ShockwaveWorld" parent="World" instance=ExtResource( 2 )]
 
-[node name="Camera" parent="World/ShockwaveWorld" index="5"]
-shake_amount = 0.0
+[node name="SmokeParticles2D" parent="World/ShockwaveWorld/Explosion" index="0"]
+emitting = false
+
+[node name="FireTrailParticles2D" parent="World/ShockwaveWorld/Explosion/FireTrails" index="0"]
+emitting = false
+
+[node name="FireTrailParticles2D2" parent="World/ShockwaveWorld/Explosion/FireTrails" index="1"]
+emitting = false
+
+[node name="FireTrailParticles2D3" parent="World/ShockwaveWorld/Explosion/FireTrails" index="2"]
+emitting = false
+
+[node name="FireTrailParticles2D4" parent="World/ShockwaveWorld/Explosion/FireTrails" index="3"]
+emitting = false
+
+[node name="FireTrailParticles2D5" parent="World/ShockwaveWorld/Explosion/FireTrails" index="4"]
+emitting = false
+
+[node name="FireBurstParticles2D" parent="World/ShockwaveWorld/Explosion" index="2"]
+emitting = false
+
+[node name="SparkleParticles2D" parent="World/ShockwaveWorld/Explosion" index="3"]
+emitting = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="World"]
 environment = SubResource( 1 )
 
 [node name="Mask" type="Viewport" parent="."]
-size = Vector2( 1024, 600 )
+size = Vector2( 1920, 1080 )
 own_world = true
 transparent_bg = true
 usage = 0
 render_target_update_mode = 3
 
 [node name="Shockwave" parent="Mask" instance=ExtResource( 3 )]
-position = Vector2( 293.313, 393.491 )
-emitting = false
+position = Vector2( 543, 651 )
 speed_scale = 0.8
 
 [node name="PostProcessedScreen" type="TextureRect" parent="."]

@@ -3,7 +3,6 @@
 [ext_resource path="res://Assets/topdown-player.svg" type="Texture" id=2]
 [ext_resource path="res://Trail/Trail2D.tscn" type="PackedScene" id=3]
 
-
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
@@ -28,11 +27,10 @@ colors = PoolColorArray( 0.294118, 0.356863, 0.670588, 0, 0.294118, 0.356863, 0.
 [node name="ShipWithTrail" type="Node2D"]
 position = Vector2( 511.602, 297.63 )
 script = SubResource( 1 )
-speed = 600.0
+speed = 900.0
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
-scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -44,7 +42,7 @@ position = Vector2( -15.8954, -0.198364 )
 rotation = 1.57079
 z_index = -1
 points = PoolVector2Array( -0.589685, 44.7556, -0.0901849, 0.300196 )
-width = 45.0
+width = 67.5
 width_curve = SubResource( 2 )
 gradient = SubResource( 3 )
 begin_cap_mode = 2

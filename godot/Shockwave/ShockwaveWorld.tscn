@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://StarField/StarField.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/puff_smooth.png" type="Texture" id=2]
@@ -310,7 +310,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 4 ),
 "transitions": PoolRealArray( -1.8, 1 ),
 "update": 0,
-"values": [ Vector2( 1091.05, -49.438 ), Vector2( 307.614, 390.496 ) ]
+"values": [ Vector2( 1604, -115 ), Vector2( 543, 651 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Asteroid:scale")
@@ -322,7 +322,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 4 ),
 "transitions": PoolRealArray( 2, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1e-05, 1e-05 ) ]
+"values": [ Vector2( 1.5, 1.5 ), Vector2( 1e-05, 1e-05 ) ]
 }
 tracks/2/type = "animation"
 tracks/2/path = NodePath("Explosion/AnimationPlayer")
@@ -371,21 +371,35 @@ tracks/5/keys = {
 "values": [ 0.0, 0.0, 0.2, 0.0 ]
 }
 
+[sub_resource type="Animation" id=30]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Asteroid:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 505, 681 ) ]
+}
+
 [node name="ShockwaveWorld" type="Node2D"]
 
 [node name="StarField" parent="." instance=ExtResource( 1 )]
 amount = 16
 
 [node name="Earth" type="Sprite" parent="."]
-position = Vector2( 271.887, 397.912 )
+position = Vector2( 469.353, 687.353 )
 rotation = 0.126762
-scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 3 )
 region_enabled = true
 region_rect = Rect2( 36, 22, 356, 356 )
 
 [node name="Asteroid" type="Node2D" parent="."]
-position = Vector2( 307.614, 390.496 )
+position = Vector2( 505, 681 )
 scale = Vector2( 1e-05, 1e-05 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid"]
@@ -418,18 +432,17 @@ process_material = SubResource( 11 )
 texture = ExtResource( 7 )
 
 [node name="Sprite" type="Sprite" parent="Asteroid"]
-rotation = -1.74846e-07
+rotation = -6.28319
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 4 )
 
 [node name="Explosion" type="Node2D" parent="."]
-position = Vector2( 307.874, 390.929 )
+position = Vector2( 543, 651 )
 scale = Vector2( 0.8, 0.8 )
 z_index = 1
 z_as_relative = false
 
 [node name="SmokeParticles2D" type="Particles2D" parent="Explosion"]
-emitting = false
 amount = 16
 lifetime = 3.0
 preprocess = 0.6
@@ -443,7 +456,6 @@ texture = ExtResource( 8 )
 
 [node name="FireTrailParticles2D" type="Particles2D" parent="Explosion/FireTrails"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 50
 lifetime = 0.5
 speed_scale = 0.4
@@ -454,7 +466,6 @@ texture = ExtResource( 2 )
 
 [node name="FireTrailParticles2D2" type="Particles2D" parent="Explosion/FireTrails"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 50
 lifetime = 0.5
 speed_scale = 0.4
@@ -466,7 +477,6 @@ texture = ExtResource( 2 )
 
 [node name="FireTrailParticles2D3" type="Particles2D" parent="Explosion/FireTrails"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 50
 lifetime = 0.5
 speed_scale = 0.4
@@ -478,7 +488,6 @@ texture = ExtResource( 2 )
 
 [node name="FireTrailParticles2D4" type="Particles2D" parent="Explosion/FireTrails"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 50
 lifetime = 0.5
 speed_scale = 0.4
@@ -490,7 +499,6 @@ texture = ExtResource( 2 )
 
 [node name="FireTrailParticles2D5" type="Particles2D" parent="Explosion/FireTrails"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 50
 lifetime = 0.5
 speed_scale = 0.4
@@ -502,7 +510,6 @@ texture = ExtResource( 2 )
 
 [node name="FireBurstParticles2D" type="Particles2D" parent="Explosion"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 64
 lifetime = 0.5
 speed_scale = 0.4
@@ -515,7 +522,6 @@ texture = ExtResource( 8 )
 
 [node name="SparkleParticles2D" type="Particles2D" parent="Explosion"]
 modulate = Color( 1.2, 1.2, 1.2, 1 )
-emitting = false
 amount = 32
 speed_scale = 0.4
 explosiveness = 0.2
@@ -529,8 +535,8 @@ anims/Explode = SubResource( 28 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Collision"
 anims/Collision = SubResource( 29 )
+anims/RESET = SubResource( 30 )
 
 [node name="Camera" parent="." instance=ExtResource( 5 )]
 anchor_mode = 0
 zoom = Vector2( 1, 1 )
-shake_amount = 0.0720001

@@ -36,7 +36,7 @@ func _unhandled_input(event: InputEvent) -> void:
 [node name="StarFieldBackground" parent="." instance=ExtResource( 3 )]
 
 [node name="Asteroid" type="StaticBody2D" parent="."]
-position = Vector2( 930.964, 92.4753 )
+position = Vector2( 1647, 569 )
 rotation = 3.03087
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid"]
@@ -47,7 +47,7 @@ scale = Vector2( 0.486244, 0.486244 )
 texture = ExtResource( 1 )
 
 [node name="Asteroid2" type="StaticBody2D" parent="."]
-position = Vector2( 628.228, 155.387 )
+position = Vector2( 1194, 286 )
 rotation = -0.663561
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid2"]
@@ -58,7 +58,7 @@ scale = Vector2( 0.635398, 0.635398 )
 texture = ExtResource( 1 )
 
 [node name="Asteroid4" type="StaticBody2D" parent="."]
-position = Vector2( 106.365, 497.13 )
+position = Vector2( 308, 839 )
 rotation = -0.309969
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid4"]
@@ -69,7 +69,7 @@ scale = Vector2( 0.635398, 0.635398 )
 texture = ExtResource( 1 )
 
 [node name="Asteroid5" type="StaticBody2D" parent="."]
-position = Vector2( 128.336, 103.168 )
+position = Vector2( 415, 293 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid5"]
 shape = SubResource( 2 )
@@ -79,7 +79,7 @@ scale = Vector2( 0.635398, 0.635398 )
 texture = ExtResource( 1 )
 
 [node name="Asteroid3" type="StaticBody2D" parent="."]
-position = Vector2( 789.841, 412.141 )
+position = Vector2( 995, 696 )
 rotation = 0.209989
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid3"]
@@ -89,16 +89,16 @@ shape = SubResource( 3 )
 texture = ExtResource( 1 )
 
 [node name="PlayerShip" type="Node2D" parent="."]
-position = Vector2( 194.39, 293.051 )
+position = Vector2( 208, 540 )
 script = SubResource( 4 )
 
 [node name="LaserBeam2D" parent="PlayerShip" instance=ExtResource( 4 )]
 position = Vector2( 24, 0 )
 cast_to = Vector2( 100, 0 )
+max_length = 2000.0
 
 [node name="Sprite" type="Sprite" parent="PlayerShip"]
 rotation = 1.5708
-scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 2 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

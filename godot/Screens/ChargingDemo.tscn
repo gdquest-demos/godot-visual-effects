@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://LaserBeam/LaserBeam2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/2d_environment.tres" type="Environment" id=2]
@@ -17,7 +17,7 @@ curve = SubResource( 1 )
 
 [sub_resource type="ParticlesMaterial" id=3]
 emission_shape = 2
-emission_box_extents = Vector3( 512, 300, 0 )
+emission_box_extents = Vector3( 960, 540, 0 )
 flag_disable_z = true
 gravity = Vector3( 0, 0, 0 )
 angular_velocity = 50.0
@@ -254,7 +254,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2, 6.7 ),
 "transitions": PoolRealArray( 1, 1, 0 ),
 "update": 0,
-"values": [ Vector2( 1127.48, 297.578 ), Vector2( 1127.48, 297.578 ), Vector2( 225.453, 297.578 ) ]
+"values": [ Vector2( 1637, 280 ), Vector2( 1637, 280 ), Vector2( 225.453, 297.578 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("PlayerShip:rotation_degrees")
@@ -264,9 +264,9 @@ tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
 "times": PoolRealArray( 0, 1.9, 2, 2.5, 6.7, 6.8, 7.3, 7.45, 8.2, 8.3 ),
-"transitions": PoolRealArray( 1, 0.5, 0.5, 1.5, 0.5, 0.5, 0.5, 0.5, 0.5, -2 ),
+"transitions": PoolRealArray( 1, 0.5, 0.5, 0.861524, 0.5, 0.5, 0.5, 0.5, 0.5, -2 ),
 "update": 0,
-"values": [ -90.0, -90.0, -90.0, -25.47, -145.0, -140.0, -140.0, -145.0, -85.0, -90.0 ]
+"values": [ -90.0, -90.0, -90.0, -45.0, -145.0, -140.0, -140.0, -145.0, -85.0, -90.0 ]
 }
 tracks/2/type = "animation"
 tracks/2/path = NodePath("Asteroid/AnimationPlayer")
@@ -301,14 +301,41 @@ tracks/4/keys = {
 "values": [ 0.0, 0.0, 0.2, 0.0, 0.2, 0.0 ]
 }
 
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Asteroid:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1637, 280 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("PlayerShip:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -45.0 ]
+}
+
 [node name="ChargingDemo" type="Node2D"]
 
 [node name="StarField" parent="." instance=ExtResource( 3 )]
 process_material = SubResource( 3 )
 
 [node name="PlayerShip" type="Node2D" parent="."]
-position = Vector2( 512, 531.788 )
-rotation = -1.40259
+position = Vector2( 954, 848 )
+rotation = -0.785398
 
 [node name="LaserBeam2D" parent="PlayerShip" instance=ExtResource( 1 )]
 position = Vector2( 24, 0 )
@@ -331,7 +358,7 @@ anims/Setup = SubResource( 5 )
 environment = ExtResource( 2 )
 
 [node name="Asteroid" type="KinematicBody2D" parent="."]
-position = Vector2( 551.716, 297.578 )
+position = Vector2( 1637, 280 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Asteroid"]
 shape = SubResource( 6 )
@@ -373,12 +400,12 @@ scale = Vector2( 5.31207, 5.31207 )
 [node name="Camera" parent="." instance=ExtResource( 8 )]
 anchor_mode = 0
 zoom = Vector2( 1, 1 )
-shake_amount = 0.3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Demo"
 playback_process_mode = 0
 anims/Demo = SubResource( 10 )
+anims/RESET = SubResource( 11 )
 
 [connection signal="screen_exited" from="Asteroid/VisibilityNotifier2D" to="Asteroid" method="_on_VisibilityNotifier2D_screen_exited"]
 

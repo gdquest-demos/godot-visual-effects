@@ -168,19 +168,22 @@ motion_scale = Vector2( 0.2, 0.2 )
 motion_mirroring = Vector2( 3328, 0 )
 
 [node name="Sprite" type="Sprite" parent="RepeatingBackground/ParallaxLayer"]
-position = Vector2( 432, 264 )
+position = Vector2( 513, 496 )
+scale = Vector2( 1.27838, 1.27838 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 30, 10, 370, 380 )
 
 [node name="Sprite2" type="Sprite" parent="RepeatingBackground/ParallaxLayer"]
-position = Vector2( 1608, 440 )
+position = Vector2( 1569, 687 )
+scale = Vector2( 1.39697, 1.39697 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 610, 30, 380, 330 )
 
 [node name="Sprite3" type="Sprite" parent="RepeatingBackground/ParallaxLayer"]
-position = Vector2( 2768, 224 )
+position = Vector2( 2816, 384 )
+scale = Vector2( 1.41316, 1.41316 )
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 130, 470, 760, 380 )
@@ -190,16 +193,16 @@ motion_scale = Vector2( 0.5, 0.5 )
 motion_mirroring = Vector2( 3328, 0 )
 
 [node name="Sprite4" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 1868, 99.9999 )
-scale = Vector2( 0.40625, 0.40625 )
+position = Vector2( 1842, 229 )
+scale = Vector2( 0.781251, 0.781251 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RepeatingBackground/ParallaxLayer2/Sprite4"]
 anims/spin = SubResource( 2 )
 
 [node name="Sprite5" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 1130, 434 )
-scale = Vector2( 0.546875, 0.546875 )
+position = Vector2( 1135, 664 )
+scale = Vector2( 0.984375, 0.984375 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RepeatingBackground/ParallaxLayer2/Sprite5"]
@@ -207,8 +210,8 @@ playback_speed = 0.8
 anims/spin = SubResource( 3 )
 
 [node name="Sprite6" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 749, 117 )
-scale = Vector2( 0.398437, 0.398437 )
+position = Vector2( 783, 215 )
+scale = Vector2( 0.714844, 0.714844 )
 z_index = -1
 texture = ExtResource( 3 )
 
@@ -217,8 +220,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 4 )
 
 [node name="Sprite7" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 7.62939e-06, 512 )
-scale = Vector2( 0.480469, 0.480469 )
+position = Vector2( 33, 746 )
+scale = Vector2( 0.873047, 0.873047 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RepeatingBackground/ParallaxLayer2/Sprite7"]
@@ -226,8 +229,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 5 )
 
 [node name="Sprite8" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2276.62, 124.625 )
-scale = Vector2( 0.401367, 0.401367 )
+position = Vector2( 2330, 202 )
+scale = Vector2( 0.694356, 0.694356 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RepeatingBackground/ParallaxLayer2/Sprite8"]
@@ -235,8 +238,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 6 )
 
 [node name="Sprite9" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2048, 528 )
-scale = Vector2( 0.302733, 0.302733 )
+position = Vector2( 2079, 689 )
+scale = Vector2( 0.670898, 0.670898 )
 z_index = -1
 texture = ExtResource( 3 )
 
@@ -245,8 +248,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 7 )
 
 [node name="Sprite10" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 3288, 96 )
-scale = Vector2( 0.401367, 0.401367 )
+position = Vector2( 3332, 205 )
+scale = Vector2( 0.743652, 0.743652 )
 z_index = -1
 texture = ExtResource( 3 )
 
@@ -255,8 +258,8 @@ playback_speed = 1.2
 anims/spin = SubResource( 8 )
 
 [node name="Sprite11" type="Sprite" parent="RepeatingBackground/ParallaxLayer2"]
-position = Vector2( 2656.62, 528.625 )
-scale = Vector2( 0.245116, 0.245116 )
+position = Vector2( 2655, 920 )
+scale = Vector2( 0.608417, 0.608417 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="RepeatingBackground/ParallaxLayer2/Sprite11"]

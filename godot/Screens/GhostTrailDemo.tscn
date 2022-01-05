@@ -137,7 +137,7 @@ tracks/4/keys = {
 [node name="BlurTest" type="Node"]
 
 [node name="Viewport" type="Viewport" parent="."]
-size = Vector2( 1024, 600 )
+size = Vector2( 1920, 1080 )
 render_target_v_flip = true
 
 [node name="StarFieldTest" parent="Viewport" instance=ExtResource( 2 )]
@@ -158,7 +158,7 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 473.5, 312.5 )
+position = Vector2( 960, 540 )
 rotation = 1.5708
 scale = Vector2( 0.7, 0.7 )
 texture = ExtResource( 1 )
