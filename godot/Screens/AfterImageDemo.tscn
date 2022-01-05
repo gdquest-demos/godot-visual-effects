@@ -165,7 +165,6 @@ script = SubResource( 1 )
 
 [node name="Sprite" parent="Player" instance=ExtResource( 1 )]
 position = Vector2( 0, -0.45 )
-texture = ExtResource( 2 )
 is_emitting = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -183,19 +182,20 @@ anims/walk = SubResource( 6 )
 [node name="Floor" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Floor"]
-polygon = PoolVector2Array( 0, 448, 448, 448, 448, 616, 0, 616 )
+position = Vector2( 0, 622 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Floor/CollisionPolygon2D"]
 color = Color( 0.294118, 0.356863, 0.670588, 1 )
-polygon = PoolVector2Array( 0, 448, 448, 448, 448, 616, 0, 616 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
 
 [node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Floor"]
-position = Vector2( 640, 0 )
-polygon = PoolVector2Array( 0, 448, 384, 448, 384, 616, 0, 616 )
+position = Vector2( 1019, 622 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Floor/CollisionPolygon2D2"]
 color = Color( 0.294118, 0.356863, 0.670588, 1 )
-polygon = PoolVector2Array( 0, 448, 384, 448, 384, 616, 0, 616 )
+polygon = PoolVector2Array( 0, 0, 900, 0, 900, 620, 0, 620 )
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
@@ -204,6 +204,6 @@ rotation = 1.57079
 shape = SubResource( 7 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
-position = Vector2( 1024, 0 )
+position = Vector2( 1920, 0 )
 rotation = 1.57079
 shape = SubResource( 8 )

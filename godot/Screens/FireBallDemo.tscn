@@ -256,7 +256,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1024, 0 ), Vector2( 1024, 600 ) ]
+"values": [ Vector2( 1920, 0 ), Vector2( 1920, 1080 ) ]
 }
 
 [node name="FireBallDemo" type="Node2D"]
@@ -308,7 +308,7 @@ anims/Cast = SubResource( 9 )
 anims/Rest = SubResource( 10 )
 
 [node name="AsteroidSpawner" type="Position2D" parent="."]
-position = Vector2( 1024, 600 )
+position = Vector2( 1920, 0 )
 script = SubResource( 11 )
 
 [node name="RandomTimer" type="Timer" parent="AsteroidSpawner"]
@@ -320,5 +320,6 @@ max_wait_time = 4.0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AsteroidSpawner"]
 autoplay = "Idle"
 anims/Idle = SubResource( 13 )
+
 [connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner" method="spawn"]
 [connection signal="timeout" from="AsteroidSpawner/RandomTimer" to="AsteroidSpawner/RandomTimer" method="_on_timeout"]
