@@ -7,7 +7,7 @@
 [ext_resource path="res://common/UI/9patch_searchbar.png" type="Texture" id=5]
 [ext_resource path="res://common/UI/9patch_mainmenu.png" type="Texture" id=6]
 [ext_resource path="res://common/planet.png" type="Texture" id=7]
-[ext_resource path="res://Main/title.svg" type="Texture" id=8]
+[ext_resource path="res://Assets/app-title.svg" type="Texture" id=8]
 [ext_resource path="res://Main/GDQuestLogo.tscn" type="PackedScene" id=9]
 [ext_resource path="res://common/planet_large.png" type="Texture" id=10]
 [ext_resource path="res://Main/filter_button_group.tres" type="ButtonGroup" id=11]
@@ -178,7 +178,7 @@ margin_bottom = 240.0
 rect_min_size = Vector2( 0, 240 )
 texture = ExtResource( 8 )
 expand = true
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 margin_top = 256.0
