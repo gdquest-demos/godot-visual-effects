@@ -5,7 +5,9 @@
 [resource]
 background_mode = 2
 background_sky = SubResource( 3 )
+ambient_light_energy = 0.5
 tonemap_mode = 3
+ssao_enabled = true
 glow_enabled = true
 glow_blend_mode = 1
 glow_bicubic_upscale = true
