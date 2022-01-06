@@ -238,5 +238,6 @@ translations=PoolStringArray( "res://Demos/labels/demo_labels.en.translation" )
 
 [rendering]
 
+quality/shadows/filter_mode=2
 environment/default_clear_color=Color( 0.196078, 0.160784, 0.278431, 1 )
 environment/default_environment="res://default_env.tres"

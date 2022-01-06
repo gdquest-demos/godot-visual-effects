@@ -13,7 +13,8 @@
       "Trail2D"
     ],
     "3d": [
-      "Slash3D"
+      "Slash3D",
+	  "Vines3D"
     ]
   },
   "search_terms": {
