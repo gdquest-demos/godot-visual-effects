@@ -55,6 +55,7 @@ curve = SubResource( 24 )
 shader = ExtResource( 3 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/rate_of_fire = 10.0
+shader_param/fresnel_threshold = 0.5
 shader_param/size_randomization = 0.3
 shader_param/texture_albedo = ExtResource( 4 )
 shader_param/scale_curve = SubResource( 25 )
