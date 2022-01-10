@@ -12,10 +12,10 @@ varying float offset;
 
 void vertex() {
 	float uneven_growth = (growth * 2.0 - 1.0) - COLOR.r;
-	uneven_growth = min(0.0, uneven_growth);
 	offset = UV.x;
-	offset += uneven_growth;
-	VERTEX -= NORMAL * 0.1; // subtract original model thickness
+	offset += min(0.0, uneven_growth);
+	// subtract original model's thickness
+	VERTEX -= NORMAL * 0.1; 
 	VERTEX += NORMAL * thickness * offset;
 }
 
@@ -23,8 +23,9 @@ void fragment() {
 	if (offset < 0.0) {
 		discard;
 	}
-	ALBEDO = texture(albedo_texture, UV + vec2(offset, 0.0) * uv_scale).rgb;
-	NORMALMAP = texture(normal_texture, UV + vec2(offset, 0.0) * uv_scale).rgb;
+	vec2 offset_uv = UV + vec2(offset, 0.0) * uv_scale;
+	ALBEDO = texture(albedo_texture, offset_uv).rgb;
+	NORMALMAP = texture(normal_texture, offset_uv).rgb;
 	ROUGHNESS = roughness;
 	SSS_STRENGTH = sss_strength;
 }
