@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://MuzzleFlash3D/MuzzleFlash.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=2]
+
+[sub_resource type="GDScript" id=16]
+script/source = "extends Spatial
+
+onready var _animation : AnimationPlayer = $Sword/AnimationPlayer
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action(\"ui_accept\"):
+		_animation.play(\"Attack\")
+"
+
+[sub_resource type="CubeMesh" id=19]
+size = Vector3( 0.295, 1.585, 0.259 )
+
+[sub_resource type="SpatialMaterial" id=18]
+albedo_color = Color( 0.572549, 0.572549, 0.572549, 1 )
+metallic = 1.0
+roughness = 0.2
+
+[sub_resource type="CubeMesh" id=20]
+size = Vector3( 0.327, 0.422, 0.178 )
+
+[sub_resource type="CubeMesh" id=21]
+size = Vector3( 0.163, 0.527, 0.175 )
+
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "Rotate"
+length = 4.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Gun:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[node name="MuzzleFlash3DDemo" type="Spatial"]
+script = SubResource( 16 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.707107, -0.353553, 0.612372, 2, 1.351, 2 )
+
+[node name="Gun" type="Spatial" parent="."]
+
+[node name="GunBarrel" type="MeshInstance" parent="Gun"]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.0212351, 0.17727, 0 )
+mesh = SubResource( 19 )
+skeleton = NodePath("../../Camera")
+material/0 = SubResource( 18 )
+
+[node name="GunHandle" type="MeshInstance" parent="Gun"]
+transform = Transform( 0.751137, 0.660146, 0, -0.660146, 0.751137, 0, 0, 0, 1, -0.735846, -0.00022611, 0 )
+mesh = SubResource( 20 )
+skeleton = NodePath("../../Camera")
+material/0 = SubResource( 18 )
+
+[node name="GunMagazine" type="MeshInstance" parent="Gun"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.274981, -0.122034, 0 )
+mesh = SubResource( 21 )
+skeleton = NodePath("../../Camera")
+material/0 = SubResource( 18 )
+
+[node name="MuzzleFlash" parent="Gun" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.789114, 0.256479, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Rotate"
+anims/RESET = SubResource( 22 )
+anims/Rotate = SubResource( 23 )
