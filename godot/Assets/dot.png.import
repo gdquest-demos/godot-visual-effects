@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/dot.png-9f6edf7713915b6bfd79ba73208766a3.stex"
+path="res://.import/dot.png-ff580c3e6efaeb1f85cef86f8d493903.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Slash3D/dot.png"
-dest_files=[ "res://.import/dot.png-9f6edf7713915b6bfd79ba73208766a3.stex" ]
+source_file="res://Assets/dot.png"
+dest_files=[ "res://.import/dot.png-ff580c3e6efaeb1f85cef86f8d493903.stex" ]
 
 [params]
 

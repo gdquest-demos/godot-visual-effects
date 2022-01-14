@@ -10,3 +10,4 @@ shockwave_shockwavedemo,"Using a viewport to render a dynamic shockwave mask tha
 starfield_starfielddemo,"Use particles to create a dynamic background."
 trail2d_trail2ddemo,"A dynamic trail can easily be achieved using Line2D."
 slash3d_slash3ddemo,"A quad with a custom shader and a particle system makes a simple but effective slash effect."
+muzzleflash3d_muzzleflash3ddemo,"Using simple texture cards we can make a complex effect by scaling and rotating in the vertex shader."
