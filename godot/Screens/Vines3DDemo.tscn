@@ -1,0 +1,72 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Vines3D/checker.png" type="Texture" id=1]
+[ext_resource path="res://Vines3D/Vines.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=3]
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 8, 8 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 4, 4, 1 )
+
+[sub_resource type="Animation" id=8]
+resource_name = "Grow"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Vines:material/0:shader_param/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 0.420448, 2.54912 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Vines:material/0:shader_param/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[node name="Vines3DDemo" type="Spatial"]
+
+[node name="Vines" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, -1.4, 0, -0.7 )
+
+[node name="Ground" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 3 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( -0.707107, -0.612372, 0.353554, -3.78552e-08, 0.5, 0.866025, -0.707107, 0.612372, -0.353554, 0, 0, 0 )
+light_color = Color( 1, 0.929412, 0.819608, 1 )
+shadow_enabled = true
+shadow_bias = 0.02
+directional_shadow_normal_bias = 0.1
+directional_shadow_max_distance = 60.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Grow"
+anims/Grow = SubResource( 8 )
+anims/RESET = SubResource( 9 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 2, 2.17 )
