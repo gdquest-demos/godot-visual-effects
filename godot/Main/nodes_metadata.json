@@ -14,6 +14,7 @@
     ],
     "3d": [
       "Slash3D",
+	  "MuzzleFlash3D",
 	  "Vines3D"
     ]
   },

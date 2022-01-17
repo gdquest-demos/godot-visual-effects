@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://Slash3D/dot.png" type="Texture" id=1]
+[ext_resource path="res://Assets/dot.png" type="Texture" id=1]
 [ext_resource path="res://Slash3D/slash_pattern.png" type="Texture" id=2]
 [ext_resource path="res://Slash3D/Slash3D.gdshader" type="Shader" id=3]
 
