@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://FireBurst3D/fire_burst.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=4]
+code = "shader_type spatial;
+render_mode unshaded;
+
+const float TAU = 6.283185307179586;
+
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_pattern;
+uniform int particles_h_frames;
+uniform int particles_v_frames;
+uniform sampler2D fire_gradient : hint_albedo;
+uniform float warp_strength : hint_range(0.0, 0.1) = 0.025;
+uniform float warp_speed : hint_range(0.0, 16.0) = 8.0;
+uniform float warp_scale : hint_range(0.0, 2.0) = 0.5;
+
+void vertex() {
+	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
+	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
+	
+	float h_frames = float(particles_h_frames);
+	float v_frames = float(particles_v_frames);
+	float particle_total_frames = float(particles_h_frames * particles_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+void fragment() {
+	float x_warp = (1.0 - COLOR.a) * warp_speed + UV.y * TAU / warp_scale;
+	float y_warp = (1.0 - COLOR.a) * warp_speed + UV.x * TAU / warp_scale;
+	
+	vec2 distortion_offset = vec2(sin(x_warp), sin(y_warp)) * warp_strength;
+	float pattern = texture(texture_pattern, UV + distortion_offset).r;
+	
+	pattern = clamp(pattern - (1.0 - COLOR.a), 0.0, 1.0);
+	vec4 col = texture(fire_gradient, vec2(pattern, 0.0));
+	col.rgb *= COLOR.rgb;
+	
+	ALBEDO = col.rgb * albedo.rgb;
+	ALPHA = pattern;
+}
+"
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.00440529, 0.265086, 0.676724, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 0.175781, 0, 1, 1, 0.693898, 0.0611743, 1, 1, 0.867188, 0, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/albedo = Color( 2, 2, 2, 1 )
+shader_param/particles_h_frames = 2
+shader_param/particles_v_frames = 2
+shader_param/warp_strength = 0.025
+shader_param/warp_speed = 8.0
+shader_param/warp_scale = 0.5
+shader_param/texture_pattern = ExtResource( 1 )
+shader_param/fire_gradient = SubResource( 3 )
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.995327 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0.185596 ), 0.0, 2.25567, 0, 0, Vector2( 1, 0.527047 ), -2.42512, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+lifetime_randomness = 0.5
+trail_divisor = 6
+spread = 1.0
+gravity = Vector3( 0, 0.5, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.3
+angular_velocity = 15.0
+angular_velocity_random = 0.4
+damping = 1.0
+damping_random = 0.5
+angle = 720.0
+angle_random = 1.0
+scale = 0.7
+scale_random = 1.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="QuadMesh" id=11]
+
+[node name="FireBurst" type="Particles"]
+material_override = SubResource( 5 )
+amount = 300
+lifetime = 2.0
+draw_order = 2
+process_material = SubResource( 10 )
+draw_pass_1 = SubResource( 11 )
