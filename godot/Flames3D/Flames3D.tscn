@@ -1,0 +1,99 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Flames3D/fire_shape.png" type="Texture" id=1]
+[ext_resource path="res://Flames3D/fire_grain.png" type="Texture" id=2]
+[ext_resource path="res://Flames3D/fire_pattern.png" type="Texture" id=3]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type spatial;
+render_mode blend_add, depth_draw_opaque, unshaded;
+
+const float TAU = 6.283185307179586;
+
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_fire_shape : hint_albedo;
+uniform sampler2D texture_fire_pattern : hint_albedo;
+uniform sampler2D texture_fire_grain : hint_albedo;
+
+varying float particle_time;
+
+void vertex() {
+	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
+	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
+	particle_time = INSTANCE_CUSTOM.z;
+}
+
+void fragment() {
+	vec2 fire_pattern_uv_offset = vec2(
+		sin(particle_time * TAU) * 0.2,
+		particle_time
+	);
+	vec2 fire_grain1_uv_offset = vec2(
+		sin(particle_time * TAU) * .7, 
+		particle_time * 1.6
+	);
+	vec2 fire_grain2_uv_offset = vec2(
+		sin(particle_time * TAU + 0.5) * 0.2 + 0.5, 
+		particle_time * 2.0 + 0.5
+	);
+	
+	vec4 fire_shape = texture(texture_fire_shape, UV);
+	vec4 fire_pattern = texture(texture_fire_pattern, UV * vec2(0.5, 0.25) + fire_pattern_uv_offset);
+	vec4 fire_grain1 = texture(texture_fire_grain, UV * vec2(0.5) + fire_grain1_uv_offset);
+	vec4 fire_grain2 = texture(texture_fire_grain, UV * vec2(0.25) + fire_grain2_uv_offset);
+	vec4 albedo_tex =  fire_shape * fire_pattern * 2.0 * fire_grain1 * 2.0 * fire_grain2 * 2.0;
+	albedo_tex = albedo_tex;
+	albedo_tex *= COLOR;
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	ALPHA = albedo.a * albedo_tex.a;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/texture_fire_shape = ExtResource( 1 )
+shader_param/texture_fire_pattern = ExtResource( 3 )
+shader_param/texture_fire_grain = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.245327, 0.714953, 1 )
+colors = PoolColorArray( 0.110145, 0.110145, 0.110145, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 0.791667 ), 0.0, 1.40052, 0, 0, Vector2( 1, 0.206871 ), -1.31274, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_box_extents = Vector3( 3, 0.1, 0.1 )
+direction = Vector3( 0, 1, 0 )
+spread = 13.89
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.5
+linear_accel = 1.0
+linear_accel_random = 0.4
+scale = 2.0
+scale_random = 0.83
+scale_curve = SubResource( 6 )
+color_ramp = SubResource( 4 )
+anim_speed = 0.2
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="QuadMesh" id=8]
+
+[node name="Flames3D" type="Particles"]
+material_override = SubResource( 2 )
+amount = 50
+lifetime = 1.5
+draw_order = 2
+process_material = SubResource( 7 )
+draw_pass_1 = SubResource( 8 )
