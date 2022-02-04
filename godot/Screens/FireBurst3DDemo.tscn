@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Vines3D/checker.png" type="Texture" id=1]
+[ext_resource path="res://FireBurst3D/FireBurst.tscn" type="PackedScene" id=2]
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 8, 8 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 4, 4, 1 )
+
+[sub_resource type="ProceduralSky" id=5]
+sky_top_color = Color( 0.215686, 0.384314, 0.478431, 1 )
+sky_horizon_color = Color( 0.960784, 0.635294, 0.490196, 1 )
+sky_curve = 0.0353063
+ground_bottom_color = Color( 0.0627451, 0.0784314, 0.0901961, 1 )
+ground_horizon_color = Color( 0.333333, 0.25098, 0.180392, 1 )
+
+[sub_resource type="Environment" id=6]
+background_mode = 2
+background_sky = SubResource( 5 )
+tonemap_mode = 4
+glow_enabled = true
+glow_bicubic_upscale = true
+glow_high_quality = true
+
+[node name="Vines3DDemo" type="Spatial"]
+
+[node name="Ground" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="FireBurst" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.957, 0.574, 0.7 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 6 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.5, 1.8 )
