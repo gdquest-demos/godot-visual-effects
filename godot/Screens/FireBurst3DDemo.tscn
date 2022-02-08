@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Vines3D/checker.png" type="Texture" id=1]
+[ext_resource path="res://FireBurst3D/FireBurst.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/3d_environment_night.tres" type="Environment" id=3]
+
+[sub_resource type="PlaneMesh" id=3]
+size = Vector2( 8, 8 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 1 )
+uv1_scale = Vector3( 4, 4, 1 )
+
+[node name="Vines3DDemo" type="Spatial"]
+
+[node name="Ground" type="MeshInstance" parent="."]
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="FireBurst" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.957, 0.574, 0.7 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 3 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.5, 1.8 )

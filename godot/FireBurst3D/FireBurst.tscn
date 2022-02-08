@@ -1,0 +1,65 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://FireBurst3D/fire_burst.png" type="Texture" id=1]
+[ext_resource path="res://FireBurst3D/FireBurst.gdshader" type="Shader" id=2]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0.00440529, 0.265086, 0.676724, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 0.175781, 0, 1, 1, 0.693898, 0.0611743, 1, 1, 0.867188, 0, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 2, 2, 2, 1 )
+shader_param/particles_h_frames = 2
+shader_param/particles_v_frames = 2
+shader_param/warp_strength = 0.025
+shader_param/warp_speed = 8.0
+shader_param/warp_scale = 0.5
+shader_param/fire_gradient = SubResource( 3 )
+shader_param/texture_pattern = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=6]
+offsets = PoolRealArray( 0, 0.995327 )
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=7]
+gradient = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0.185596 ), 0.0, 2.25567, 0, 0, Vector2( 1, 0.527047 ), -2.42512, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+lifetime_randomness = 0.5
+trail_divisor = 6
+spread = 1.0
+gravity = Vector3( 0, 0.5, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.3
+angular_velocity = 15.0
+angular_velocity_random = 0.4
+damping = 1.0
+damping_random = 0.5
+angle = 720.0
+angle_random = 1.0
+scale = 0.7
+scale_random = 1.0
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 7 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="QuadMesh" id=11]
+
+[node name="FireBurst" type="Particles"]
+material_override = SubResource( 5 )
+amount = 300
+lifetime = 2.0
+draw_order = 2
+process_material = SubResource( 10 )
+draw_pass_1 = SubResource( 11 )
