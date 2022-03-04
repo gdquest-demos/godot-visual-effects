@@ -148,10 +148,10 @@ tracks/6/loop_wrap = true
 tracks/6/imported = false
 tracks/6/enabled = true
 tracks/6/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.75 ),
-"transitions": PoolRealArray( 0.7, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 0.7, 1, 1 ),
 "update": 0,
-"values": [ 1.0, 0.0, 1.0, 1.0 ]
+"values": [ 1.0, 0.0, 1.0 ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Sword/Particles:emitting")
@@ -247,7 +247,6 @@ tracks/3/keys = {
 }
 
 [node name="Sword" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="Model" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 2.98023e-08, 1, -4.47035e-08, -2.23517e-08, -1.11759e-08, 1, 0, 0, 0 )
