@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/dot.png" type="Texture" id=1]
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash_mesh.obj" type="ArrayMesh" id=2]
@@ -45,6 +45,13 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="QuadMesh" id=17]
 material = SubResource( 16 )
 
+[sub_resource type="Gradient" id=27]
+offsets = PoolRealArray( 0, 0.245399, 0.803681, 1 )
+colors = PoolColorArray( 0.952941, 0.447059, 0, 0, 0.952941, 0.447059, 0, 0.321569, 0.92549, 0.717647, 0, 1, 1, 1, 1, 1 )
+
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 27 )
+
 [sub_resource type="Curve" id=24]
 _data = [ Vector2( 0, 0.745614 ), 0.0, 1.80341, 0, 0, Vector2( 1, 0 ), -2.26381, 0.0, 0, 0 ]
 
@@ -53,11 +60,11 @@ curve = SubResource( 24 )
 
 [sub_resource type="ShaderMaterial" id=26]
 shader = ExtResource( 3 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/rate_of_fire = 10.0
 shader_param/fresnel_threshold = 0.5
 shader_param/size_randomization = 0.3
-shader_param/texture_albedo = ExtResource( 4 )
+shader_param/muzzle_pattern = ExtResource( 4 )
+shader_param/colorize_gradient = SubResource( 28 )
 shader_param/scale_curve = SubResource( 25 )
 
 [sub_resource type="QuadMesh" id=22]
