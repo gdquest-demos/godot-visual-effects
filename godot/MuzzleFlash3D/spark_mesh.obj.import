@@ -14,7 +14,7 @@ dest_files=[ "res://.import/spark_mesh.obj-24bf58637d84e9204764f9349257f13f.mesh
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 2, 1 )
+scale_mesh=Vector3( 0.015, 0.1, 0.015 )
 offset_mesh=Vector3( 0, 0, 0 )
 octahedral_compression=true
 optimize_mesh_flags=4286

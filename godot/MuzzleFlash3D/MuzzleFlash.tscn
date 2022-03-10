@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Assets/dot.png" type="Texture" id=1]
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash_mesh.obj" type="ArrayMesh" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash.png" type="Texture" id=4]
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash_gradient.tres" type="Gradient" id=5]
 [ext_resource path="res://MuzzleFlash3D/spark_mesh.obj" type="ArrayMesh" id=6]
+[ext_resource path="res://MuzzleFlash3D/sparks_material.tres" type="Material" id=7]
 
 [sub_resource type="Gradient" id=13]
 offsets = PoolRealArray( 0.493976, 1 )
@@ -23,9 +24,8 @@ direction = Vector3( 0, 0, -1 )
 spread = 30.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 1.0
-scale = 0.04
-scale_random = 0.04
-color = Color( 2, 1.05098, 0.721569, 1 )
+scale_random = 0.3
+color = Color( 3, 1.56, 0.3, 1 )
 color_ramp = SubResource( 14 )
 
 [sub_resource type="GradientTexture" id=28]
@@ -62,6 +62,7 @@ albedo_texture = ExtResource( 1 )
 [sub_resource type="Environment" id=30]
 background_mode = 2
 background_sky = SubResource( 29 )
+glow_enabled = true
 glow_bicubic_upscale = true
 glow_high_quality = true
 
@@ -69,6 +70,7 @@ glow_high_quality = true
 
 [node name="Sparks" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
+material_override = ExtResource( 7 )
 speed_scale = 20.0
 process_material = SubResource( 15 )
 draw_pass_1 = ExtResource( 6 )
