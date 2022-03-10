@@ -1,56 +1,35 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Assets/dot.png" type="Texture" id=1]
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash_mesh.obj" type="ArrayMesh" id=2]
 [ext_resource path="res://MuzzleFlash3D/MuzzleFlash.gdshader" type="Shader" id=3]
 [ext_resource path="res://MuzzleFlash3D/muzzle_flash.png" type="Texture" id=4]
+[ext_resource path="res://MuzzleFlash3D/muzzle_flash_gradient.tres" type="Gradient" id=5]
+[ext_resource path="res://MuzzleFlash3D/spark_mesh.obj" type="ArrayMesh" id=6]
 
 [sub_resource type="Gradient" id=13]
-offsets = PoolRealArray( 0, 0.364, 0.844 )
-colors = PoolColorArray( 0.0540541, 0.0540541, 0.0540541, 1, 1, 1, 1, 1, 0, 0, 0, 1 )
+offsets = PoolRealArray( 0.493976, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
 
 [sub_resource type="GradientTexture" id=14]
 gradient = SubResource( 13 )
 
-[sub_resource type="Curve" id=18]
-_data = [ Vector2( 0, 0 ), 0.0, 2.22173, 0, 0, Vector2( 0.486254, 0.459064 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -1.43217, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=19]
-curve = SubResource( 18 )
-
 [sub_resource type="ParticlesMaterial" id=15]
-lifetime_randomness = 0.34
-trail_divisor = 50
-trail_size_modifier = SubResource( 19 )
+lifetime_randomness = 0.35
 emission_shape = 1
 emission_sphere_radius = 0.1
+flag_align_y = true
+direction = Vector3( 0, 0, -1 )
 spread = 30.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 1.0
 scale = 0.04
-color = Color( 2, 1.36, 0.72, 1 )
+scale_random = 0.04
+color = Color( 2, 1.05098, 0.721569, 1 )
 color_ramp = SubResource( 14 )
 
-[sub_resource type="SpatialMaterial" id=16]
-flags_transparent = true
-flags_unshaded = true
-vertex_color_use_as_albedo = true
-params_blend_mode = 1
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_texture = ExtResource( 1 )
-
-[sub_resource type="QuadMesh" id=17]
-material = SubResource( 16 )
-
-[sub_resource type="Gradient" id=27]
-offsets = PoolRealArray( 0, 0.245399, 0.803681, 1 )
-colors = PoolColorArray( 0.952941, 0.447059, 0, 0, 0.952941, 0.447059, 0, 0.321569, 0.92549, 0.717647, 0, 1, 1, 1, 1, 1 )
-
 [sub_resource type="GradientTexture" id=28]
-gradient = SubResource( 27 )
+gradient = ExtResource( 5 )
 
 [sub_resource type="Curve" id=24]
 _data = [ Vector2( 0, 0.745614 ), 0.0, 1.80341, 0, 0, Vector2( 1, 0 ), -2.26381, 0.0, 0, 0 ]
@@ -68,55 +47,61 @@ shader_param/colorize_gradient = SubResource( 28 )
 shader_param/scale_curve = SubResource( 25 )
 
 [sub_resource type="QuadMesh" id=22]
-size = Vector2( 0.2, 0.2 )
+size = Vector2( 0.3, 0.3 )
 
 [sub_resource type="SpatialMaterial" id=23]
 flags_transparent = true
 flags_unshaded = true
 params_blend_mode = 1
-params_depth_draw_mode = 3
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_color = Color( 4, 2.8, 0.6, 1 )
+params_billboard_mode = 1
+albedo_color = Color( 3, 1.56078, 0.301961, 0.45098 )
 albedo_texture = ExtResource( 1 )
+
+[sub_resource type="ProceduralSky" id=29]
+
+[sub_resource type="Environment" id=30]
+background_mode = 2
+background_sky = SubResource( 29 )
+glow_bicubic_upscale = true
+glow_high_quality = true
 
 [node name="MuzzleFlash" type="Spatial"]
 
-[node name="Particles2" type="Particles" parent="."]
-transform = Transform( 1, -9.54835e-05, -2.54864e-05, 9.5492e-05, 1, 0.00018429, 2.54776e-05, -0.00018429, 1, 0.209063, 0, 0 )
-amount = 250
+[node name="Sparks" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
 speed_scale = 20.0
 process_material = SubResource( 15 )
-draw_pass_1 = SubResource( 17 )
+draw_pass_1 = ExtResource( 6 )
 
 [node name="muzzle_mesh1" type="MeshInstance" parent="."]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0.00645694 )
+transform = Transform( 1, 1.06581e-14, 0, 4.65882e-22, -4.37114e-08, 1, 1.06581e-14, -1, -4.37114e-08, 0, 0, 0 )
 mesh = ExtResource( 2 )
 material/0 = SubResource( 26 )
 
 [node name="muzzle_mesh2" type="MeshInstance" parent="."]
-transform = Transform( 0.351598, 0.355498, 0, -0.355498, 0.351598, 0, 0, 0, 0.5, 0.0705296, -0.0146319, 0 )
+transform = Transform( 0.355498, -0.351598, 0, -1.53688e-08, -1.55393e-08, 0.5, -0.351598, -0.355498, -2.18557e-08, -0.0210046, -0.00851425, -0.0464832 )
 mesh = ExtResource( 2 )
 material/0 = SubResource( 26 )
 
 [node name="muzzle_mesh3" type="MeshInstance" parent="."]
-transform = Transform( -0.282015, 0.412877, 0, -0.412877, -0.282015, 0, 0, 0, 0.5, 0.0506733, -0.0394653, 0 )
+transform = Transform( 0.412877, 0.282015, 0, 1.23273e-08, -1.80474e-08, 0.5, 0.282015, -0.412877, -2.18557e-08, 0.0451989, -0.000556645, -0.0266269 )
 mesh = ExtResource( 2 )
 material/0 = SubResource( 26 )
 
 [node name="muzzle_mesh4" type="MeshInstance" parent="."]
-transform = Transform( -0.0290173, 0.402011, -0.29588, -0.499157, -0.02337, 0.0172003, 2.79397e-09, 0.296379, 0.40269, 0.0705296, -0.0146319, 0.0519256 )
+transform = Transform( 0.499157, 0.02337, -0.0172003, 4.06236e-09, 0.296379, 0.40269, 0.0290173, -0.402011, 0.29588, 0.0143538, 0.0319007, -0.0477009 )
 mesh = ExtResource( 2 )
 material/0 = SubResource( 26 )
 
 [node name="muzzle_mesh5" type="MeshInstance" parent="."]
-transform = Transform( -0.0128222, 0.443515, 0.230499, -0.499157, -0.02337, 0.0172003, 0.0260307, -0.229669, 0.443367, 0.0705296, -0.0146319, -0.0743624 )
+transform = Transform( 0.499157, 0.02337, -0.0172003, 0.0260307, -0.229669, 0.443367, 0.0128222, -0.443515, -0.230499, -0.00894161, -0.0828767, -0.0493807 )
 mesh = ExtResource( 2 )
 material/0 = SubResource( 26 )
 
 [node name="muzzle_core" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.262779, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14034 )
 mesh = SubResource( 22 )
 material/0 = SubResource( 23 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 30 )

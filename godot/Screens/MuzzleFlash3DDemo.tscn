@@ -72,25 +72,25 @@ transform = Transform( 0.707107, -0.353553, 0.612372, 0, 0.866025, 0.5, -0.70710
 [node name="Gun" type="Spatial" parent="."]
 
 [node name="GunBarrel" type="MeshInstance" parent="Gun"]
-transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.0212351, 0.17727, 0 )
+transform = Transform( 1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.0150342, 0.17727, -0.251668 )
 mesh = SubResource( 19 )
 skeleton = NodePath("../../Camera")
 material/0 = SubResource( 18 )
 
 [node name="GunHandle" type="MeshInstance" parent="Gun"]
-transform = Transform( 0.751137, 0.660146, 0, -0.660146, 0.751137, 0, 0, 0, 1, -0.735846, -0.00022611, 0 )
+transform = Transform( -3.28332e-08, -2.88559e-08, 1, -0.660146, 0.751137, 0, -0.751137, -0.660146, -4.37114e-08, 0.0150343, -0.00022611, 0.505413 )
 mesh = SubResource( 20 )
 skeleton = NodePath("../../Camera")
 material/0 = SubResource( 18 )
 
 [node name="GunMagazine" type="MeshInstance" parent="Gun"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.274981, -0.122034, 0 )
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.0150342, -0.122034, -0.505414 )
 mesh = SubResource( 21 )
 skeleton = NodePath("../../Camera")
 material/0 = SubResource( 18 )
 
 [node name="MuzzleFlash" parent="Gun" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.789114, 0.256479, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256, -1.03907 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Rotate"

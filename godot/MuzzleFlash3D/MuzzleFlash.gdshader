@@ -1,6 +1,6 @@
 shader_type spatial;
-render_mode depth_draw_alpha_prepass, cull_disabled, unshaded;
 
+render_mode cull_disabled, unshaded, blend_add;
 const float TAU = 6.283185307179586;
 
 uniform sampler2D muzzle_pattern;
@@ -20,6 +20,7 @@ vec3 rotate (vec3 v, vec3 n, float a) {
 	return v * cos(a) + cross(n, v) * sin(a) + n * dot(n, v) * (1.0 - cos(a));
 }
 
+// ANCHOR: vertex_function
 void vertex() {
 	// The mesh's origin in world space
 	vec3 origin = (WORLD_MATRIX * vec4(0, 0, 0, 1)).xyz;
@@ -33,6 +34,7 @@ void vertex() {
 	float curve = texture(scale_curve, vec2(fract(TIME * rate_of_fire))).r;
 	VERTEX *= curve;
 }
+// END: vertex_function
 
 void fragment() {
 	float muzzle_tex = texture(muzzle_pattern, UV).r;
