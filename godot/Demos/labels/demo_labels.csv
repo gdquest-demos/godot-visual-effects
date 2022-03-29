@@ -14,3 +14,4 @@ muzzleflash3d_muzzleflash3ddemo,"Using simple texture cards we can make a comple
 vines3d_vines3ddemo,"Using a static mesh of tubes we can manipulate the vertices and discard parts of the mesh with a simple shader for a vine growing effect."
 flames3d_flames3ddemo,"With multiple layers of scrolling textures on a particle, you can achieve complicated non repeating patterns with a low number of particles."
 fireburst3d_fireburst3ddemo,"Using warping and four texture variations we can create a fluid fire effect that doesn't look repetitive. Great for dragons and flame throwers."
+stylizedexplosion3d_stylizedexplosion3ddemo,"While particles and billboard are often used for explosions, another approach that offers great control is a custom mesh."
