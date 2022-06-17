@@ -19,6 +19,10 @@ script = ExtResource( 6 )
 script = ExtResource( 5 )
 
 [node name="DemoPickerUI" parent="." instance=ExtResource( 1 )]
+margin_left = -15.0
+margin_top = 5.0
+margin_right = -15.0
+margin_bottom = 5.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 100
