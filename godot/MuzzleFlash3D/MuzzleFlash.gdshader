@@ -1,10 +1,10 @@
 shader_type spatial;
-render_mode blend_mix, depth_draw_alpha_prepass, cull_disabled, unshaded;
 
+render_mode cull_disabled, unshaded, blend_add;
 const float TAU = 6.283185307179586;
 
-uniform vec4 albedo : hint_color = vec4(1.0);
-uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D muzzle_pattern;
+uniform sampler2D colorize_gradient : hint_albedo;
 uniform float rate_of_fire = 10.0;
 uniform float fresnel_threshold : hint_range(0.0, 1.0) = 0.5;
 uniform float size_randomization : hint_range(0.0, 1.0) = 0.3;
@@ -20,6 +20,7 @@ vec3 rotate (vec3 v, vec3 n, float a) {
 	return v * cos(a) + cross(n, v) * sin(a) + n * dot(n, v) * (1.0 - cos(a));
 }
 
+// ANCHOR: vertex_function
 void vertex() {
 	// The mesh's origin in world space
 	vec3 origin = (WORLD_MATRIX * vec4(0, 0, 0, 1)).xyz;
@@ -33,12 +34,14 @@ void vertex() {
 	float curve = texture(scale_curve, vec2(fract(TIME * rate_of_fire))).r;
 	VERTEX *= curve;
 }
+// END: vertex_function
 
 void fragment() {
-	vec4 albedo_tex = texture(texture_albedo, UV);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float muzzle_tex = texture(muzzle_pattern, UV).r;
+	vec4 muzzle_color = texture(colorize_gradient, vec2(muzzle_tex));
+	ALBEDO = muzzle_color.rgb;
 	float fresnel = smoothstep(0.0, fresnel_threshold, dot(NORMAL, VIEW));
 	// Multiply alpha by a fresnel effect to hide the texture cards when their
 	// surface is almost aligned to the camera view
-	ALPHA = max(0.0, albedo.a + albedo_tex.a - 1.0) * fresnel;
+	ALPHA = muzzle_color.a * fresnel;
 }

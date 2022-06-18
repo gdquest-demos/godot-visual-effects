@@ -2,19 +2,21 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/muzzle_flash.png-22cc65389b49e49e58a0db0183bf87f1.stex"
+path.s3tc="res://.import/spark.png-4133215330d6c0f8ce0c4d4057ec996b.s3tc.stex"
+path.etc2="res://.import/spark.png-4133215330d6c0f8ce0c4d4057ec996b.etc2.stex"
 metadata={
-"vram_texture": false
+"imported_formats": [ "s3tc", "etc2" ],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://MuzzleFlash3D/muzzle_flash.png"
-dest_files=[ "res://.import/muzzle_flash.png-22cc65389b49e49e58a0db0183bf87f1.stex" ]
+source_file="res://MuzzleFlash3D/spark.png"
+dest_files=[ "res://.import/spark.png-4133215330d6c0f8ce0c4d4057ec996b.s3tc.stex", "res://.import/spark.png-4133215330d6c0f8ce0c4d4057ec996b.etc2.stex" ]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0

@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/spark_mesh.obj-24bf58637d84e9204764f9349257f13f.mesh"
+
+[deps]
+
+files=[ "res://.import/spark_mesh.obj-24bf58637d84e9204764f9349257f13f.mesh" ]
+
+source_file="res://MuzzleFlash3D/spark_mesh.obj"
+dest_files=[ "res://.import/spark_mesh.obj-24bf58637d84e9204764f9349257f13f.mesh", "res://.import/spark_mesh.obj-24bf58637d84e9204764f9349257f13f.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 0.015, 0.1, 0.015 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286
