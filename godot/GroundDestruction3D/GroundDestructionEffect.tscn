@@ -1,0 +1,498 @@
+[gd_scene load_steps=37 format=2]
+
+[ext_resource path="res://GroundDestruction3D/rocks_vfx.gdshader" type="Shader" id=1]
+[ext_resource path="res://GroundDestruction3D/cracks.png" type="Texture" id=2]
+[ext_resource path="res://GroundDestruction3D/dust-alb.png" type="Texture" id=3]
+[ext_resource path="res://GroundDestruction3D/rock_chunks_alb.png" type="Texture" id=4]
+[ext_resource path="res://GroundDestruction3D/rock_chunks_nor.png" type="Texture" id=5]
+[ext_resource path="res://GroundDestruction3D/dust-erode.png" type="Texture" id=6]
+[ext_resource path="res://GroundDestruction3D/cracks.gdshader" type="Shader" id=7]
+[ext_resource path="res://GroundDestruction3D/rocks-vfx.mesh" type="ArrayMesh" id=8]
+
+[sub_resource type="Curve" id=16]
+_data = [ Vector2( 0.0104712, 0 ), 0.0, 14.1762, 0, 0, Vector2( 0.0773481, 1 ), 11.7328, -0.334669, 0, 0, Vector2( 0.117403, 0.890909 ), 0.0, 0.0, 0, 0, Vector2( 0.421271, 0.890909 ), 0.0, 0.0, 0, 0, Vector2( 0.808901, 0 ), -4.34091, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 16 )
+
+[sub_resource type="Curve" id=18]
+_data = [ Vector2( 0.273481, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.350829, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.444751, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=19]
+width = 2047
+curve = SubResource( 18 )
+
+[sub_resource type="Curve" id=22]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 1, Vector2( 0.374346, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.376963, 0.354545 ), 0.0, 0.0, 0, 0, Vector2( 0.698953, 0.345455 ), 0.0, 0.0, 0, 0, Vector2( 0.698953, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 1, 0 ]
+
+[sub_resource type="CurveTexture" id=23]
+curve = SubResource( 22 )
+
+[sub_resource type="ShaderMaterial" id=24]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/albedo_rock = Color( 0.384314, 0.270588, 0.168627, 1 )
+shader_param/roughness = 0.7
+shader_param/bb_start = Vector3( 0, 0, -1.4 )
+shader_param/bb_size = Vector3( 8, 0, 2.8 )
+shader_param/animation_driver = -1.038
+shader_param/appear_percentage = 0.5
+shader_param/randomness = 0.05
+shader_param/scale_curve_rock = SubResource( 17 )
+shader_param/shake_curve = SubResource( 19 )
+shader_param/timing_curve = SubResource( 23 )
+
+[sub_resource type="PlaneMesh" id=45]
+size = Vector2( 12, 6 )
+
+[sub_resource type="ShaderMaterial" id=46]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/albedo = Color( 0.384314, 0.270588, 0.168627, 1 )
+shader_param/roughness = 0.7
+shader_param/depth_max_layers = 32
+shader_param/depth_min_layers = 8
+shader_param/depth_scale = 0.03
+shader_param/offset = 0.403
+shader_param/fade = -0.221
+shader_param/effect_texture = ExtResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=31]
+resource_local_to_scene = true
+flags_transparent = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.98
+particles_anim_h_frames = 8
+particles_anim_v_frames = 4
+particles_anim_loop = true
+albedo_color = Color( 0.482353, 0.321569, 0.180392, 1 )
+albedo_texture = ExtResource( 4 )
+roughness = 0.6
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 5 )
+
+[sub_resource type="Curve" id=47]
+max_value = 50.0
+_data = [ Vector2( 0, 24.0909 ), 0.0, 0.0, 0, 0, Vector2( 0.0421348, 23.6364 ), 0.0, 0.0, 0, 0, Vector2( 0.0561798, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=48]
+curve = SubResource( 47 )
+
+[sub_resource type="ParticlesMaterial" id=32]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3( 1, 2, 0 )
+spread = 5.0
+gravity = Vector3( 0, -35, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 0.1
+angular_velocity = 720.0
+angular_velocity_random = 1.0
+radial_accel = 1.0
+radial_accel_curve = SubResource( 48 )
+damping = 0.1
+angle = 720.0
+angle_random = 1.0
+scale = 0.2
+scale_random = 0.2
+anim_speed = 1.0
+anim_speed_random = 0.5
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="QuadMesh" id=33]
+
+[sub_resource type="Shader" id=36]
+code = "shader_type spatial;
+
+uniform vec4 albedo : hint_color;
+uniform vec4 transmission : hint_color;
+uniform sampler2D texture_albedo : hint_albedo;
+uniform sampler2D texture_erode : hint_white;
+uniform sampler2D texture_erode_timing : hint_white;
+uniform float proximity_fade_distance;
+uniform float erosion_edge : hint_range(0.0, 1.0) = 0.1;
+
+varying float random_value;
+
+void vertex() {
+	mat4 mat_world = mat4(normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),WORLD_MATRIX[3]);
+	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
+	random_value = INSTANCE_CUSTOM.z;
+}
+
+void fragment() {
+	vec4 albedo_tex = texture(texture_albedo, UV);
+	float erode_tex = texture(texture_erode, UV + vec2(random_value, COLOR.a * -0.4)).r;
+	float erode_timing = texture(texture_erode_timing, vec2(1.0- COLOR.a)).r;
+	
+	ALBEDO = albedo.rgb * albedo_tex.rgb * COLOR.rgb;
+	TRANSMISSION = transmission.rgb;
+	float erosion_alpha = smoothstep(erode_timing - erosion_edge, erode_timing + erosion_edge, erode_tex);
+	ALPHA = min(erosion_alpha, albedo_tex.a);
+	
+	// Proximity Fade
+	float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex*2.0-1.0,1.0);
+	world_pos.xyz/=world_pos.w;
+	ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+}
+"
+
+[sub_resource type="Curve" id=37]
+_data = [ Vector2( 0, 0 ), 0.0, 0.545455, 0, 0, Vector2( 1, 1 ), 1.83471, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=25]
+curve = SubResource( 37 )
+
+[sub_resource type="ShaderMaterial" id=38]
+resource_local_to_scene = true
+shader = SubResource( 36 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/transmission = Color( 0.902344, 0.902344, 0.902344, 1 )
+shader_param/proximity_fade_distance = 0.25
+shader_param/erosion_edge = 0.1
+shader_param/texture_albedo = ExtResource( 3 )
+shader_param/texture_erode = ExtResource( 6 )
+shader_param/texture_erode_timing = SubResource( 25 )
+
+[sub_resource type="Gradient" id=39]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=28]
+gradient = SubResource( 39 )
+
+[sub_resource type="Curve" id=40]
+_data = [ Vector2( 0, 0 ), 0.0, 3.11273, 0, 0, Vector2( 1, 1 ), 0.162121, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=30]
+curve = SubResource( 40 )
+
+[sub_resource type="ParticlesMaterial" id=41]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_box_extents = Vector3( 1.5, 0, 2 )
+direction = Vector3( 2, 1, 0 )
+spread = 5.0
+gravity = Vector3( 0, -0.5, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.25
+angular_velocity_random = 1.0
+damping = 1.5
+damping_random = 0.3
+angle = 25.0
+angle_random = 1.0
+scale_random = 0.2
+scale_curve = SubResource( 30 )
+color = Color( 0.835294, 0.835294, 0.835294, 1 )
+color_ramp = SubResource( 28 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="QuadMesh" id=42]
+
+[sub_resource type="ParticlesMaterial" id=43]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_box_extents = Vector3( 1.5, 0, 2.2 )
+direction = Vector3( 2, 1, 0 )
+spread = 5.0
+gravity = Vector3( 0, -0.5, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.25
+angular_velocity_random = 1.0
+damping = 1.5
+damping_random = 0.3
+angle = 25.0
+angle_random = 1.0
+scale = 1.5
+scale_random = 0.2
+scale_curve = SubResource( 30 )
+color = Color( 0.835294, 0.835294, 0.835294, 1 )
+color_ramp = SubResource( 28 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="ParticlesMaterial" id=44]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_box_extents = Vector3( 1.5, 0, 2.4 )
+direction = Vector3( 2, 1, 0 )
+spread = 5.0
+gravity = Vector3( 0, -0.5, 0 )
+initial_velocity = 2.0
+initial_velocity_random = 0.25
+angular_velocity_random = 1.0
+damping = 1.5
+damping_random = 0.3
+angle = 25.0
+angle_random = 1.0
+scale = 2.0
+scale_random = 0.2
+scale_curve = SubResource( 30 )
+color = Color( 0.835294, 0.835294, 0.835294, 1 )
+color_ramp = SubResource( 28 )
+anim_offset = 1.0
+anim_offset_random = 1.0
+
+[sub_resource type="Animation" id=10]
+resource_name = "Attack"
+length = 3.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("RocksEffectMesh:material/0:shader_param/animation_driver")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 3, 3.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 1.0, 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Chunks:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.55 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Chunks2:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Chunks3:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("DustParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("DustParticles2:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.45 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("DustParticles3:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = false
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.95 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("CracksEffectMesh:material/0:shader_param/offset")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.35, 2.5 ),
+"transitions": PoolRealArray( 0.707107, 1, 1 ),
+"update": 0,
+"values": [ -0.429, 0.0, 0.0 ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("CracksEffectMesh:material/0:shader_param/fade")
+tracks/8/interp = 1
+tracks/8/loop_wrap = false
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.35, 0.5, 1.4, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 2, 1 ),
+"update": 0,
+"values": [ 0.1, 0.1, 0.0, 0.0, 0.267 ]
+}
+tracks/9/type = "method"
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 3.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("RocksEffectMesh:material/0:shader_param/animation_driver")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -1.038 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CracksEffectMesh:material/0:shader_param/offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.403 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CracksEffectMesh:material/0:shader_param/fade")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -0.221 ]
+}
+
+[node name="GroundDestructionEffect" type="Spatial"]
+
+[node name="RocksEffectMesh" type="MeshInstance" parent="."]
+mesh = ExtResource( 8 )
+material/0 = SubResource( 24 )
+
+[node name="CracksEffectMesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.21229, 0.00884724, 0 )
+mesh = SubResource( 45 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 46 )
+
+[node name="Chunks" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07245, 1.00758, 0 )
+material_override = SubResource( 31 )
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB( -1.72344, -14.6753, -5.65166, 21.033, 19.2252, 12.3878 )
+draw_order = 2
+process_material = SubResource( 32 )
+draw_pass_1 = SubResource( 33 )
+
+[node name="Chunks2" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.44482, 1.69066, 0 )
+material_override = SubResource( 31 )
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB( -1.87375, -9.92389, -6.13203, 20.9108, 16.4378, 13.8003 )
+draw_order = 2
+process_material = SubResource( 32 )
+draw_pass_1 = SubResource( 33 )
+
+[node name="Chunks3" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.30105, 3.18456, -4.76837e-07 )
+material_override = SubResource( 31 )
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB( -1.73532, -16.2619, -12.2165, 27.3022, 25.692, 23.8669 )
+draw_order = 2
+process_material = SubResource( 32 )
+draw_pass_1 = SubResource( 33 )
+
+[node name="DustParticles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 0 )
+material_override = SubResource( 38 )
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource( 41 )
+draw_pass_1 = SubResource( 42 )
+
+[node name="DustParticles2" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+material_override = SubResource( 38 )
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource( 43 )
+draw_pass_1 = SubResource( 42 )
+
+[node name="DustParticles3" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3, 0, 0 )
+material_override = SubResource( 38 )
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource( 44 )
+draw_pass_1 = SubResource( 42 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Attack"
+anims/Attack = SubResource( 10 )
+anims/RESET = SubResource( 11 )

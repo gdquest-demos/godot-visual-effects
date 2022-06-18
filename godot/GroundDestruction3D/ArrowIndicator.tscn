@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://GroundDestruction3D/arrow_indicator.png" type="Texture" id=1]
+
+[sub_resource type="PlaneMesh" id=1]
+size = Vector2( 1, 0.25 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+albedo_color = Color( 0, 0, 0, 1 )
+albedo_texture = ExtResource( 1 )
+
+[node name="ArrowIndicator" type="Spatial"]
+
+[node name="Mesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445, 0.01, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )

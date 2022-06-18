@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://GroundDestruction3D/ArrowIndicator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://GroundDestruction3D/GroundDestruction3DDemo.gd" type="Script" id=2]
+[ext_resource path="res://GroundDestruction3D/GroundDestructionEffect.tscn" type="PackedScene" id=3]
+
+[sub_resource type="PlaneMesh" id=8]
+size = Vector2( 4, 4 )
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.701961, 0.623529, 0.498039, 1 )
+roughness = 0.9
+
+[sub_resource type="BoxShape" id=14]
+extents = Vector3( 2, 1, 2 )
+
+[sub_resource type="ProceduralSky" id=12]
+sun_latitude = 45.0
+sun_longitude = -135.0
+
+[sub_resource type="Environment" id=13]
+background_mode = 2
+background_sky = SubResource( 12 )
+background_energy = 0.75
+tonemap_mode = 4
+ssao_enabled = true
+ssao_quality = 2
+
+[node name="GroundDestruction3DDemo" type="Spatial"]
+script = ExtResource( 2 )
+effect = ExtResource( 3 )
+arrow_path = NodePath("ArrowIndicator")
+
+[node name="ArrowIndicator" parent="." instance=ExtResource( 1 )]
+visible = false
+
+[node name="Ground" type="StaticBody" parent="."]
+transform = Transform( 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0 )
+
+[node name="Mesh" type="MeshInstance" parent="Ground"]
+mesh = SubResource( 8 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 9 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Ground"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+shape = SubResource( 14 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 10, 0 )
+light_color = Color( 1, 0.854902, 0.709804, 1 )
+shadow_enabled = true
+shadow_bias = 0.005
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.2
+directional_shadow_max_distance = 30.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 13 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 24, 22 )
+projection = 1
+fov = 45.0
+size = 16.0
