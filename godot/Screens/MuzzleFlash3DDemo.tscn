@@ -1,18 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://MuzzleFlash3D/MuzzleFlash.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=2]
-
-[sub_resource type="GDScript" id=16]
-script/source = "extends Spatial
-
-onready var _animation : AnimationPlayer = $Sword/AnimationPlayer
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action(\"ui_accept\"):
-		_animation.play(\"Attack\")
-"
 
 [sub_resource type="CubeMesh" id=19]
 size = Vector3( 0.295, 1.585, 0.259 )
@@ -61,7 +50,6 @@ tracks/0/keys = {
 }
 
 [node name="MuzzleFlash3DDemo" type="Spatial"]
-script = SubResource( 16 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 2 )
