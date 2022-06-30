@@ -1,0 +1,112 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://RainEffects3D/rings_drops.gdshader" type="Shader" id=1]
+[ext_resource path="res://RainEffects3D/splash_outline.gdshader" type="Shader" id=2]
+[ext_resource path="res://Vines3D/checker.png" type="Texture" id=3]
+[ext_resource path="res://RainEffects3D/water_splashes.png" type="Texture" id=4]
+[ext_resource path="res://RainEffects3D/drop.png" type="Texture" id=5]
+[ext_resource path="res://RainEffects3D/raindrop_ring_patterns.png" type="Texture" id=6]
+[ext_resource path="res://RainEffects3D/drop_uvs.png" type="Texture" id=7]
+[ext_resource path="res://RainEffects3D/rain_object.obj" type="ArrayMesh" id=8]
+
+[sub_resource type="OpenSimplexNoise" id=2]
+octaves = 1
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = ExtResource( 2 )
+shader_param/albedo = Color( 0.745098, 0.745098, 0.745098, 0.498039 )
+shader_param/height = 0.4
+shader_param/roughness = 0.1
+shader_param/normal_strength = 1.0
+shader_param/frame_rate = 12.0
+shader_param/splash_size = 4.0
+shader_param/refraction = 0.05
+shader_param/splashes_texture = ExtResource( 4 )
+shader_param/profile_noise_texture = SubResource( 3 )
+
+[sub_resource type="ShaderMaterial" id=5]
+next_pass = SubResource( 4 )
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 0.494118, 0.494118, 0.494118, 0.317647 )
+shader_param/roughness = 0.2
+shader_param/normal_scale = 2.0
+shader_param/ring_width = 0.2
+shader_param/ring_fadeout = 0.35
+shader_param/ring_scale = 3.0
+shader_param/drop_speed = 2.0
+shader_param/drop_scale = 2.0
+shader_param/ring_pattern_texture = ExtResource( 6 )
+shader_param/drop_texture = ExtResource( 5 )
+shader_param/drop_uv_texture = ExtResource( 7 )
+
+[sub_resource type="SpatialMaterial" id=1]
+next_pass = SubResource( 5 )
+albedo_texture = ExtResource( 3 )
+roughness = 0.5
+uv1_scale = Vector3( 12, 12, 12 )
+
+[sub_resource type="ProceduralSky" id=6]
+
+[sub_resource type="Environment" id=7]
+background_mode = 2
+background_sky = SubResource( 6 )
+ambient_light_energy = 0.5
+tonemap_mode = 4
+
+[sub_resource type="Animation" id=8]
+resource_name = "CameraMove"
+length = 8.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[node name="RainEffects3DDemo" type="Spatial"]
+
+[node name="Level" type="MeshInstance" parent="."]
+mesh = ExtResource( 8 )
+material/0 = SubResource( 1 )
+
+[node name="CameraPivot" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 6.5, 10 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 7 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.707107, 0.707107, 0, -0.707107, -0.707107, 0, 20, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "CameraMove"
+anims/CameraMove = SubResource( 8 )
+anims/RESET = SubResource( 9 )
