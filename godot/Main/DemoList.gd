@@ -102,11 +102,12 @@ func set_category_filter(value: String) -> void:
 
 func update_filter_icons():
 	for filterButton in _filter_buttons:
-		if filterButton.text.to_lower() == category_filter:
+		var filterButtonText = filterButton.text.to_lower()
+		if filterButtonText == category_filter:
 			filterButton.icon = load("res://Demos/icons/Node" + category_filter + "Selected.svg")
 			continue
 		else:
-			filterButton.icon = load("res://Demos/icons/Node" + filterButton.text + ".svg")
+			filterButton.icon = load("res://Demos/icons/Node" + filterButtonText + ".svg")
 
 func select_first_item() -> void:
 	scroll_vertical = 0

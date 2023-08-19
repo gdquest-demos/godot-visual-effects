@@ -11,9 +11,9 @@
 [ext_resource path="res://Main/GDQuestLogo.tscn" type="PackedScene" id=9]
 [ext_resource path="res://common/planet_large.png" type="Texture" id=10]
 [ext_resource path="res://Main/filter_button_group.tres" type="ButtonGroup" id=11]
-[ext_resource path="res://Demos/icons/Node3D.svg" type="Texture" id=12]
-[ext_resource path="res://Demos/icons/Node2D.svg" type="Texture" id=13]
-[ext_resource path="res://Demos/icons/NodeALLSelected.svg" type="Texture" id=14]
+[ext_resource path="res://Demos/icons/Node3d.svg" type="Texture" id=12]
+[ext_resource path="res://Demos/icons/Node2d.svg" type="Texture" id=13]
+[ext_resource path="res://Demos/icons/NodeallSelected.svg" type="Texture" id=14]
 [ext_resource path="res://Main/UIControlsList.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StyleBoxEmpty" id=1]
