@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Demos/icons/Node2d.svg" type="Texture" id=1]
+[ext_resource path="res://Demos/icons/Node2D.svg" type="Texture" id=1]
 [ext_resource path="res://Main/DemoItem.gd" type="Script" id=2]
 
 
