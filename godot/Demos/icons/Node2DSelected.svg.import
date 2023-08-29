@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Node3D.svg-e2c8116601aecb36f5773a007431c3f1.stex"
+path="res://.import/Node2DSelected.svg-2b1516ad9648311fe73d9f490d68bd8d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demos/icons/Node3D.svg"
-dest_files=[ "res://.import/Node3D.svg-e2c8116601aecb36f5773a007431c3f1.stex" ]
+source_file="res://Demos/icons/Node2DSelected.svg"
+dest_files=[ "res://.import/Node2DSelected.svg-2b1516ad9648311fe73d9f490d68bd8d.stex" ]
 
 [params]
 

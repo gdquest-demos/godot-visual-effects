@@ -141,10 +141,6 @@ func _list_demos_in_directory(directory_path: String) -> void:
 		_container.add_child(item)
 		item.demo_name = demo_name
 		
-		# TODO: Seeing errors in Output. Missing icon resources.
-		# var icon_path := icons_dirpath.plus_file(demo_name + ".svg")
-		# item.demo_icon = load(icon_path)
-		
 		_items.append(item)
 		item.connect("pressed", self, "_select_item", [item])
 		item.connect("focus_entered", self, "_scroll_to_item", [item, index])

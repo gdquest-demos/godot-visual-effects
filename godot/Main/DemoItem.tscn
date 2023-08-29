@@ -1,8 +1,6 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Demos/icons/Node2D.svg" type="Texture" id=1]
 [ext_resource path="res://Main/DemoItem.gd" type="Script" id=2]
-
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.294118, 0.356863, 0.670588, 0.215686 )
@@ -40,15 +38,14 @@ __meta__ = {
 }
 
 [node name="Icon" type="TextureRect" parent="HBoxContainer"]
-margin_left = 154.0
-margin_right = 178.0
+margin_left = 166.0
+margin_right = 166.0
 margin_bottom = 48.0
-texture = ExtResource( 1 )
 stretch_mode = 6
 
 [node name="Label" type="Label" parent="HBoxContainer"]
-margin_left = 182.0
+margin_left = 170.0
 margin_top = 17.0
-margin_right = 252.0
+margin_right = 240.0
 margin_bottom = 31.0
 text = "DemoItem"
