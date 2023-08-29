@@ -26,7 +26,8 @@ export(String, FILE) var icons_dirpath := demos_dirpath.plus_file("icons")
 
 # Maps demo names as displayed in the list to paths to scenes to load.
 var demo_scenes := {}
-# Category filter applied to list items. See `_on_FilterButton_toggled()` for more information.
+
+# Category filter applied to list items. See `_on_FilterButton_pressed()` for more information.
 var category_filter: String setget set_category_filter
 
 # Metadata loaded and cached from a JSON file.
@@ -35,9 +36,10 @@ var _nodes_metadata := _load_node_metadata()
 var _items := []
 var _selected_item: DemoItem = null
 var _focused_item_index := 0
+var _filter_buttons = []
 
 onready var _container := $VBoxContainer
-onready var _no_results := $NoResultsLabel
+onready var _no_results := $VBoxContainer/NoResultsLabel
 
 
 func _ready() -> void:
@@ -51,8 +53,9 @@ func _ready() -> void:
 
 # Connects to filter buttons to set the `category_filter` upon clicking them.
 func setup(filter_buttons: Array) -> void:
-	for button in filter_buttons:
-		button.connect("toggled", self, "_on_FilterButton_toggled", [button.text.to_lower()])
+	_filter_buttons = filter_buttons
+	for button in _filter_buttons:
+		button.connect("pressed", self, "_on_FilterButton_pressed", [button.text.to_lower()])
 
 
 # Updates visible demo items based on the search query and the `category_filter`.
@@ -91,8 +94,19 @@ func update_display(search_filter := "") -> void:
 
 func set_category_filter(value: String) -> void:
 	category_filter = value
+	update_filter_icons()
 	update_display()
 
+	# So we don't end up hiding a selected item.
+	select_first_item()
+
+func update_filter_icons():
+	for filterButton in _filter_buttons:
+		if filterButton.text.to_lower() == category_filter:
+			filterButton.icon = load("res://Demos/icons/Node" + category_filter.to_upper() + "Selected.svg")
+			continue
+		else:
+			filterButton.icon = load("res://Demos/icons/Node" + filterButton.text + ".svg")
 
 func select_first_item() -> void:
 	scroll_vertical = 0
@@ -126,8 +140,7 @@ func _list_demos_in_directory(directory_path: String) -> void:
 		var item := DemoItemScene.instance()
 		_container.add_child(item)
 		item.demo_name = demo_name
-		var icon_path := icons_dirpath.plus_file(demo_name + ".svg")
-		item.demo_icon = load(icon_path)
+		
 		_items.append(item)
 		item.connect("pressed", self, "_select_item", [item])
 		item.connect("focus_entered", self, "_scroll_to_item", [item, index])
@@ -154,13 +167,15 @@ func _scroll_to_item(item: DemoItem, index: int) -> void:
 	if direction == 0:
 		return
 
+	var half_rect_size_y: float = rect_size.y / 2.0
+
 	if direction < 0 and item.rect_position.y < scroll_vertical:
-		scroll_vertical = item.rect_position.y
+		scroll_vertical = int(item.rect_position.y)
 	elif (
 		direction > 0
-		and item.rect_position.y > rect_size.y / 2 + rect_position.y + scroll_vertical
+		and item.rect_position.y > half_rect_size_y + rect_position.y + scroll_vertical
 	):
-		scroll_vertical = item.rect_position.y - rect_size.y + item.rect_size.y
+		scroll_vertical = int(item.rect_position.y - rect_size.y + item.rect_size.y)
 
 	_focused_item_index = index
 
@@ -220,8 +235,8 @@ func _load_node_metadata() -> Dictionary:
 	return JSON.parse(metadata_file.get_as_text()).result
 
 
-func _on_FilterButton_toggled(button_pressed: bool, button_text: String) -> void:
-	set_category_filter(button_text if button_pressed else "")
+func _on_FilterButton_pressed(button_text: String) -> void:
+	set_category_filter(button_text)
 
 
 func _on_visibility_changed() -> void:

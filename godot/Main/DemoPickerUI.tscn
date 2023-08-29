@@ -13,7 +13,7 @@
 [ext_resource path="res://Main/filter_button_group.tres" type="ButtonGroup" id=11]
 [ext_resource path="res://Demos/icons/Node3D.svg" type="Texture" id=12]
 [ext_resource path="res://Demos/icons/Node2D.svg" type="Texture" id=13]
-[ext_resource path="res://Demos/icons/GuiVisibilityVisible.svg" type="Texture" id=16]
+[ext_resource path="res://Demos/icons/NodeALLSelected.svg" type="Texture" id=14]
 [ext_resource path="res://Main/UIControlsList.tscn" type="PackedScene" id=17]
 
 [sub_resource type="StyleBoxEmpty" id=1]
@@ -54,9 +54,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
@@ -67,9 +64,6 @@ size_flags_vertical = 3
 texture = ExtResource( 1 )
 expand = true
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="planet" type="Sprite" parent="TextureRect"]
 position = Vector2( 1719.03, 225.17 )
@@ -106,7 +100,7 @@ toggle_mode = true
 pressed = true
 group = ExtResource( 11 )
 text = "ALL"
-icon = ExtResource( 16 )
+icon = ExtResource( 14 )
 flat = true
 align = 0
 expand_icon = true
@@ -227,9 +221,6 @@ custom_constants/margin_right = 16
 custom_constants/margin_top = 24
 custom_constants/margin_left = 16
 custom_constants/margin_bottom = 27
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="DemoList" parent="VBoxContainer/NinePatchRect/MarginContainer" instance=ExtResource( 2 )]
 focus_neighbour_top = NodePath(".")
@@ -256,9 +247,6 @@ margin_left = 24.0
 margin_top = 24.0
 margin_right = 184.0
 margin_bottom = 64.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="QuitButton" type="Button" parent="HBoxContainer"]
 margin_right = 96.0

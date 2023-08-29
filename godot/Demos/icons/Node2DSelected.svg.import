@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/GuiVisibilityVisible.svg-535bf1fd75450cd660db3da06c95c264.stex"
+path="res://.import/Node2DSelected.svg-2b1516ad9648311fe73d9f490d68bd8d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Demos/icons/GuiVisibilityVisible.svg"
-dest_files=[ "res://.import/GuiVisibilityVisible.svg-535bf1fd75450cd660db3da06c95c264.stex" ]
+source_file="res://Demos/icons/Node2DSelected.svg"
+dest_files=[ "res://.import/Node2DSelected.svg-2b1516ad9648311fe73d9f490d68bd8d.stex" ]
 
 [params]
 
@@ -32,4 +32,4 @@ process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true
-svg/scale=1.5
+svg/scale=2.0
