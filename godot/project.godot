@@ -28,7 +28,7 @@ window/size/fullscreen=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/ColorPickerPresets/plugin.cfg", "res://addons/DebugNodeGroups/plugin.cfg", "res://addons/node-essential-helpers/plugin.cfg")
+enabled=PackedStringArray("res://addons/DebugNodeGroups/plugin.cfg", "res://addons/node-essential-helpers/plugin.cfg")
 
 [input]
 
@@ -120,6 +120,10 @@ toggle_mouse_confined={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194305,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://Demos/labels/demo_labels.en.translation")
 
 [locale]
 
