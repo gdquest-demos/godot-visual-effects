@@ -1,16 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://bgmdy0pn7juph"]
 
-[ext_resource path="res://FireBall/FireBall.tscn" type="PackedScene" id=1]
-[ext_resource path="res://FireBall/FireBallExplosion.tscn" type="PackedScene" id=2]
+[ext_resource type="PackedScene" uid="uid://yb6e5sti184s" path="res://FireBall/FireBall.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://c8dy5potnbu4x" path="res://FireBall/FireBallExplosion.tscn" id="2"]
 
-[sub_resource type="GDScript" id=1]
+[sub_resource type="GDScript" id="1"]
 script/source = "extends RigidBody2D
 
-export var explosion_scene: PackedScene = preload(\"res://Explosion/Explosion.tscn\")
+@export var explosion_scene: PackedScene = preload(\"res://Explosion/Explosion.tscn\")
 
-onready var explosion_container: Node = self
-onready var effect := $FireBallEffect
-onready var effect_animator := $FireBallEffect/AnimationPlayer
+@onready var effect := $FireBallEffect
+@onready var effect_animator := $FireBallEffect/AnimationPlayer
 
 
 func _on_Area2D_area_entered(_area: Area2D) -> void:
@@ -20,35 +19,37 @@ func _on_Area2D_area_entered(_area: Area2D) -> void:
 
 
 func explode() -> void:
-	var explosion := explosion_scene.instance()
+	var explosion := explosion_scene.instantiate()
 	
-	explosion_container.add_child(explosion)
-	explosion.global_position = global_position
+	add_child(explosion)
+	var anim = explosion.get_node(\"AnimationPlayer\") as AnimationPlayer
+	anim.play(\"Explode\")
 	effect_animator.play(\"Fade\")
 
-	yield(effect_animator, \"animation_finished\")
+	await anim.animation_finished
+	explosion.queue_free()
 	queue_free()
 "
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id="2"]
 radius = 16.0
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id="3"]
 radius = 24.0
 
 [node name="FireBall" type="RigidBody2D"]
 gravity_scale = 0.0
-script = SubResource( 1 )
-explosion_scene = ExtResource( 2 )
+script = SubResource("1")
+explosion_scene = ExtResource("2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 2 )
+shape = SubResource("2")
 
-[node name="FireBallEffect" parent="." instance=ExtResource( 1 )]
+[node name="FireBallEffect" parent="." instance=ExtResource("1")]
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 3 )
+shape = SubResource("3")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
