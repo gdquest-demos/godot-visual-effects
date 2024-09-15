@@ -6,10 +6,10 @@
 _data = [ Vector2( 0, 0 ), 0.0, 1.0, 0, 1, Vector2( 1, 1 ), 1.0, 0.0, 1, 0 ]
 
 [sub_resource type="Gradient" id=2]
-colors = PoolColorArray( 0.294118, 0.356863, 0.670588, 0, 0.294118, 0.356863, 0.670588, 1 )
+colors = PackedColorArray( 0.294118, 0.356863, 0.670588, 0, 0.294118, 0.356863, 0.670588, 1 )
 
 [node name="Trail2D" type="Line2D"]
-points = PoolVector2Array( 0, 0, 32, 0 )
+points = PackedVector2Array( 0, 0, 32, 0 )
 width_curve = SubResource( 1 )
 default_color = Color( 1, 1, 1, 1 )
 gradient = SubResource( 2 )
