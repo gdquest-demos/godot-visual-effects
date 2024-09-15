@@ -4,24 +4,24 @@
 extends RayCast2D
 
 # Speed at which the laser extends when first fired, in pixels per seconds.
-export var cast_speed := 7000.0
+@export var cast_speed := 7000.0
 # Maximum length of the laser in pixels.
-export var max_length := 1400.0
+@export var max_length := 1400.0
 # Base duration of the tween animation in seconds.
-export var growth_time := 0.1
+@export var growth_time := 0.1
 
 # If `true`, the laser is firing.
 # It plays appearing and disappearing animations when it's not animating.
 # See `appear()` and `disappear()` for more information.
-var is_casting := false setget set_is_casting
+var is_casting := false: set = set_is_casting
 
-onready var fill := $FillLine2D
-onready var tween := $Tween
-onready var casting_particles := $CastingParticles2D
-onready var collision_particles := $CollisionParticles2D
-onready var beam_particles := $BeamParticles2D
+@onready var fill : Line2D = $FillLine2D
+var tween : Tween
+@onready var casting_particles := $CastingParticles2D
+@onready var collision_particles := $CollisionParticles2D
+@onready var beam_particles := $BeamParticles2D
 
-onready var line_width: float = fill.width
+@onready var line_width: float = fill.width
 
 
 func _ready() -> void:
@@ -30,7 +30,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	cast_to = (cast_to + Vector2.RIGHT * cast_speed * delta).limit_length(max_length)
+	target_position = (target_position + Vector2.RIGHT * cast_speed * delta).limit_length(max_length)
 	cast_beam()
 
 
@@ -38,8 +38,8 @@ func set_is_casting(cast: bool) -> void:
 	is_casting = cast
 	
 	if is_casting:
-		cast_to = Vector2.ZERO
-		fill.points[1] = cast_to
+		target_position = Vector2.ZERO
+		fill.points[1] = target_position
 		appear()
 	else:
 		# Reset the laser endpoint
@@ -56,7 +56,7 @@ func set_is_casting(cast: bool) -> void:
 # Controls the emission of particles and extends the Line2D to `cast_to` or the ray's 
 # collision point, whichever is closest.
 func cast_beam() -> void:
-	var cast_point := cast_to
+	var cast_point := target_position
 
 	force_raycast_update()
 	collision_particles.emitting = is_colliding()
@@ -72,14 +72,13 @@ func cast_beam() -> void:
 
 
 func appear() -> void:
-	if tween.is_active():
-		tween.stop_all()
-	tween.interpolate_property(fill, "width", 0, line_width, growth_time * 2)
-	tween.start()
-
+	if tween and tween.is_running():
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(fill, "width", line_width, growth_time * 2).from(0)
 
 func disappear() -> void:
-	if tween.is_active():
-		tween.stop_all()
-	tween.interpolate_property(fill, "width", fill.width, 0, growth_time)
-	tween.start()
+	if tween and tween.is_running():
+		tween.kill()
+	tween = create_tween()
+	tween.tween_property(fill, "width", 0, growth_time).from_current()
