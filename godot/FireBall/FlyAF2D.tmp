@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://yq880g0wicpy"]
+
+[ext_resource type="Texture2D" uid="uid://dbch3ucxyq15y" path="res://Assets/asteroid.svg" id="1"]
+
+[sub_resource type="GDScript" id="18"]
+script/source = "extends Area2D
+
+
+@export var flying_direction := Vector2.LEFT
+@export var flying_speed := 600.0
+
+@onready var _velocity := flying_direction * flying_speed
+
+func _process(delta: float) -> void:
+	translate(_velocity * delta)
+
+
+func _on_area_entered(area: Area2D) -> void:
+	queue_free()
+
+
+func _on_VisibilityNotifier2D_screen_exited() -> void:
+	queue_free()
+"
+
+[sub_resource type="Animation" id="19"]
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [360.0, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ii3bl"]
+_data = {
+"Spin": SubResource("19")
+}
+
+[sub_resource type="GDScript" id="20"]
+script/source = "extends AnimationPlayer
+
+
+@export var min_playback_speed := 0.25
+@export var max_playback_speed := 2.0
+
+func _ready() -> void:
+	randomize()
+	speed_scale = randf_range(min_playback_speed, max_playback_speed)
+"
+
+[sub_resource type="CircleShape2D" id="21"]
+radius = 32.0
+
+[node name="FlyingAsteroid" type="Area2D"]
+script = SubResource("18")
+flying_speed = 300.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 4.98664
+scale = Vector2(0.3125, 0.3125)
+texture = ExtResource("1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ii3bl")
+}
+autoplay = "Spin"
+script = SubResource("20")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("21")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(3.2, 3.2)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

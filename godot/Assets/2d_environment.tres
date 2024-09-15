@@ -1,7 +1,8 @@
 [gd_resource type="Environment" format=3 uid="uid://c8ol6uwdees61"]
 
 [resource]
-background_mode = 4
+background_mode = 3
 glow_enabled = true
-glow_blend_mode = 4
+glow_mix = 0.141
+glow_blend_mode = 0
 glow_hdr_threshold = 0.25

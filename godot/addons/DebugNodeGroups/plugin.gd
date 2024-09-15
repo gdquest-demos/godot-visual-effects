@@ -1,25 +1,25 @@
-tool
+@tool
 extends EditorPlugin
 
 const SUPPORTED_TYPES := [
-	"CollisionShape",
+	"CollisionShape3D",
 	"CollisionShape2D",
-	"RayCast",
+	"RayCast3D",
 	"RayCast2D",
-	"CollisionPolygon",
+	"CollisionPolygon3D",
 	"CollisionPolygon2D",
-	"Path",
+	"Path3D",
 	"Path2D",
 ]
 
-var dock: Control = preload("DebugGroups.tscn").instance()
+var dock: Control = preload("DebugGroups.tscn").instantiate()
 var editor_selection := get_editor_interface().get_selection()
 
 
 func _enter_tree():
 	add_control_to_dock(DOCK_SLOT_RIGHT_UL, dock)
-	dock.connect("group_selected", self, "assign_group_to_selection")
-	editor_selection.connect("selection_changed", self, "update_dock_display")
+	dock.group_selected.connect(assign_group_to_selection)
+	editor_selection.selection_changed.connect(update_dock_display)
 	update_dock_display()
 
 
@@ -33,7 +33,7 @@ func assign_group_to_selection(group: String) -> void:
 		if not node.get_class() in SUPPORTED_TYPES:
 			continue
 
-		if node is RayCast or node is RayCast2D or node is Path or node is Path2D:
+		if node is RayCast3D or node is RayCast2D or node is Path3D or node is Path2D:
 			if node.is_in_group("Draw"):
 				node.remove_from_group("Draw")
 			else:
@@ -65,7 +65,7 @@ func update_dock_display() -> void:
 
 	if has_supported_node:
 		var active_node = selection[0]
-		if active_node is RayCast or active_node is RayCast2D or active_node is Path2D:
+		if active_node is RayCast3D or active_node is RayCast2D or active_node is Path2D:
 			dock.show_toggle_draw_option()
 		else:
 			dock.show_collision_shape_options()
