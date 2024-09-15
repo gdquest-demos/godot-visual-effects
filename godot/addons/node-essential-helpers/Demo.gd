@@ -11,28 +11,31 @@ signal screen_changed
 const UIDemo := preload("UIDemo.tscn")
 #const Background := preload("res://common/Background.tscn")
 
-var areas_visible := true setget set_areas_visible
-var do_show_label := true setget set_do_show_label
+var areas_visible := true: set = set_areas_visible
+var do_show_label := true: set = set_do_show_label
 
 var _active_screen: DemoScreen = null
 #var _background: Background = null
-var _current_screen_index: int setget _set_current_screen_index
+var _current_screen_index: int: set = _set_current_screen_index
 ## Scenes to cycle through in the slideshow.
 var _screens := []
 var _mouse_mode_toggle := Input.MOUSE_MODE_CONFINED
 
-onready var _ui := UIDemo.instance()
+@onready var _ui : UIDemo = UIDemo.instantiate()
 
 
 func _ready() -> void:
-	connect("screen_changed", self, "_on_screen_changed")
+	screen_changed.connect(_on_screen_changed)
 	add_child(_ui)
-	_ui.button_previous.connect("pressed", self, "go_to_previous_screen")
-	_ui.button_next.connect("pressed", self, "go_to_next_screen")
-	_ui.button_visible_shapes.connect("toggled", self, "set_areas_visible")
-	_ui.button_reset.connect("pressed", self, "reset_current_screen")
+	
+	#removes error in editor, but breaks UI when running game
+	#await _ui.ready
+	_ui.button_previous.pressed.connect(go_to_previous_screen)
+	_ui.button_next.pressed.connect(go_to_next_screen)
+	_ui.button_visible_shapes.toggled.connect(set_areas_visible)
+	_ui.button_reset.pressed.connect(reset_current_screen)
 
-	#_background = Background.instance()
+	#_background = Background.instantiate()
 	#add_child(_background)
 
 
@@ -47,7 +50,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				else _mouse_mode_toggle
 			)
 		)
-		get_tree().set_input_as_handled()
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("go_to_next_screen"):
 		go_to_next_screen()
 	elif event.is_action_pressed("go_to_previous_screen"):
@@ -81,7 +84,7 @@ func _update_mouse_mode(use_captured_mode: bool) -> void:
 
 
 func _on_screen_changed() -> void:
-	var is_screen_3d := _active_screen.get_child(0) is Spatial
+	var is_screen_3d := _active_screen.get_child(0) is Node3D
 	_update_mouse_mode(is_screen_3d and not _active_screen.force_confined_mouse_mode)
 	#_background.visible = not is_screen_3d
 	_update_controls_display()
@@ -108,14 +111,14 @@ func _create_debug_drawing_nodes() -> void:
 		if node is CollisionShape2D:
 			instance = DebugDrawCollisionShape2D.new()
 			is_collision_shape = true
-		elif node is CollisionShape:
+		elif node is CollisionShape3D:
 			instance = DebugDrawCollisionShape.new()
 			is_collision_shape = true
-		elif node is RayCast:
+		elif node is RayCast3D:
 			instance = DebugDrawRayCast.new()
 		elif node is RayCast2D:
 			instance = DebugDrawRayCast2D.new()
-		elif node is Path:
+		elif node is Path3D:
 			instance = DebugDrawPath.new()
 		elif node is Path2D:
 			instance = DebugDrawPath2D.new()

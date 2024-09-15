@@ -3,12 +3,12 @@ class_name UIDemo
 
 const UIControlsList := preload("res://Main/UIControlsList.tscn")
 
-onready var button_previous := find_node("PreviousButton")
-onready var button_next := find_node("NextButton")
-onready var button_visible_shapes := find_node("ShowDebugButton")
-onready var button_reset := find_node("ResetButton")
+@onready var button_previous : TextureButton = $UI/HBoxContainer2/PreviousButton
+@onready var button_next : TextureButton = $UI/HBoxContainer2/NextButton
+@onready var button_visible_shapes : Button = $UI/HBoxContainer/ShowDebugButton
+@onready var button_reset : Button = $UI/HBoxContainer/ResetButton
 
-onready var _ui := $UI
+@onready var _ui := $UI
 
 var _controls_list: Control = null
 
@@ -28,7 +28,7 @@ func populate_controls(input_actions: Array, movement_scheme: int = Constants.Mo
 	if _controls_list:
 		_controls_list.queue_free()
 
-	_controls_list = UIControlsList.instance()
+	_controls_list = UIControlsList.instantiate()
 	add_child(_controls_list)
 	_controls_list.setup(input_actions, movement_scheme)
 	_controls_list.visible = _ui.visible

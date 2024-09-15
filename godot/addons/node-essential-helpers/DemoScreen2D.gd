@@ -1,3 +1,4 @@
+@tool
 ## DemoScreen represents one screen in the demo.
 ##
 ## It has utilities for displaying a label, and creating physical walls so
@@ -8,14 +9,13 @@
 ##
 ## You can create a node of this type directly to add a screen to any demo, it
 ## instantiates the nodes it needs in code.
-tool
 class_name DemoScreen2D
 extends DemoScreen
 
 const PHYSICS_LAYER_WALLS := 4
 const BOUNDS_THICKNESS = 40.0
 
-var _visibility_notifier := VisibilityNotifier2D.new()
+var _visibility_notifier := VisibleOnScreenNotifier2D.new()
 
 var _bounds := StaticBody2D.new()
 var _collisions := {
@@ -27,8 +27,8 @@ var _collisions := {
 }
 
 var _screen_size := Vector2(
-	ProjectSettings.get_setting("display/window/size/width"),
-	ProjectSettings.get_setting("display/window/size/height")
+	ProjectSettings.get_setting("display/window/size/viewport_width"),
+	ProjectSettings.get_setting("display/window/size/viewport_height")
 )
 
 
@@ -36,33 +36,33 @@ func _init() -> void:
 	_initialize_bounds()
 	_visibility_notifier.rect = Rect2(Vector2.ZERO, _screen_size).grow(-120.0)
 	add_child(_visibility_notifier)
-	_visibility_notifier.connect("screen_exited", self, "deactivate")
+	_visibility_notifier.connect("screen_exited", Callable(self, "deactivate"))
 
 
 func load_scene() -> void:
 	assert(scene != null, "Missing scene to instantiate.")
-	_scene_instance = scene.instance()
-	if Engine.editor_hint:
+	_scene_instance = scene.instantiate()
+	if Engine.is_editor_hint():
 		add_child(_scene_instance)
 	name = _scene_instance.name
 
 	# We need to wait for the instanced scene to be in the tree to add the label in front.
-	yield(_scene_instance, "ready")
+	await _scene_instance.ready
 	add_child(_label)
 	add_child(_bounds)
 	_ready_bounds()
-	_label.follow_viewport_enable = true
+	_label.follow_viewport_enabled = true
 	_label.transform = transform
 
 
 func deactivate() -> void:
-	if _scene_instance and has_node(_scene_instance.name):
+	if _scene_instance and has_node(str(_scene_instance.name)):
 		call_deferred("remove_child", _scene_instance)
 
 
 func reset() -> void:
 	_scene_instance.queue_free()
-	_scene_instance = scene.instance()
+	_scene_instance = scene.instantiate()
 	add_child(_scene_instance)
 
 
@@ -76,7 +76,8 @@ func _initialize_bounds() -> void:
 
 
 func _ready_bounds() -> void:
-	var size := get_viewport().get_size_override() / 2
+	#var size := get_viewport().get_size_2d_override() / 2
+	var size := get_viewport().get_visible_rect().size / 2
 	var offset := BOUNDS_THICKNESS / 2
 
 	_collisions.left.position.y = size.y

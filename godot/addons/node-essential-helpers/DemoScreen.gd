@@ -1,7 +1,9 @@
+@tool
+@icon("res://addons/node-essential-helpers/DemoScreen.svg")
 ## Base class for DemoScreen2D and DemoScreenSlide
-tool
-class_name DemoScreen, "DemoScreen.svg"
 extends Node2D
+class_name DemoScreen
+
 
 const TopLabel := preload("TopLabel.tscn")
 
@@ -9,20 +11,20 @@ enum MovementSchemes { NONE, TOPDOWN_2D, PLATFORMER_2D, PLATFORMER_3D }
 
 const WARNING_MISSING_SCENE := "This node needs a valid scene to function. Please set the Scene property."
 
-export var scene: PackedScene
-export (Array, String) var controls := []
-export (MovementSchemes) var movement_scheme := MovementSchemes.NONE
-export var force_confined_mouse_mode := false
+@export var scene: PackedScene
+@export var controls := [] # (Array, String)
+@export var movement_scheme := MovementSchemes.NONE
+@export var force_confined_mouse_mode := false
 
-var text: String setget set_text
+var text: String: set = set_text
 
-var _label: TopLabel = TopLabel.instance()
+var _label: TopLabel = TopLabel.instantiate()
 
 var _scene_instance: Node = null
 
 
-func _get_configuration_warning() -> String:
-	return WARNING_MISSING_SCENE if scene == null else ""
+func _get_configuration_warnings() -> PackedStringArray:
+	return PackedStringArray([WARNING_MISSING_SCENE]) if scene == null else PackedStringArray([])
 
 
 func is_loaded() -> bool:
@@ -32,13 +34,13 @@ func is_loaded() -> bool:
 func set_text(new_text: String) -> void:
 	text = new_text
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	_label.text = new_text
 
 
 func set_label_visible(is_visible: bool) -> void:
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	_label.visible = is_visible
 
 

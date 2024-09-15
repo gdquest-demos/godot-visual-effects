@@ -6,7 +6,7 @@ const DIRECTIONS := [
 
 var TILES_TO_IGNORE := []
 
-onready var gridmap: GridMap = $GridMap
+@onready var gridmap: GridMap = $GridMap
 
 
 class BoxExtents:
@@ -43,7 +43,7 @@ func _ready() -> void:
 func find_contiguous_shapes(cells: Dictionary) -> Dictionary:
 	var index := 0
 	var shapes := {}
-	while not cells.empty():
+	while not cells.is_empty():
 		shapes[index] = _flood_fill(cells.keys()[0], cells)
 		index += 1
 	return shapes
@@ -55,7 +55,7 @@ func _flood_fill(cell: Vector3, cells: Dictionary) -> Dictionary:
 	var filled_cells := {}
 	var stack := [cell]
 
-	while not stack.empty():
+	while not stack.is_empty():
 		var current = stack.pop_back()
 		if current in filled_cells:
 			continue
@@ -79,7 +79,7 @@ func calculate_collision_boxes(shape: Dictionary) -> Dictionary:
 	var boxes := {}
 	var extents := calculate_extents(shape)
 	# Start at the min end, and go X+, Z+, Y+
-	while not shape.empty():
+	while not shape.is_empty():
 		var start := _find_start(shape, extents)
 		var max_size := (extents.end - start).abs()
 		var row := _find_first_row(shape, start, max_size)
@@ -112,15 +112,17 @@ func _find_start(shape: Dictionary, extents: BoxExtents) -> Vector3:
 	if extents.start in shape:
 		return extents.start
 
+	#TODO
+	#wat
 	var start := extents.start
-	for z in extents.size.z:
-		start.z = extents.start + z
-		for y in extents.size.y:
-			start.y = extents.start + y
-			for x in extents.size.x:
-				start.x = extents.start + x
-				if start in shape:
-					return start
+	#for z in extents.size.z:
+	#	start.z = extents.start + z
+	#	for y in extents.size.y:
+	#		start.y = extents.start + y
+	#		for x in extents.size.x:
+	#			start.x = extents.start + x
+	#			if start in shape:
+	#				return start
 	return Vector3.INF
 
 
@@ -161,8 +163,8 @@ func make_box_collider(start: Vector3, end: Vector3) -> void:
 	var position: Vector3 = (end + start + Vector3.ONE) / 2
 	var extents := size / 2
 
-	var collision_shape := CollisionShape.new()
-	collision_shape.shape = BoxShape.new()
+	var collision_shape := CollisionShape3D.new()
+	collision_shape.shape = BoxShape3D.new()
 	collision_shape.shape.extents = extents
-	$StaticBody.add_child(collision_shape)
+	$StaticBody3D.add_child(collision_shape)
 	collision_shape.global_transform.origin = position * gridmap.cell_size
