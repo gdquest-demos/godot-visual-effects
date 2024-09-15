@@ -14,8 +14,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.5 ),
-"transitions": PoolRealArray( 3.03143, 3.03143, 1 ),
+"times": PackedFloat32Array( 0, 0.2, 0.5 ),
+"transitions": PackedFloat32Array( 3.03143, 3.03143, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
 }
@@ -26,8 +26,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 2 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 2 ),
+"transitions": PackedFloat32Array( 1 ),
 "values": [ {
 "args": [  ],
 "method": "queue_free"
@@ -40,8 +40,8 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array( 0 ),
+"transitions": PackedFloat32Array( 1 ),
 "update": 1,
 "values": [ true ]
 }
@@ -53,7 +53,7 @@ _data = [ Vector2( 0, 1 ), 0.0, -0.0819979, 0, 0, Vector2( 0.586319, 0.817308 ),
 width = 256
 curve = SubResource( 3 )
 
-[sub_resource type="ParticlesMaterial" id=5]
+[sub_resource type="ParticleProcessMaterial" id=5]
 flag_disable_z = true
 direction = Vector3( 0, 0, 0 )
 spread = 180.0
@@ -85,7 +85,7 @@ spread_angle = 1.0
 autoplay = "destroy"
 anims/destroy = SubResource( 2 )
 
-[node name="Sparks" type="Particles2D" parent="."]
+[node name="Sparks" type="GPUParticles2D" parent="."]
 self_modulate = Color( 1.1, 1.1, 1.1, 1 )
 emitting = false
 amount = 4
