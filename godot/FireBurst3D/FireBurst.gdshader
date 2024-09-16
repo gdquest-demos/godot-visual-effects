@@ -1,11 +1,9 @@
 shader_type spatial;
 render_mode unshaded;
 
-const float TAU = 6.283185307179586;
+uniform vec4 albedo : source_color;
 
-uniform vec4 albedo : hint_color;
-
-uniform sampler2D fire_gradient : hint_albedo;
+uniform sampler2D fire_gradient : source_color;
 uniform sampler2D texture_pattern;
 
 uniform int particles_h_frames;
@@ -17,10 +15,10 @@ uniform float warp_scale : hint_range(0.0, 2.0) = 0.5;
 
 void vertex() {
 	mat4 mat_world = mat4(
-			normalize(CAMERA_MATRIX[0])*length(WORLD_MATRIX[0]),
-			normalize(CAMERA_MATRIX[1])*length(WORLD_MATRIX[0]),
-			normalize(CAMERA_MATRIX[2])*length(WORLD_MATRIX[2]),
-			WORLD_MATRIX[3]);
+			normalize(INV_VIEW_MATRIX[0])*length(MODEL_MATRIX[0]),
+			normalize(INV_VIEW_MATRIX[1])*length(MODEL_MATRIX[0]),
+			normalize(INV_VIEW_MATRIX[2])*length(MODEL_MATRIX[2]),
+			MODEL_MATRIX[3]);
 	
 	mat_world = mat_world * mat4(
 			vec4(cos(INSTANCE_CUSTOM.x), -sin(INSTANCE_CUSTOM.x), 0.0, 0.0),
@@ -28,7 +26,7 @@ void vertex() {
 			vec4(0.0, 0.0, 1.0, 0.0),
 			vec4(0.0, 0.0, 0.0, 1.0));
 	
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat_world;
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat_world;
 	
 	float h_frames = float(particles_h_frames);
 	float v_frames = float(particles_v_frames);
