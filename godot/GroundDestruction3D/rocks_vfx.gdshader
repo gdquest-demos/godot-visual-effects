@@ -1,6 +1,6 @@
 shader_type spatial;
 
-uniform vec4 albedo_rock : hint_color = vec4(1.0);
+uniform vec4 albedo_rock : source_color = vec4(1.0);
 uniform float roughness : hint_range(0.0, 1.0) = 1.0;
 
 uniform vec3 bb_start;
@@ -9,9 +9,9 @@ uniform vec3 bb_size;
 uniform float animation_driver = 0.0;
 uniform float appear_percentage = 0.25;
 uniform float randomness = 0.05;
-uniform sampler2D scale_curve_rock : hint_black;
-uniform sampler2D shake_curve : hint_black;
-uniform sampler2D timing_curve : hint_black;
+uniform sampler2D scale_curve_rock : hint_default_black;
+uniform sampler2D shake_curve : hint_default_black;
+uniform sampler2D timing_curve : hint_default_black;
 
 float rand(vec3 p) {
 	return fract(sin(dot(p,vec3(127.1,311.7, 74.7)))*43758.5453123);
