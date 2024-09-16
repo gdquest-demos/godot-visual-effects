@@ -1,109 +1,84 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=12 format=3 uid="uid://d3s2spvfbg4ed"]
 
-[ext_resource path="res://Assets/dot.png" type="Texture" id=1]
-[ext_resource path="res://MuzzleFlash3D/muzzle_flash_mesh.obj" type="ArrayMesh" id=2]
-[ext_resource path="res://MuzzleFlash3D/MuzzleFlash.gdshader" type="Shader" id=3]
-[ext_resource path="res://MuzzleFlash3D/muzzle_flash.png" type="Texture" id=4]
-[ext_resource path="res://MuzzleFlash3D/muzzle_flash_gradient.tres" type="Gradient" id=5]
-[ext_resource path="res://MuzzleFlash3D/spark_mesh.obj" type="ArrayMesh" id=6]
-[ext_resource path="res://MuzzleFlash3D/sparks_material.tres" type="Material" id=7]
+[ext_resource type="ArrayMesh" uid="uid://cqb03h4eonifk" path="res://MuzzleFlash3D/muzzle_flash_mesh.obj" id="2"]
+[ext_resource type="Material" uid="uid://dpq0nq0u58ux5" path="res://MuzzleFlash3D/MuzzleFlashMaterial.tres" id="4_54epu"]
+[ext_resource type="Texture2D" uid="uid://dfs5wnwkmkoji" path="res://MuzzleFlash3D/spark.png" id="5_eeodd"]
+[ext_resource type="ArrayMesh" uid="uid://3u3nfwte3x80" path="res://MuzzleFlash3D/spark_mesh.obj" id="6"]
+[ext_resource type="Environment" uid="uid://e7tnf0mft8ab" path="res://Assets/3d_environment.tres" id="6_2x26f"]
+[ext_resource type="Material" uid="uid://b7jl7ggdutyo3" path="res://MuzzleFlash3D/sparks_material.tres" id="7"]
 
-[sub_resource type="Gradient" id=13]
-offsets = PoolRealArray( 0.493976, 1 )
-colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
+[sub_resource type="Gradient" id="13"]
+offsets = PackedFloat32Array(0.493976, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture" id=14]
-gradient = SubResource( 13 )
+[sub_resource type="GradientTexture2D" id="14"]
+gradient = SubResource("13")
 
-[sub_resource type="ParticlesMaterial" id=15]
+[sub_resource type="ParticleProcessMaterial" id="15"]
 lifetime_randomness = 0.35
+particle_flag_align_y = true
 emission_shape = 1
 emission_sphere_radius = 0.1
-flag_align_y = true
-direction = Vector3( 0, 0, -1 )
+direction = Vector3(0, 0, -1)
 spread = 30.0
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 1.0
-scale_random = 0.3
-color = Color( 3, 1.56, 0.3, 1 )
-color_ramp = SubResource( 14 )
+initial_velocity_min = 1.0
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.8
+scale_max = 1.2
+color = Color(3, 1.56, 0.3, 1)
+color_ramp = SubResource("14")
 
-[sub_resource type="GradientTexture" id=28]
-gradient = ExtResource( 5 )
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ro6b"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 0.619608, 0, 0.556863)
+albedo_texture = ExtResource("5_eeodd")
+billboard_mode = 1
 
-[sub_resource type="Curve" id=24]
-_data = [ Vector2( 0, 0.745614 ), 0.0, 1.80341, 0, 0, Vector2( 1, 0 ), -2.26381, 0.0, 0, 0 ]
+[sub_resource type="QuadMesh" id="22"]
+size = Vector2(0.3, 0.3)
 
-[sub_resource type="CurveTexture" id=25]
-curve = SubResource( 24 )
+[node name="MuzzleFlash" type="Node3D"]
 
-[sub_resource type="ShaderMaterial" id=26]
-shader = ExtResource( 3 )
-shader_param/rate_of_fire = 10.0
-shader_param/fresnel_threshold = 0.5
-shader_param/size_randomization = 0.3
-shader_param/muzzle_pattern = ExtResource( 4 )
-shader_param/colorize_gradient = SubResource( 28 )
-shader_param/scale_curve = SubResource( 25 )
-
-[sub_resource type="QuadMesh" id=22]
-size = Vector2( 0.3, 0.3 )
-
-[sub_resource type="SpatialMaterial" id=23]
-flags_transparent = true
-flags_unshaded = true
-params_blend_mode = 1
-params_billboard_mode = 1
-albedo_color = Color( 3, 1.56078, 0.301961, 0.45098 )
-albedo_texture = ExtResource( 1 )
-
-[sub_resource type="ProceduralSky" id=29]
-
-[sub_resource type="Environment" id=30]
-background_mode = 2
-background_sky = SubResource( 29 )
-glow_enabled = true
-glow_bicubic_upscale = true
-glow_high_quality = true
-
-[node name="MuzzleFlash" type="Spatial"]
-
-[node name="Sparks" type="Particles" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2 )
-material_override = ExtResource( 7 )
+[node name="Sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+material_override = ExtResource("7")
 speed_scale = 20.0
-process_material = SubResource( 15 )
-draw_pass_1 = ExtResource( 6 )
+process_material = SubResource("15")
+draw_pass_1 = ExtResource("6")
 
-[node name="muzzle_mesh1" type="MeshInstance" parent="."]
-transform = Transform( 1, 1.06581e-14, 0, 4.65882e-22, -4.37114e-08, 1, 1.06581e-14, -1, -4.37114e-08, 0, 0, 0 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="muzzle_mesh1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 1.06581e-14, 0, 4.65882e-22, -4.37114e-08, 1, 1.06581e-14, -1, -4.37114e-08, 0, 0, 0)
+transparency = 1.0
+mesh = ExtResource("2")
+surface_material_override/0 = ExtResource("4_54epu")
 
-[node name="muzzle_mesh2" type="MeshInstance" parent="."]
-transform = Transform( 0.355498, -0.351598, 0, -1.53688e-08, -1.55393e-08, 0.5, -0.351598, -0.355498, -2.18557e-08, -0.0210046, -0.00851425, -0.0464832 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="muzzle_mesh2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.355498, -0.351598, 0, -1.53688e-08, -1.55393e-08, 0.5, -0.351598, -0.355498, -2.18557e-08, -0.0210046, -0.00851425, -0.0464832)
+material_override = ExtResource("4_54epu")
+mesh = ExtResource("2")
 
-[node name="muzzle_mesh3" type="MeshInstance" parent="."]
-transform = Transform( 0.412877, 0.282015, 0, 1.23273e-08, -1.80474e-08, 0.5, 0.282015, -0.412877, -2.18557e-08, 0.0451989, -0.000556645, -0.0266269 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="muzzle_mesh3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.412877, 0.282015, 0, 1.23273e-08, -1.80474e-08, 0.5, 0.282015, -0.412877, -2.18557e-08, 0.0451989, -0.000556645, -0.0266269)
+material_override = ExtResource("4_54epu")
+mesh = ExtResource("2")
 
-[node name="muzzle_mesh4" type="MeshInstance" parent="."]
-transform = Transform( 0.499157, 0.02337, -0.0172003, 4.06236e-09, 0.296379, 0.40269, 0.0290173, -0.402011, 0.29588, 0.0143538, 0.0319007, -0.0477009 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="muzzle_mesh4" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.499157, 0.02337, -0.0172003, 4.06236e-09, 0.296379, 0.40269, 0.0290173, -0.402011, 0.29588, 0.0143538, 0.0319007, -0.0477009)
+material_override = ExtResource("4_54epu")
+mesh = ExtResource("2")
 
-[node name="muzzle_mesh5" type="MeshInstance" parent="."]
-transform = Transform( 0.499157, 0.02337, -0.0172003, 0.0260307, -0.229669, 0.443367, 0.0128222, -0.443515, -0.230499, -0.00894161, -0.0828767, -0.0493807 )
-mesh = ExtResource( 2 )
-material/0 = SubResource( 26 )
+[node name="muzzle_mesh5" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.499157, 0.02337, -0.0172003, 0.0260307, -0.229669, 0.443367, 0.0128222, -0.443515, -0.230499, -0.00894161, -0.0828767, -0.0493807)
+material_override = ExtResource("4_54epu")
+mesh = ExtResource("2")
 
-[node name="muzzle_core" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14034 )
-mesh = SubResource( 22 )
-material/0 = SubResource( 23 )
+[node name="muzzle_core" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.14034)
+material_override = SubResource("StandardMaterial3D_0ro6b")
+mesh = SubResource("22")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 30 )
+environment = ExtResource("6_2x26f")

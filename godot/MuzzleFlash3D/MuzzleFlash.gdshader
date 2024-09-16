@@ -1,10 +1,9 @@
 shader_type spatial;
 
 render_mode cull_disabled, unshaded, blend_add;
-const float TAU = 6.283185307179586;
 
 uniform sampler2D muzzle_pattern;
-uniform sampler2D colorize_gradient : hint_albedo;
+uniform sampler2D colorize_gradient : source_color, hint_default_black;
 uniform float rate_of_fire = 10.0;
 uniform float fresnel_threshold : hint_range(0.0, 1.0) = 0.5;
 uniform float size_randomization : hint_range(0.0, 1.0) = 0.3;
@@ -23,7 +22,7 @@ vec3 rotate (vec3 v, vec3 n, float a) {
 // ANCHOR: vertex_function
 void vertex() {
 	// The mesh's origin in world space
-	vec3 origin = (WORLD_MATRIX * vec4(0, 0, 0, 1)).xyz;
+	vec3 origin = (MODEL_MATRIX * vec4(0, 0, 0, 1)).xyz;
 	float unique_seed = origin.x + origin.y + origin.z;
 	float random_value = random(floor(TIME * rate_of_fire) + unique_seed);
 	VERTEX = rotate(VERTEX, vec3(0.0, 1.0, 0.0), random_value * TAU);
@@ -44,4 +43,10 @@ void fragment() {
 	// Multiply alpha by a fresnel effect to hide the texture cards when their
 	// surface is almost aligned to the camera view
 	ALPHA = muzzle_color.a * fresnel;
+	//ALPHA = muzzle_color > 1 ? 0.0 : 1.0;
+	
+	/*if (muzzle_color.a > 1.0) {
+		ALPHA = -1.0;
+	}*/
+	ALPHA = muzzle_tex;
 }
