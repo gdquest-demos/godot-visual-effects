@@ -1,22 +1,23 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://busne7cirj10d"]
 
-[ext_resource path="res://Vines3D/vines_albedo.png" type="Texture" id=1]
-[ext_resource path="res://Vines3D/vines_normal.png" type="Texture" id=2]
-[ext_resource path="res://Vines3D/vines.gdshader" type="Shader" id=3]
-[ext_resource path="res://Vines3D/vines_mesh.mesh" type="ArrayMesh" id=4]
+[ext_resource type="Shader" path="res://Vines3D/vines.gdshader" id="1_e5mp4"]
+[ext_resource type="Texture2D" uid="uid://dlcqc58hn146q" path="res://Vines3D/vines_albedo.png" id="2_076jq"]
+[ext_resource type="Texture2D" uid="uid://cveduu12gkhfu" path="res://Vines3D/vines_normal.png" id="3_4p3db"]
+[ext_resource type="ArrayMesh" uid="uid://7wdxsgq56n54" path="res://Vines3D/vines_mesh.mesh" id="4"]
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = ExtResource( 3 )
-shader_param/roughness = 0.5
-shader_param/uv_scale = Vector2( 4, 1 )
-shader_param/growth = 1.0
-shader_param/thickness = 0.25
-shader_param/sss_strength = 0.3
-shader_param/albedo_texture = ExtResource( 1 )
-shader_param/normal_texture = ExtResource( 2 )
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m64vv"]
+render_priority = 0
+shader = ExtResource("1_e5mp4")
+shader_parameter/roughness = 0.5
+shader_parameter/uv_scale = Vector2(4, 1)
+shader_parameter/growth = 0.999999
+shader_parameter/thickness = 0.26
+shader_parameter/sss_strength = 0.3
+shader_parameter/albedo_texture = ExtResource("2_076jq")
+shader_parameter/normal_texture = ExtResource("3_4p3db")
 
-[node name="Vines" type="MeshInstance"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42459, 0, 0 )
-mesh = ExtResource( 4 )
+[node name="Vines" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.42459, 0, 0)
+material_override = SubResource("ShaderMaterial_m64vv")
+mesh = ExtResource("4")
 skeleton = NodePath("")
-material/0 = SubResource( 7 )
