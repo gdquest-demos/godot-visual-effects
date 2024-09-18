@@ -6,8 +6,8 @@ signal demo_requested
 @export var demo_icon: Texture2D: set = set_demo_icon
 
 
-@onready var _label : Label= $HBoxContainer/Label
-@onready var _icon : TextureRect= $HBoxContainer/Icon
+@onready var _label : Label = $HBoxContainer/Label
+@onready var _icon : TextureRect = $HBoxContainer/Icon
 
 
 func _gui_input(event: InputEvent) -> void:
