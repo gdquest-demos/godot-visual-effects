@@ -1,19 +1,19 @@
 class_name DebugDrawRayCast
-extends MeshInstance
+extends MeshInstance3D
 
 const BASE_COLOR := NodeEssentialsPalette.COLOR_INTERACT
 const WALL_COLLISION_COLOR := NodeEssentialsPalette.COLOR_WALL_COLLISION
 const PLAYER_COLLISION_COLOR := NodeEssentialsPalette.COLOR_HITBOX
 const DISABLED_COLOR := NodeEssentialsPalette.COLOR_DISABLED
 
-export var radius := 0.01 setget set_radius
-export var collision_sphere_radius := 0.08
+@export var radius := 0.01: set = set_radius
+@export var collision_sphere_radius := 0.08
 
-var _color := BASE_COLOR setget _set_color
+var _color := BASE_COLOR: set = _set_color
 var _collision_point := Vector3.ZERO
-var _sphere := MeshInstance.new()
+var _sphere := MeshInstance3D.new()
 
-onready var _parent := get_parent() as RayCast
+@onready var _parent := get_parent() as RayCast3D
 
 
 func _init() -> void:
@@ -24,10 +24,10 @@ func _init() -> void:
 
 func _ready() -> void:
 	add_child(_sphere)
-	transform.basis = _parent.cast_to.normalized()
+	#transform.basis = _parent.target_position.normalized()
 
 	# Make Y axis look at the cast_to vector
-	transform.basis.y = _parent.cast_to.normalized()
+	transform.basis.y = _parent.target_position.normalized()
 	transform.basis.z = Vector3.UP * -1.0
 	transform.basis.x = transform.basis.z.cross(transform.basis.y).normalized()
 
@@ -55,7 +55,7 @@ func _physics_process(delta: float) -> void:
 		_set_color(BASE_COLOR)
 		_collision_point = Vector3.ZERO
 	scale.y = (
-		_parent.cast_to.length()
+		_parent.target_position.length()
 		if _collision_point == Vector3.ZERO
 		else _collision_point.length()
 	)
@@ -63,16 +63,16 @@ func _physics_process(delta: float) -> void:
 	_sphere.visible = _collision_point != Vector3.ZERO
 	transform.origin = transform.basis.y * mesh.height / 2.0
 	_sphere.transform.origin = Vector3.UP * mesh.height / 2.0
-	mesh.material.set_shader_param("color", _color)
+	mesh.material.set_shader_parameter("color", _color)
 
 
-func _get_configuration_warning() -> String:
-	return "" if _parent != null else "Parent must be a RayCast"
+func _get_configuration_warnings() -> PackedStringArray:
+	return PackedStringArray([]) if _parent != null else PackedStringArray(["Parent must be a RayCast3D"])
 
 
 func _set_color(value: Color) -> void:
 	_color = value
-	mesh.material.set_shader_param("color", _color)
+	mesh.material.set_shader_parameter("color", _color)
 
 
 func set_radius(value: float) -> void:

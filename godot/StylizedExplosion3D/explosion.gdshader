@@ -1,14 +1,14 @@
 shader_type spatial;
 
-render_mode depth_draw_alpha_prepass, unshaded;
+render_mode depth_prepass_alpha, unshaded;
 
 uniform sampler2D erosion_texture;
 uniform sampler2D pattern_texture;
 
 uniform float erosion_smooth : hint_range(0.0,  1.0) = 0.1;
 uniform float fire_smooth : hint_range(0.0,  1.0) = 0.1;
-uniform vec4 smoke_color : hint_color;
-uniform vec4 emission_color : hint_color;
+uniform vec4 smoke_color : source_color;
+uniform vec4 emission_color : source_color;
 uniform float uv_offset = 0.0;
 uniform float displacement : hint_range(0.0, 1.0) = 0.0;
 uniform float movement_driver : hint_range(0.0, 1.0) = 0.0;

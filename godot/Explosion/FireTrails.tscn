@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://f5l8qog5qdbm"]
+
+[ext_resource type="Texture2D" uid="uid://djh1iy8ptxq5h" path="res://Explosion/scraps_gradient.tres" id="1_ueoew"]
+[ext_resource type="Texture2D" uid="uid://ctmalhnk0tfxo" path="res://Assets/puff_smooth.png" id="2_brooh"]
+
+[sub_resource type="Curve" id="6"]
+_data = [Vector2(0, 0.377273), 0.0, 2.60769, 0, 0, Vector2(0.761062, 0.986364), 0.0, 0.0, 0, 0, Vector2(1, 0.322727), -0.564845, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="7"]
+curve = SubResource("6")
+
+[sub_resource type="ParticleProcessMaterial" id="8"]
+emission_shape = 1
+emission_sphere_radius = 15.0
+spread = 180.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = -1000.0
+tangential_accel_max = 1000.0
+damping_min = 1500.0
+damping_max = 1500.0
+scale_min = 0.2
+scale_max = 0.2
+scale_curve = SubResource("7")
+color_ramp = ExtResource("1_ueoew")
+
+[node name="FireTrailParticles2D" type="GPUParticles2D"]
+modulate = Color(1.2, 1.2, 1.2, 1)
+amount_ratio = 0.162
+process_material = SubResource("8")
+texture = ExtResource("2_brooh")
+lifetime = 0.5
+randomness = 0.5
+trail_enabled = true

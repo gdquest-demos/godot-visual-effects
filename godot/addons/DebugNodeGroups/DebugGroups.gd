@@ -1,22 +1,22 @@
-tool
+@tool
 extends Control
 
 signal group_selected(group)
 
 var groups := NodeEssentialsPalette.DEBUG_DRAWING_GROUPS
 
-onready var _collision_shape_container := find_node("CollisionShapeOptions")
-onready var _toggle_draw_button := find_node("ToggleDrawButton")
-onready var _instructions_label := find_node("InstructionsLabel")
+@onready var _collision_shape_container : BoxContainer = find_child("CollisionShapeOptions")
+@onready var _toggle_draw_button : Button = find_child("ToggleDrawButton")
+@onready var _instructions_label : Label  = find_child("InstructionsLabel")
 
 
 func _ready() -> void:
 	for group in groups:
 		var button := Button.new()
 		button.text = group
-		button.connect("pressed", self, "emit_signal", ["group_selected", group])
+		button.pressed.connect(group_selected.emit.bind(group))
 		_collision_shape_container.add_child(button)
-	_toggle_draw_button.connect("pressed", self, "emit_signal", ["group_selected", ""])
+	_toggle_draw_button.pressed.connect(group_selected.emit.bind(""))
 
 
 func show_toggle_draw_option() -> void:

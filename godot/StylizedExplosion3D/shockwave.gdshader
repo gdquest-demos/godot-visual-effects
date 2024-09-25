@@ -1,8 +1,8 @@
 shader_type spatial;
 
-render_mode depth_draw_alpha_prepass, unshaded;
+render_mode depth_prepass_alpha, unshaded;
 
-uniform vec4 albedo : hint_color;
+uniform vec4 albedo : source_color;
 uniform sampler2D noise_texture;
 uniform float erosion : hint_range(0.0, 1.0) = 0.0;
 uniform float erosion_width : hint_range(0.0, 1.0) = 0.0;

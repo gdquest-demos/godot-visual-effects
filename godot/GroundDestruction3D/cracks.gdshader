@@ -1,7 +1,7 @@
 shader_type spatial;
 
-uniform sampler2D effect_texture : hint_black;
-uniform vec4 albedo : hint_color = vec4(1.0);
+uniform sampler2D effect_texture : hint_default_black;
+uniform vec4 albedo : source_color = vec4(1.0);
 uniform float roughness : hint_range(0.0, 1.0) = 1.0;
 
 uniform int depth_max_layers = 32;
@@ -42,7 +42,7 @@ void fragment() {
 	vec4 pattern = texture(effect_texture, base_uv);
 	
 	ALBEDO = albedo.rgb;
-	NORMALMAP = pattern.rgb;
+	NORMAL_MAP = pattern.rgb;
 	ALPHA = texture(effect_texture, UV).b;
-	ALPHA_SCISSOR = 0.9 + gradient * 0.4;
+	ALPHA_SCISSOR_THRESHOLD = 0.9 + gradient * 0.4;
 }

@@ -1,0 +1,21 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=3 format=3 uid="uid://brefvvil53m7v"]
+
+[sub_resource type="Curve" id="47"]
+max_value = 50.0
+_data = [Vector2(0, 24.0909), 0.0, 0.0, 0, 0, Vector2(0.0421348, 23.6364), 0.0, 0.0, 0, 0, Vector2(0.0561798, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="48"]
+curve = SubResource("47")
+
+[resource]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(1, 2, 0)
+spread = 5.0
+initial_velocity_min = 10.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -35, 0)
+radial_accel_curve = SubResource("48")
+scale_min = 0.1
+scale_max = 0.2

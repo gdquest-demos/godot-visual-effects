@@ -1,21 +1,21 @@
 extends Line2D
 
-export (float, 0.5, 3.0) var spread_angle := PI/4.0
-export (int, 1, 36) var segments := 12
+@export var spread_angle := PI/4.0 # (float, 0.5, 3.0)
+@export var segments := 12 # (int, 1, 36)
 
-onready var sparks := $Sparks
-onready var ray_cast := $RayCast2D
+@onready var sparks := $Sparks
+@onready var ray_cast := $RayCast2D
 
 
 func _ready() -> void:
-	set_as_toplevel(true)
+	set_as_top_level(true)
 
 
 func create(start: Vector2, end: Vector2) -> void:
 	
 	ray_cast.global_position = start
 
-	ray_cast.cast_to = end - start
+	ray_cast.target_position = end - start
 	ray_cast.force_raycast_update()
 
 	if ray_cast.is_colliding():
@@ -30,7 +30,7 @@ func create(start: Vector2, end: Vector2) -> void:
 	for segment in range(segments):
 		# Face the end point and extend towards it
 		# Rotate a random amount to get next point
-		var _rotation := rand_range(-spread_angle / 2, spread_angle / 2)
+		var _rotation := randf_range(-spread_angle / 2, spread_angle / 2)
 		var _new := _current + (_current.direction_to(end) * _segment_length).rotated(_rotation)
 		_points.append(_new)
 		_current = _new

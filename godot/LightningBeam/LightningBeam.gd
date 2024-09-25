@@ -1,17 +1,17 @@
 extends RayCast2D
 
-export (int, 1, 10) var flashes := 3
-export (float, 0.0, 3.0) var flash_time := 0.1
-export (int, 0, 10) var bounces_max := 3
-export var lightning_jolt: PackedScene = preload("res://LightningBeam/LightningJolt.tscn")
+@export var flashes := 3 # (int, 1, 10)
+@export var flash_time := 0.1 # (float, 0.0, 3.0)
+@export var bounces_max := 3 # (int, 0, 10)
+@export var lightning_jolt: PackedScene = preload("res://LightningBeam/LightningJolt.tscn")
 
 var target_point := Vector2.ZERO
 
-onready var jump_area := $JumpArea
+@onready var jump_area := $JumpArea
 
 
 func _physics_process(delta) -> void:
-	target_point = to_global(cast_to)
+	target_point = to_global(target_position)
 
 	if is_colliding():
 		target_point = get_collision_point()
@@ -32,7 +32,7 @@ func shoot() -> void:
 	for flash in range(flashes):
 		var _start = global_position
 
-		var jolt = lightning_jolt.instance()
+		var jolt = lightning_jolt.instantiate()
 		add_child(jolt)
 		jolt.create(_start, target_point)
 
@@ -40,10 +40,10 @@ func shoot() -> void:
 		for _i in range(min(bounces_max, _secondary_bodies.size())):
 			var _body = _secondary_bodies[_i]
 
-			jolt = lightning_jolt.instance()
+			jolt = lightning_jolt.instantiate()
 			add_child(jolt)
 			jolt.create(_start, _body.global_position)
 
 			_start = _body.global_position
 
-		yield(get_tree().create_timer(flash_time), "timeout")
+		await get_tree().create_timer(flash_time).timeout

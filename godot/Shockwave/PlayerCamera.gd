@@ -4,18 +4,18 @@
 # the original's position in the world using a `RemoteTransform2D`.
 #
 # The camera supports zooming and camera shake.
+@tool
 extends Camera2D
 
 const SHAKE_EXPONENT := 1.8
 
-export var decay_rate := 1.0
-export var max_offset := Vector2(100.0, 100.0)
-export var max_rotation := 0.1
+@export var decay_rate := 1.0
+@export var shake_offset_multiplier := Vector2(100.0, 100.0)
 
-export var shake_amount := 0.0 setget set_shake_amount
+@export var shake_amount := 0.0: set = set_shake_amount
 var noise_y := 0
 
-onready var noise := OpenSimplexNoise.new()
+@onready var noise := FastNoiseLite.new()
 
 
 func _ready() -> void:
@@ -23,29 +23,30 @@ func _ready() -> void:
 
 	randomize()
 	noise.seed = randi()
-	noise.period = 4
-	noise.octaves = 2
+	noise.frequency = 4
+	noise.fractal_octaves = 2
 
 
 func _physics_process(delta):
 	self.shake_amount -= decay_rate * delta
+	noise_y += delta
 	shake()
 
 
 func shake():
 	var amount := pow(shake_amount, SHAKE_EXPONENT)
 
-	noise_y += 1.0
-	rotation = max_rotation * amount * noise.get_noise_2d(noise.seed, noise_y)
+	if amount == 0:
+		return
+
 	offset = Vector2(
-		max_offset.x * amount * noise.get_noise_2d(noise.seed * 2, noise_y),
-		max_offset.y * amount * noise.get_noise_2d(noise.seed * 3, noise_y)
+		shake_offset_multiplier.x * amount * noise.get_noise_2d(noise_y, amount),
+		shake_offset_multiplier.y * amount * noise.get_noise_2d(amount, noise_y)
 	)
 
 
 func set_shake_amount(value):
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	shake_amount = clamp(value, 0.0, 1.0)
 	set_physics_process(shake_amount != 0.0)
-

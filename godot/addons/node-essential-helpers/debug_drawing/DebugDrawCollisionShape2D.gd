@@ -1,18 +1,19 @@
+@tool
+@icon("res://addons/node-essential-helpers/debug_drawing/DebugDrawCollisionShape.svg")
 ## This class is a simple debug shape to visualize Area2Ds.
 ##
 ## It isn't directly related to any demo functionality.
-tool
-class_name DebugDrawCollisionShape2D, "DebugDrawCollisionShape.svg"
+class_name DebugDrawCollisionShape2D
 extends Node2D
 
-var _halo_circle := preload("HaloCircle.tscn").instance()
+var _halo_circle := preload("HaloCircle.tscn").instantiate()
 
 enum ShapeType { SQUARE, CIRCLE }
 
-var shape_type: int setget set_shape_type
-var color := NodeEssentialsPalette.COLOR_INTERACT setget set_color
-var outline_thickness := 1.0 setget set_outline_thickness
-var shape_size: Vector2 setget set_shape_size
+var shape_type: int: set = set_shape_type
+var color := NodeEssentialsPalette.COLOR_INTERACT: set = set_color
+var outline_thickness := 1.0: set = set_outline_thickness
+var shape_size: Vector2: set = set_shape_size
 
 var do_draw_fill := false
 
@@ -35,11 +36,11 @@ func _draw() -> void:
 			draw_circle(Vector2.ZERO, shape_size.x, color)
 	elif shape_type == ShapeType.SQUARE:
 		var rect := Rect2(-shape_size, shape_size * 2)
-		draw_rect(rect, color, do_draw_fill, outline_thickness, true)
+		draw_rect(rect, color, do_draw_fill, outline_thickness)# true) TODOConverter3To4 Antialiasing argument is missing
 
 
-func _get_configuration_warning() -> String:
-	return "" if has_valid_parent() else "Parent isn't a CollisionShape2D"
+func _get_configuration_warnings() -> PackedStringArray:
+	return PackedStringArray([]) if has_valid_parent() else PackedStringArray(["Parent isn't a CollisionShape2D"])
 
 
 func has_valid_parent() -> bool:
@@ -49,22 +50,22 @@ func has_valid_parent() -> bool:
 
 func set_color(new_color: Color) -> void:
 	color = new_color
-	update()
+	queue_redraw()
 
 
 func set_outline_thickness(new_outline_thickness: float) -> void:
 	outline_thickness = new_outline_thickness
-	update()
+	queue_redraw()
 
 
 func set_shape_size(new_shape_size: Vector2) -> void:
 	shape_size = new_shape_size
-	update()
+	queue_redraw()
 
 
 func set_shape_type(new_shape_type: int) -> void:
 	shape_type = new_shape_type
-	update()
+	queue_redraw()
 
 
 func _autodetect_shape() -> void:
@@ -79,10 +80,10 @@ func _autodetect_shape() -> void:
 		shape_type = ShapeType.SQUARE
 		shape_size = parent.shape.extents
 	else:
-		push_error("Shape '%s' at '%s' isn't a supported shape" % [parent.shape, parent.get_path()])
+		push_error("Shape2D '%s' at '%s' isn't a supported shape" % [parent.shape, parent.get_path()])
 
 
 func _is_main_scene() -> bool:
-	var current_scene := get_tree().current_scene.filename
+	var current_scene := get_tree().current_scene.name
 	var main_scene: String = ProjectSettings.get_setting('application/run/main_scene')
 	return current_scene == main_scene

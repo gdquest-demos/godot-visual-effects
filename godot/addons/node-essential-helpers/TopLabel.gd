@@ -1,27 +1,27 @@
 class_name TopLabel
 extends Node
 
-export (String, MULTILINE) var text: String setget set_text
+@export var text: String: set = set_text
 
-var visible := true setget set_visible
+var visible := true: set = set_visible
 
-onready var _label := $Background/Label
-onready var _background := $Background
+@onready var _label := $Background/Label
+@onready var _background := $Background
 
 
 func set_text(new_text: String) -> void:
 	text = new_text
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	_label.text = new_text
 
 
 func get_size() -> Vector2:
-	return _label.rect_size
+	return _label.size
 
 
 func set_visible(value: bool) -> void:
 	visible = value
 	if not is_inside_tree():
-		yield(self, "ready")
+		await self.ready
 	_background.visible = visible

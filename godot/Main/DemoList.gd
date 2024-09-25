@@ -7,6 +7,7 @@
 # Emits a signal when the player select an item or presses it so another node
 # can handle the loading and scene navigation.
 extends ScrollContainer
+class_name DemoList
 
 # Emitted when the player selects a demo to play.
 signal demo_selected(scene_path)
@@ -19,16 +20,16 @@ signal display_updated(item_count)
 const DemoItemScene = preload("DemoItem.tscn")
 const DemoItem = preload("DemoItem.gd")
 
-export(String, FILE) var metadata_file_path := "res://Main/nodes_metadata.json"
+@export var metadata_file_path := "res://Main/nodes_metadata.json" # (String, FILE)
 # Directory to
-export(String, FILE) var demos_dirpath := "res://Demos/"
-export(String, FILE) var icons_dirpath := demos_dirpath.plus_file("icons")
+@export var demos_dirpath := "res://Demos/" # (String, FILE)
+@export var icons_dirpath := demos_dirpath.path_join("icons") # (String, FILE)
 
 # Maps demo names as displayed in the list to paths to scenes to load.
 var demo_scenes := {}
 
 # Category filter applied to list items. See `_on_FilterButton_pressed()` for more information.
-var category_filter: String setget set_category_filter
+var category_filter: String: set = set_category_filter
 
 # Metadata loaded and cached from a JSON file.
 var _nodes_metadata := _load_node_metadata()
@@ -38,15 +39,15 @@ var _selected_item: DemoItem = null
 var _focused_item_index := 0
 var _filter_buttons = []
 
-onready var _container := $VBoxContainer
-onready var _no_results := $VBoxContainer/NoResultsLabel
+@onready var _container := $VBoxContainer
+@onready var _no_results := $VBoxContainer/NoResultsLabel
 
 
 func _ready() -> void:
 	_list_demos_in_directory(demos_dirpath)
 	_no_results.hide()
-	connect("focus_entered", self, "_scroll_to_item", ["select_first_item"])
-	connect("visibility_changed", self, "_on_visibility_changed")
+	focus_entered.connect(_scroll_to_item.bind("select_first_item"))
+	visibility_changed.connect(_on_visibility_changed)
 
 	select_first_item()
 
@@ -55,7 +56,7 @@ func _ready() -> void:
 func setup(filter_buttons: Array) -> void:
 	_filter_buttons = filter_buttons
 	for button in _filter_buttons:
-		button.connect("pressed", self, "_on_FilterButton_pressed", [button.text.to_lower()])
+		button.pressed.connect(_on_FilterButton_pressed.bind(button.text.to_lower()))
 
 
 # Updates visible demo items based on the search query and the `category_filter`.
@@ -63,8 +64,8 @@ func update_display(search_filter := "") -> void:
 	var visible_count := 0
 	search_filter = search_filter.to_lower()
 	for item in _items:
-		if item.is_connected("focus_entered", self, "_scroll_to_item"):
-			item.disconnect("focus_entered", self, "_scroll_to_item")
+		if item.focus_entered.is_connected(_scroll_to_item):
+			item.focus_entered.disconnect(_scroll_to_item)
 		# We need to check the search against every keyword corresponding to a node.
 		# See nodes_metadata.json to add search terms for specific nodes.
 		var search_terms := [item.demo_name]
@@ -87,9 +88,9 @@ func update_display(search_filter := "") -> void:
 			)
 		if item.visible:
 			visible_count += 1
-			item.connect("focus_entered", self, "_scroll_to_item", [item, visible_count - 1])
+			item.focus_entered.connect(_scroll_to_item.bind(item, visible_count - 1))
 	_no_results.visible = visible_count == 0
-	emit_signal("display_updated", visible_count)
+	display_updated.emit(visible_count)
 
 
 func set_category_filter(value: String) -> void:
@@ -126,7 +127,7 @@ func _list_demos_in_directory(directory_path: String) -> void:
 		var demo_name: String = path.rsplit("/", true, 1)[-1]
 		demo_name = demo_name.replace(".tscn", "")
 		demo_name_and_paths.append([demo_name, path])
-	demo_name_and_paths.sort_custom(self, "_sort_demos")
+	demo_name_and_paths.sort_custom(_sort_demos)
 
 	# Create a list entry for each demo and store the mapping of demo names to
 	# file paths as a dictionary.
@@ -137,14 +138,14 @@ func _list_demos_in_directory(directory_path: String) -> void:
 
 		demo_scenes[demo_name] = path
 
-		var item := DemoItemScene.instance()
+		var item := DemoItemScene.instantiate()
 		_container.add_child(item)
 		item.demo_name = demo_name
 		
 		_items.append(item)
-		item.connect("pressed", self, "_select_item", [item])
-		item.connect("focus_entered", self, "_scroll_to_item", [item, index])
-		item.connect("demo_requested", self, "_request_demo", [item])
+		item.pressed.connect(_select_item.bind(item))
+		item.focus_entered.connect(_scroll_to_item.bind(item, index))
+		item.demo_requested.connect(_request_demo.bind(item))
 		index += 1
 
 	_selected_item = _items[0]
@@ -152,14 +153,14 @@ func _list_demos_in_directory(directory_path: String) -> void:
 
 func _request_demo(item: DemoItem) -> void:
 	_select_item(item)
-	emit_signal("demo_requested")
+	demo_requested.emit()
 
 
 func _select_item(item: DemoItem) -> void:
 	_selected_item = item
 	item.grab_focus()
 	var demo_path: String = demo_scenes[item.demo_name]
-	emit_signal("demo_selected", demo_path)
+	demo_selected.emit(demo_path)
 
 
 func _scroll_to_item(item: DemoItem, index: int) -> void:
@@ -167,15 +168,15 @@ func _scroll_to_item(item: DemoItem, index: int) -> void:
 	if direction == 0:
 		return
 
-	var half_rect_size_y: float = rect_size.y / 2.0
+	var half_rect_size_y: float = size.y / 2.0
 
-	if direction < 0 and item.rect_position.y < scroll_vertical:
-		scroll_vertical = int(item.rect_position.y)
+	if direction < 0 and item.position.y < scroll_vertical:
+		scroll_vertical = int(item.position.y)
 	elif (
 		direction > 0
-		and item.rect_position.y > half_rect_size_y + rect_position.y + scroll_vertical
+		and item.position.y > half_rect_size_y + position.y + scroll_vertical
 	):
-		scroll_vertical = int(item.rect_position.y - rect_size.y + item.rect_size.y)
+		scroll_vertical = int(item.position.y - size.y + item.size.y)
 
 	_focused_item_index = index
 
@@ -193,28 +194,28 @@ func _pascal_case_to_title(demo_name: String) -> String:
 ## Finds files that match a list of `patterns` in the directory `dirpath`.
 ## Each pattern is a string the function runs through Godot's `String.match()`: it supports wildcards and question marks.
 func _find_files(
-	dirpath := "", patterns := PoolStringArray(), is_recursive := false, do_skip_hidden := true
-) -> PoolStringArray:
-	var paths := PoolStringArray()
-	var directory := Directory.new()
+	dirpath := "", patterns := PackedStringArray(), is_recursive := false, do_skip_hidden := true
+) -> PackedStringArray:
+	var paths := PackedStringArray()
+	var directory := DirAccess.open(dirpath)
 
-	if not directory.dir_exists(dirpath):
+	if not DirAccess.dir_exists_absolute(dirpath):
 		printerr("The directory does not exist: %s" % dirpath)
 		return paths
-	if not directory.open(dirpath) == OK:
+	if not directory:
 		printerr("Could not open the following dirpath: %s" % dirpath)
 		return paths
 
-	directory.list_dir_begin(true, do_skip_hidden)
+	directory.list_dir_begin() # TODOConverter3To4 fill missing arguments https://github.com/godotengine/godot/pull/40547
 	var file_name := directory.get_next()
 	while file_name != "":
 		if directory.current_is_dir() and is_recursive:
-			var subdirectory := dirpath.plus_file(file_name)
+			var subdirectory := dirpath.path_join(file_name)
 			paths.append_array(_find_files(subdirectory, patterns, is_recursive))
 		else:
 			for pattern in patterns:
 				if file_name.match(pattern):
-					paths.append(dirpath.plus_file(file_name))
+					paths.append(dirpath.path_join(file_name))
 		file_name = directory.get_next()
 
 	directory.list_dir_end()
@@ -228,11 +229,13 @@ static func _sort_demos(a: Array, b: Array) -> bool:
 
 # Loads the nodes metadata json file and returns the result
 func _load_node_metadata() -> Dictionary:
-	var metadata_file := File.new()
-	var error := metadata_file.open(metadata_file_path, File.READ)
+	var metadata_file := FileAccess.open(metadata_file_path, FileAccess.ModeFlags.READ)
+	var error := metadata_file.get_error()
 	if error == ERR_CANT_OPEN:
 		print_debug("Error opening file: " + metadata_file.get_path())
-	return JSON.parse(metadata_file.get_as_text()).result
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(metadata_file.get_as_text())
+	return test_json_conv.get_data()
 
 
 func _on_FilterButton_pressed(button_text: String) -> void:

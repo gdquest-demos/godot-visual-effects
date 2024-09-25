@@ -1,72 +1,69 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://deh5s147il7xd"]
 
-[ext_resource path="res://Vines3D/checker.png" type="Texture" id=1]
-[ext_resource path="res://Vines3D/Vines.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Assets/3d_environment.tres" type="Environment" id=3]
+[ext_resource type="PackedScene" uid="uid://busne7cirj10d" path="res://Vines3D/Vines.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://es5nmobkd0nr" path="res://common/Ground.tscn" id="2_1c55t"]
+[ext_resource type="Environment" uid="uid://e7tnf0mft8ab" path="res://Assets/3d_environment.tres" id="3"]
 
-[sub_resource type="PlaneMesh" id=3]
-size = Vector2( 8, 8 )
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_texture = ExtResource( 1 )
-uv1_scale = Vector3( 4, 4, 1 )
-
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id="8"]
 resource_name = "Grow"
 length = 8.0
-loop = true
+loop_mode = 1
 tracks/0/type = "value"
-tracks/0/path = NodePath("Vines:material/0:shader_param/growth")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("Vines:material_override:shader_parameter/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 4 ),
-"transitions": PoolRealArray( 0.420448, 2.54912 ),
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(0.420448, 2.54912),
 "update": 0,
-"values": [ 0.0, 1.0 ]
+"values": [0.0, 1.0]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id="9"]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Vines:material/0:shader_param/growth")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
+tracks/0/path = NodePath("Vines:material_override:shader_parameter/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ 0.0 ]
+"values": [0.0]
 }
 
-[node name="Vines3DDemo" type="Spatial"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ol3kg"]
+_data = {
+"Grow": SubResource("8"),
+"RESET": SubResource("9")
+}
 
-[node name="Vines" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, -1.4, 0, -0.7 )
+[node name="Vines3DDemo" type="Node3D"]
 
-[node name="Ground" type="MeshInstance" parent="."]
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="Vines" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, -1.4, 0, -0.7)
+
+[node name="Ground" parent="." instance=ExtResource("2_1c55t")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = ExtResource( 3 )
+environment = ExtResource("3")
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( -0.707107, -0.612372, 0.353554, -3.78552e-08, 0.5, 0.866025, -0.707107, 0.612372, -0.353554, 0, 0, 0 )
-light_color = Color( 1, 0.929412, 0.819608, 1 )
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.707107, -0.612372, 0.353554, -3.78552e-08, 0.5, 0.866025, -0.707107, 0.612372, -0.353554, 0, 0, 0)
+light_color = Color(1, 0.929412, 0.819608, 1)
 shadow_enabled = true
 shadow_bias = 0.02
-directional_shadow_normal_bias = 0.1
 directional_shadow_max_distance = 60.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ol3kg")
+}
 autoplay = "Grow"
-anims/Grow = SubResource( 8 )
-anims/RESET = SubResource( 9 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 2, 2.17 )
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 2, 2.17)

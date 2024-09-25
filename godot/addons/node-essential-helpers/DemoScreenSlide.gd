@@ -1,4 +1,4 @@
-tool
+@tool
 class_name DemoScreenSlide
 extends DemoScreen
 
@@ -10,13 +10,13 @@ func _ready() -> void:
 
 
 func display_scene() -> void:
-	.display_scene()
-	if not _scene_instance.has_node(_label.name):
+	super.display_scene()
+	if not _scene_instance.has_node(str(_label.name)):
 		_scene_instance.add_child(_label)
 
 
 func load_scene() -> void:
-	_scene_instance = scene.instance()
+	_scene_instance = scene.instantiate()
 
 
 func clear_scene() -> void:

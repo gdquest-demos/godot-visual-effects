@@ -1,19 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://dt8vub8d14rty"]
 
-[ext_resource path="res://Shockwave/PlayerCamera.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://Shockwave/PlayerCamera.gd" id="1"]
 
-[node name="Camera" type="Camera2D" groups=["Camera"]]
-current = true
-zoom = Vector2( 1.2, 1.2 )
-process_mode = 0
-smoothing_enabled = true
+[node name="Camera" type="Camera2D" groups=["Camera3D"]]
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
 editor_draw_drag_margin = true
-script = ExtResource( 1 )
-
-[node name="Tween" type="Tween" parent="."]
-playback_process_mode = 0
-
-[node name="ShakeDuration" type="Timer" parent="."]
-one_shot = true
-
-[connection signal="timeout" from="ShakeDuration" to="." method="_on_ShakeDuration_timeout"]
+script = ExtResource("1")

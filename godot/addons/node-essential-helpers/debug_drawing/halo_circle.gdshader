@@ -1,6 +1,6 @@
 shader_type canvas_item;
 
-uniform vec4 halo_color: hint_color = vec4(1.0);
+uniform vec4 halo_color: source_color = vec4(1.0);
 // Length of the bounding square in pixels. Set from GDScript.
 uniform float bounds_half_length = 1.0;
 // Size of the gradient in pixels.

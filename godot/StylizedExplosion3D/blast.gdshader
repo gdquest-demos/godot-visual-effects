@@ -1,14 +1,14 @@
 shader_type spatial;
 
-render_mode depth_draw_alpha_prepass, unshaded;
+render_mode depth_prepass_alpha, unshaded;
 
-uniform vec4 albedo : hint_color;
+uniform vec4 albedo : source_color;
 uniform sampler2D texture_blast;
 uniform float width : hint_range(0.0, 1.0) = 0.75;
 uniform float threshold : hint_range(0.0, 1.0) = 0.0;
 
 void vertex() {
-	MODELVIEW_MATRIX = INV_CAMERA_MATRIX * mat4(CAMERA_MATRIX[0],CAMERA_MATRIX[1],CAMERA_MATRIX[2],WORLD_MATRIX[3]);
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0],INV_VIEW_MATRIX[1],INV_VIEW_MATRIX[2],MODEL_MATRIX[3]);
 }
 
 void fragment() {
