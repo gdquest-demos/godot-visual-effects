@@ -194,7 +194,6 @@ _data = {
 [node name="StarFieldBackground" parent="." instance=ExtResource("1")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 script = SubResource("1")
 
 [node name="RepeatingBackground" type="ParallaxBackground" parent="."]
