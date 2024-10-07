@@ -1,3 +1,4 @@
+
 [gd_scene load_steps=12 format=3 uid="uid://bmsaejwq7dt0i"]
 
 [ext_resource type="Texture2D" uid="uid://r8ik0l6yh254" path="res://Assets/topdown-player.svg" id="1"]
@@ -160,5 +161,4 @@ libraries = {
 "": SubResource("AnimationLibrary_k0hia")
 }
 autoplay = "Accelerate"
-
 [editable path="SubViewport/StarFieldTest"]
