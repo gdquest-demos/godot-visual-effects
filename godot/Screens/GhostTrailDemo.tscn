@@ -1,17 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://bmsaejwq7dt0i"]
+[gd_scene load_steps=12 format=3 uid="uid://bmsaejwq7dt0i"]
 
 [ext_resource type="Texture2D" uid="uid://r8ik0l6yh254" path="res://Assets/topdown-player.svg" id="1"]
 [ext_resource type="PackedScene" uid="uid://ddralsy1mp35i" path="res://Screens/StarFieldDemo.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://b537hgqri828g" path="res://GhostTrail/GhostTrail.tscn" id="3"]
-
-[sub_resource type="GDScript" id="1"]
-script/source = "extends Camera2D
-
-@export var speed: float = 0
-
-func _process(delta):
-	translate((Vector2.RIGHT * speed) * delta)
-"
 
 [sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
@@ -57,11 +48,11 @@ colors = PackedColorArray(1, 1, 1, 0.435294, 1, 1, 1, 0)
 gradient = SubResource("5")
 
 [sub_resource type="ParticleProcessMaterial" id="7"]
-direction = Vector3(0, -1, 0)
+direction = Vector3(0, 1, 0)
 spread = 0.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
 gravity = Vector3(0, 0, 0)
-scale_min = 0.0
-scale_max = 0.0
 color_ramp = SubResource("6")
 
 [sub_resource type="Animation" id="8"]
@@ -71,26 +62,26 @@ step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewport/Camera2D:speed")
+tracks/0/path = NodePath("BlurHorizontal:material:shader_parameter/blur_scale")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1.6, 2.25, 4),
 "transitions": PackedFloat32Array(1, 2, 1, 2),
 "update": 0,
-"values": [200.0, 200.0, 2000.0, 4000.0]
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(4, 0), Vector2(6, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("BlurHorizontal:material:shader_param/blur_scale")
+tracks/1/path = NodePath("Sprite2D/GhostTrail:speed_scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1.6, 2.25, 4),
-"transitions": PackedFloat32Array(1, 2, 1, 2),
+"transitions": PackedFloat32Array(2, 2, 1, 2),
 "update": 0,
-"values": [Vector2(0, 0), Vector2(0, 0), Vector2(4, 0), Vector2(6, 0)]
+"values": [0.2, 0.2, 1.0, 4.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -99,34 +90,22 @@ tracks/2/path = NodePath("Sprite2D/GhostTrail:emitting")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 1.6, 5.5),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
+"times": PackedFloat32Array(1.6, 2.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [false, true]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Sprite2D/GhostTrail:speed_scale")
+tracks/3/path = NodePath("SubViewport/StarFieldTest/Camera2D:speed")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 1.6, 2.25, 4),
-"transitions": PackedFloat32Array(2, 2, 1, 2),
+"transitions": PackedFloat32Array(1, 2, 1, 2),
 "update": 0,
-"values": [0.2, 0.2, 1.0, 4.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/GhostTrail:process_material:initial_velocity")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 1.6, 2.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [1.0, 1.0, 500.0]
+"values": [200.0, 200.0, 2000.0, 4000.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_k0hia"]
@@ -141,9 +120,7 @@ size = Vector2i(1920, 1080)
 
 [node name="StarFieldTest" parent="SubViewport" instance=ExtResource("2")]
 
-[node name="Camera2D" type="Camera2D" parent="SubViewport"]
-anchor_mode = 0
-script = SubResource("1")
+[node name="Camera2D" parent="SubViewport/StarFieldTest" index="1"]
 speed = 200.0
 
 [node name="BlurHorizontal" type="TextureRect" parent="."]
@@ -163,9 +140,12 @@ texture = ExtResource("1")
 emitting = false
 process_material = SubResource("7")
 speed_scale = 0.2
+local_coords = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_k0hia")
 }
 autoplay = "Accelerate"
+
+[editable path="SubViewport/StarFieldTest"]
