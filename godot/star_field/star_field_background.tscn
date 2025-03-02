@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkvpya4h3ihll"]
+
+[ext_resource type="PackedScene" uid="uid://c6u8nw3ec7vgk" path="res://star_field/star_field.tscn" id="1"]
+
+[node name="StarFieldBackground" type="ParallaxBackground"]
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 0.1)
+motion_mirroring = Vector2(1920, 1080)
+
+[node name="StarField" parent="ParallaxLayer" instance=ExtResource("1")]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.05, 0.05)
+motion_mirroring = Vector2(1920, 1080)
+
+[node name="StarField" parent="ParallaxLayer2" instance=ExtResource("1")]
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.01, 0.01)
+motion_mirroring = Vector2(1920, 1080)
+
+[node name="StarField" parent="ParallaxLayer3" instance=ExtResource("1")]

@@ -1,0 +1,87 @@
+[gd_scene load_steps=10 format=3 uid="uid://cmngfyis6hbgb"]
+
+[ext_resource type="Texture2D" uid="uid://cspsrrl5sjd88" path="res://common/ui/arrow_right.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bhnt3jgw5koyw" path="res://common/ui/arrow_right_pressed.png" id="2"]
+[ext_resource type="PackedScene" path="res://common/ui/text_button.tscn" id="3"]
+[ext_resource type="Texture2D" uid="uid://dw1mj8wsusfop" path="res://common/ui/arrow_left.png" id="4"]
+[ext_resource type="Script" path="res://addons/node-essential-helpers/ui_demo.gd" id="5"]
+[ext_resource type="Theme" uid="uid://cjj058exws11l" path="res://common/ui/ui_theme.tres" id="6"]
+[ext_resource type="Texture2D" uid="uid://cnsmepsuaxrnm" path="res://common/ui/arrow_left_pressed.png" id="7"]
+
+[sub_resource type="Shortcut" id="2"]
+
+[sub_resource type="Shortcut" id="4"]
+
+[node name="UIDemo" type="CanvasLayer"]
+layer = 100
+script = ExtResource("5")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchor_top = -0.00196194
+anchor_right = 1.0
+anchor_bottom = 0.998038
+mouse_filter = 2
+theme = ExtResource("6")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI"]
+visible = false
+layout_mode = 0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -47.9999
+offset_right = -8.0
+offset_bottom = 48.0001
+mouse_filter = 2
+
+[node name="PreviousButton" type="TextureButton" parent="UI/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 2
+focus_mode = 0
+shortcut_in_tooltip = false
+texture_normal = ExtResource("4")
+texture_pressed = ExtResource("7")
+
+[node name="NextButton" type="TextureButton" parent="UI/HBoxContainer2"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+size_flags_horizontal = 10
+focus_mode = 0
+shortcut_in_tooltip = false
+texture_normal = ExtResource("1")
+texture_pressed = ExtResource("2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI"]
+layout_mode = 0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -525.0
+offset_top = -144.0
+offset_right = -34.0
+offset_bottom = -29.9999
+mouse_filter = 2
+theme_override_constants/separation = 32
+alignment = 2
+
+[node name="ShowDebugButton" parent="UI/HBoxContainer" instance=ExtResource("3")]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_hover_color = Color(0.760784, 0.760784, 0.819608, 1)
+theme_override_colors/font_pressed_color = Color(0.494118, 0.494118, 0.560784, 1)
+theme_override_colors/font_color = Color(0.760784, 0.760784, 0.819608, 1)
+toggle_mode = true
+shortcut = SubResource("2")
+text = "SHOW DEBUG"
+
+[node name="ResetButton" parent="UI/HBoxContainer" instance=ExtResource("3")]
+custom_minimum_size = Vector2(200, 96)
+layout_mode = 2
+focus_mode = 0
+shortcut = SubResource("4")
+text = "RESET"

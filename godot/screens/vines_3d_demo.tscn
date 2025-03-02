@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=3 uid="uid://deh5s147il7xd"]
+
+[ext_resource type="PackedScene" uid="uid://busne7cirj10d" path="res://vines_3d/vines.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://es5nmobkd0nr" path="res://common/ground.tscn" id="2_1c55t"]
+[ext_resource type="Environment" uid="uid://e7tnf0mft8ab" path="res://assets/3d_environment.tres" id="3"]
+
+[sub_resource type="Animation" id="8"]
+resource_name = "Grow"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vines:material_override:shader_parameter/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(0.420448, 2.54912),
+"update": 0,
+"values": [0.0, 1.0]
+}
+
+[sub_resource type="Animation" id="9"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Vines:material_override:shader_parameter/growth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ol3kg"]
+_data = {
+"Grow": SubResource("8"),
+"RESET": SubResource("9")
+}
+
+[node name="Vines3DDemo" type="Node3D"]
+
+[node name="Vines" parent="." instance=ExtResource("2")]
+transform = Transform3D(0.906308, 0, -0.422618, 0, 1, 0, 0.422618, 0, 0.906308, -1.4, 0, -0.7)
+
+[node name="Ground" parent="." instance=ExtResource("2_1c55t")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.707107, -0.612372, 0.353554, -3.78552e-08, 0.5, 0.866025, -0.707107, 0.612372, -0.353554, 0, 0, 0)
+light_color = Color(1, 0.929412, 0.819608, 1)
+shadow_enabled = true
+shadow_bias = 0.02
+directional_shadow_max_distance = 60.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_ol3kg")
+}
+autoplay = "Grow"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 2, 2.17)

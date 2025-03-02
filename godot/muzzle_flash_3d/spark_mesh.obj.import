@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://3u3nfwte3x80"
+path="res://.godot/imported/spark_mesh.obj-d67d935fa0cb705af9b6bac526143a45.mesh"
+
+[deps]
+
+files=["res://.godot/imported/spark_mesh.obj-d67d935fa0cb705af9b6bac526143a45.mesh"]
+
+source_file="res://muzzle_flash_3d/spark_mesh.obj"
+dest_files=["res://.godot/imported/spark_mesh.obj-d67d935fa0cb705af9b6bac526143a45.mesh", "res://.godot/imported/spark_mesh.obj-d67d935fa0cb705af9b6bac526143a45.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(0.015, 0.1, 0.015)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

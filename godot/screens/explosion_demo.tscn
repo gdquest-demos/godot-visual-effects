@@ -1,0 +1,222 @@
+[gd_scene load_steps=17 format=3 uid="uid://b23r6y4cf0xda"]
+
+[ext_resource type="Texture2D" uid="uid://r8ik0l6yh254" path="res://assets/topdown-player.svg" id="1"]
+[ext_resource type="Texture2D" uid="uid://dbch3ucxyq15y" path="res://assets/asteroid.svg" id="2"]
+[ext_resource type="PackedScene" uid="uid://c6u8nw3ec7vgk" path="res://star_field/star_field.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://b537hgqri828g" path="res://ghost_trail/ghost_trail.tscn" id="3_wl2t8"]
+[ext_resource type="PackedScene" uid="uid://3owm1bforxoy" path="res://explosion/explosion.tscn" id="4"]
+[ext_resource type="Environment" uid="uid://c8ol6uwdees61" path="res://assets/2d_environment.tres" id="5"]
+
+[sub_resource type="Curve" id="1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.241936, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.0482635), 0.0, 0.0, 0, 0, Vector2(0.745161, 0.990571), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="2"]
+curve = SubResource("1")
+
+[sub_resource type="ParticleProcessMaterial" id="3"]
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("2")
+
+[sub_resource type="Animation" id="4"]
+resource_name = "Collide"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.95),
+"transitions": PackedFloat32Array(3.605, 0.5),
+"update": 0,
+"values": [Vector2(223, 1195), Vector2(1418, 296)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:self_modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(0, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.92785]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GhostTrail:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="10"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(223, 1195)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.92785]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GhostTrail:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3eryl"]
+_data = {
+"Collide": SubResource("4"),
+"RESET": SubResource("10")
+}
+
+[sub_resource type="Animation" id="8"]
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 360.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yyiwh"]
+_data = {
+"Spin": SubResource("8")
+}
+
+[sub_resource type="Animation" id="9"]
+resource_name = "Explosion"
+length = 5.0
+loop_mode = 1
+step = 0.05
+tracks/0/type = "animation"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Player/AnimationPlayer")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"clips": PackedStringArray("Collide"),
+"times": PackedFloat32Array(0.3)
+}
+tracks/1/type = "animation"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion/AnimationPlayer")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"clips": PackedStringArray("DISABLE", "Explode"),
+"times": PackedFloat32Array(0, 1.15)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0woet"]
+_data = {
+"Explosion": SubResource("9")
+}
+
+[node name="ExplosionSampleScene" type="Node2D"]
+
+[node name="StarField" parent="." instance=ExtResource("3")]
+modulate = Color(1.05, 1.05, 1.05, 1)
+process_material = SubResource("3")
+
+[node name="StarField2" parent="." instance=ExtResource("3")]
+modulate = Color(1.05, 1.05, 1.05, 1)
+process_material = SubResource("3")
+
+[node name="Player" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(223, 1195)
+rotation = 0.92785
+texture = ExtResource("1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_3eryl")
+}
+autoplay = "RESET"
+
+[node name="GhostTrail" parent="Player" instance=ExtResource("3_wl2t8")]
+
+[node name="Asteroid" type="Sprite2D" parent="."]
+position = Vector2(1471, 261)
+scale = Vector2(1.61719, 1.61719)
+texture = ExtResource("2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Asteroid"]
+libraries = {
+"": SubResource("AnimationLibrary_yyiwh")
+}
+autoplay = "Spin"
+
+[node name="Explosion" parent="." instance=ExtResource("4")]
+z_index = 3
+position = Vector2(1389.16, 324.831)
+scale = Vector2(1.5, 1.5)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0woet")
+}
+autoplay = "Explosion"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("5")
+
+[editable path="player/ghost_trail"]
+[editable path="explosion"]

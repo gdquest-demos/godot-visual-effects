@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b537hgqri828g"]
+
+[ext_resource type="Texture2D" uid="uid://r8ik0l6yh254" path="res://assets/topdown-player.svg" id="2"]
+
+[sub_resource type="Gradient" id="Gradient_4pean"]
+colors = PackedColorArray(1, 1, 1, 0.435294, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="6"]
+gradient = SubResource("Gradient_4pean")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kcy0o"]
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+angle_min = -53.2
+angle_max = -53.2
+direction = Vector3(0, -1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+color_ramp = SubResource("6")
+
+[node name="GhostTrail" type="GPUParticles2D"]
+show_behind_parent = true
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_kcy0o")
+texture = ExtResource("2")
+lifetime = 0.5

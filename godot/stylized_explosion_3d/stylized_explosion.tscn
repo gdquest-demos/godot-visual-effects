@@ -1,0 +1,427 @@
+[gd_scene load_steps=25 format=3 uid="uid://byvdlc8l7l3gd"]
+
+[ext_resource type="Texture2D" uid="uid://346qbv0sf363" path="res://stylized_explosion_3d/explosion-pattern.png" id="1"]
+[ext_resource type="ArrayMesh" path="res://stylized_explosion_3d/explosion_mesh.mesh" id="2"]
+[ext_resource type="Shader" path="res://stylized_explosion_3d/explosion.gdshader" id="3"]
+[ext_resource type="Texture2D" uid="uid://b5te02213m88f" path="res://stylized_explosion_3d/ground_decal.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://c8hi5nfr85gov" path="res://stylized_explosion_3d/blast.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://jgdnwvnkv5l" path="res://stylized_explosion_3d/smooth_noise.png" id="6"]
+[ext_resource type="Shader" path="res://stylized_explosion_3d/blast.gdshader" id="7"]
+[ext_resource type="Shader" path="res://stylized_explosion_3d/shockwave.gdshader" id="8"]
+
+[sub_resource type="Curve" id="9"]
+_data = [Vector2(0, 0.1), 0.0, 0.413057, 0, 0, Vector2(1, 0.981818), 1.56881, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="10"]
+curve = SubResource("9")
+
+[sub_resource type="Curve" id="11"]
+_data = [Vector2(0, 0.245455), 0.0, 4.25836, 0, 0, Vector2(0.20384, 0.645455), 0.0, 0.0, 0, 0, Vector2(0.666174, 0), -0.327764, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="12"]
+curve = SubResource("11")
+
+[sub_resource type="Curve" id="7"]
+_data = [Vector2(0, 0), 0.0, 12.2393, 0, 0, Vector2(0.157143, 0.7), 1.07177, 1.07177, 0, 0, Vector2(1, 1), 0.25886, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="8"]
+curve = SubResource("7")
+
+[sub_resource type="ShaderMaterial" id="2"]
+render_priority = 0
+shader = ExtResource("3")
+shader_parameter/erosion_smooth = 0.05
+shader_parameter/fire_smooth = 0.05
+shader_parameter/smoke_color = Color(0.290196, 0.290196, 0.290196, 1)
+shader_parameter/emission_color = Color(1.8, 0.63, 0, 1)
+shader_parameter/uv_offset = 0.0
+shader_parameter/displacement = 0.25
+shader_parameter/movement_driver = 0.0
+shader_parameter/offset = 0.2
+shader_parameter/dissapation_offset = 0.2
+shader_parameter/erosion_texture = ExtResource("6")
+shader_parameter/pattern_texture = ExtResource("1")
+shader_parameter/movement_curve = SubResource("8")
+shader_parameter/fire_curve = SubResource("12")
+shader_parameter/erosion_curve = SubResource("10")
+
+[sub_resource type="Animation" id="Animation_0dmeb"]
+resource_name = "Explosion"
+length = 1.5
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:material_override:shader_parameter/uv_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 0.6]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:material_override:shader_parameter/movement_driver")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Shockwave:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(-0.00138778, 0.25),
+"transitions": PackedFloat32Array(0.574349, 1),
+"update": 0,
+"values": [Vector3(0.3, 0.3, 0.3), Vector3(5, 5, 5)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Shockwave:material_override:shader_parameter/erosion")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1.7905, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Shockwave:material_override:shader_parameter/albedo")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.25, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(2, 1, 0, 1), Color(2, 1, 0, 1), Color(2, 1, 0, 0), Color(2, 1, 0, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Explosion:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1.41421, 1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0), Vector3(0, 2.5, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Blast:material_override:shader_parameter/threshold")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.337, 0.7, 0.7]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Ground Decal:scale")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.1, 1.5),
+"transitions": PackedFloat32Array(0.63728, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(6, 6, 6), Vector3(6, 6, 6)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Ground Decal:material_override:albedo_color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("OmniLight3D:omni_range")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.25, 1.5),
+"transitions": PackedFloat32Array(0.203063, 0.297301, 1),
+"update": 0,
+"values": [0.0, 20.0, 0.0]
+}
+
+[sub_resource type="Animation" id="5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Explosion:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Explosion:material_override:shader_parameter/uv_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Explosion:material_override:shader_parameter/mesh_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.602]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Explosion:material_override:shader_parameter/movement_driver")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Shockwave:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(3.73294, 3.73294, 3.73294)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Shockwave:material_override:shader_parameter/erosion")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.46]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Shockwave:material_override:shader_parameter/albedo")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(2, 1, 0, 0)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Explosion:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.5, 0)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Blast:material_override:shader_parameter/threshold")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.27]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Ground Decal:scale")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Ground Decal:material_override:albedo_color")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("OmniLight3D:omni_range")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [20.0]
+}
+tracks/12/type = "bezier"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("Explosion:material_override:shader_parameter/scale_driver")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/13/type = "bezier"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Explosion:material_override:shader_parameter/fire_driver")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+tracks/14/type = "bezier"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Explosion:material_override:shader_parameter/erosion_driver")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"handle_modes": PackedInt32Array(),
+"points": PackedFloat32Array(),
+"times": PackedFloat32Array()
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8pkac"]
+_data = {
+"Explosion": SubResource("Animation_0dmeb"),
+"RESET": SubResource("5")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u415r"]
+render_priority = 0
+shader = ExtResource("8")
+shader_parameter/albedo = Color(2, 1, 0, 0)
+shader_parameter/erosion = 0.46
+shader_parameter/erosion_width = 0.13
+shader_parameter/noise_texture = ExtResource("6")
+
+[sub_resource type="SphereMesh" id="13"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uqxi8"]
+render_priority = 0
+shader = ExtResource("7")
+shader_parameter/albedo = Color(1, 1, 0.39, 1)
+shader_parameter/width = 0.57
+shader_parameter/threshold = 0.27
+shader_parameter/texture_blast = ExtResource("5")
+
+[sub_resource type="QuadMesh" id="20"]
+size = Vector2(14, 14)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ulhb"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("4")
+
+[sub_resource type="PlaneMesh" id="23"]
+
+[node name="StylizedExplosion" type="Node3D"]
+
+[node name="Explosion" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("2")
+mesh = ExtResource("2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_8pkac")
+}
+autoplay = "Explosion"
+
+[node name="Shockwave" type="MeshInstance3D" parent="."]
+transform = Transform3D(3.73294, 0, 0, 0, 3.73294, 0, 0, 0, 3.73294, 0, 0.520448, 0)
+material_override = SubResource("ShaderMaterial_u415r")
+cast_shadow = 0
+mesh = SubResource("13")
+
+[node name="Blast" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.508594, 0)
+material_override = SubResource("ShaderMaterial_uqxi8")
+cast_shadow = 0
+mesh = SubResource("20")
+
+[node name="Ground Decal" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+material_override = SubResource("StandardMaterial3D_6ulhb")
+cast_shadow = 0
+mesh = SubResource("23")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.821446, 0)
+light_color = Color(1, 0.760784, 0.6, 1)
+light_energy = 20.0
+omni_range = 20.0
+omni_attenuation = 10.0

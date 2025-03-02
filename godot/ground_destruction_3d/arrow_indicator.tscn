@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://b44qoeetpb288"]
+
+[ext_resource type="Texture2D" uid="uid://m7wf7pw4xoq2" path="res://ground_destruction_3d/arrow_indicator.png" id="1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugwna"]
+transparency = 1
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = ExtResource("1")
+
+[sub_resource type="PlaneMesh" id="1"]
+size = Vector2(1, 0.25)
+
+[node name="ArrowIndicator" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.445, 0.01, 0)
+material_override = SubResource("StandardMaterial3D_ugwna")
+mesh = SubResource("1")

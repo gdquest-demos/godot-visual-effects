@@ -1,0 +1,456 @@
+[gd_scene load_steps=36 format=3 uid="uid://d72tvryhxky1"]
+
+[ext_resource type="Shader" path="res://ground_destruction_3d/rocks_vfx.gdshader" id="1"]
+[ext_resource type="Texture2D" uid="uid://cw3rwyfyrr5an" path="res://ground_destruction_3d/dust-alb.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cxsfbk284vpun" path="res://ground_destruction_3d/rock_chunks_alb.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://4nje0r4kxesp" path="res://ground_destruction_3d/cracks.png" id="4_ja014"]
+[ext_resource type="Texture2D" uid="uid://cny6nwyaoux8y" path="res://ground_destruction_3d/rock_chunks_nor.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://c0s6m6m8fdahh" path="res://ground_destruction_3d/dust-erode.png" id="6"]
+[ext_resource type="Shader" path="res://ground_destruction_3d/cracks.gdshader" id="7"]
+[ext_resource type="Material" uid="uid://brefvvil53m7v" path="res://ground_destruction_3d/ground_destruction_chunk_ppm.tres" id="7_rr443"]
+[ext_resource type="ArrayMesh" uid="uid://nj7jurahv6lm" path="res://ground_destruction_3d/rocks-vfx.mesh" id="8"]
+
+[sub_resource type="Curve" id="Curve_ugytj"]
+_data = [Vector2(0.0551876, 0), 0.0, 14.1417, 0, 0, Vector2(0.130243, 1), 0.0, 0.0, 0, 0, Vector2(0.220751, 0.870539), 0.0, 0.0, 0, 0, Vector2(0.540839, 0.865145), 0.0, 0.0, 0, 0, Vector2(0.827815, 0), -7.55628, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="CurveTexture_6g0jb"]
+curve = SubResource("Curve_ugytj")
+
+[sub_resource type="Curve" id="Curve_7dywt"]
+_data = [Vector2(0.251656, 0), 0.0, 0.0, 0, 0, Vector2(0.346578, 1), 0.0, 0.0, 0, 0, Vector2(0.452539, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_knmtw"]
+curve = SubResource("Curve_7dywt")
+
+[sub_resource type="Curve" id="Curve_spgml"]
+_data = [Vector2(0.357616, 0), 0.0, 0.0, 0, 0, Vector2(0.359823, 0.287967), 0.0, 0.0, 0, 0, Vector2(0.677704, 0.282573), 0.0, 0.0, 0, 0, Vector2(0.679912, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_xybj5"]
+width = 2048
+curve = SubResource("Curve_spgml")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qqh2d"]
+render_priority = 0
+shader = ExtResource("1")
+shader_parameter/albedo_rock = Color(0.384314, 0.270588, 0.168627, 1)
+shader_parameter/roughness = 0.7
+shader_parameter/bb_start = Vector3(0, 0, -1.4)
+shader_parameter/bb_size = Vector3(8, 0, 2.8)
+shader_parameter/animation_driver = -1.038
+shader_parameter/appear_percentage = 0.2
+shader_parameter/randomness = 0.05
+shader_parameter/scale_curve_rock = SubResource("CurveTexture_6g0jb")
+shader_parameter/shake_curve = SubResource("CurveTexture_knmtw")
+shader_parameter/timing_curve = SubResource("CurveTexture_xybj5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbw3q"]
+render_priority = 0
+shader = ExtResource("7")
+shader_parameter/albedo = Color(0.384314, 0.270588, 0.168627, 1)
+shader_parameter/roughness = 0.7
+shader_parameter/depth_max_layers = 32
+shader_parameter/depth_min_layers = 8
+shader_parameter/depth_scale = 0.03
+shader_parameter/offset = 0.403
+shader_parameter/fade = -0.221
+shader_parameter/effect_texture = ExtResource("4_ja014")
+
+[sub_resource type="PlaneMesh" id="45"]
+size = Vector2(12, 6)
+
+[sub_resource type="StandardMaterial3D" id="31"]
+resource_local_to_scene = true
+transparency = 2
+alpha_scissor_threshold = 0.98
+alpha_antialiasing_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.482353, 0.321569, 0.180392, 1)
+albedo_texture = ExtResource("4")
+roughness = 0.6
+normal_enabled = true
+normal_texture = ExtResource("5")
+billboard_mode = 3
+particles_anim_h_frames = 8
+particles_anim_v_frames = 4
+particles_anim_loop = true
+
+[sub_resource type="QuadMesh" id="33"]
+size = Vector2(0.2, 0.2)
+
+[sub_resource type="Shader" id="36"]
+code = "shader_type spatial;
+
+uniform vec4 albedo : source_color;
+uniform vec4 transmission : source_color;
+uniform sampler2D texture_albedo : source_color;
+uniform sampler2D texture_erode : hint_default_white;
+uniform sampler2D texture_erode_timing : hint_default_white;
+uniform float proximity_fade_distance;
+uniform float erosion_edge : hint_range(0.0, 1.0) = 0.1;
+uniform sampler2D DEPTH_TEXTURE : source_color, hint_depth_texture, filter_linear_mipmap;
+varying float random_value;
+
+void vertex() {
+	mat4 mat_world = mat4(normalize(INV_VIEW_MATRIX[0])*length(MODEL_MATRIX[0]),normalize(INV_VIEW_MATRIX[1])*length(MODEL_MATRIX[0]),normalize(INV_VIEW_MATRIX[2])*length(MODEL_MATRIX[2]),MODEL_MATRIX[3]);
+	mat_world = mat_world * mat4( vec4(cos(INSTANCE_CUSTOM.x),-sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0),vec4(0.0, 0.0, 1.0, 0.0),vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat_world;
+	random_value = INSTANCE_CUSTOM.z;
+}
+
+void fragment() {
+	vec4 albedo_tex = texture(texture_albedo, UV);
+	float erode_tex = texture(texture_erode, UV + vec2(random_value, COLOR.a * -0.4)).r;
+	float erode_timing = texture(texture_erode_timing, vec2(1.0- COLOR.a)).r;
+	
+	ALBEDO = albedo.rgb * albedo_tex.rgb * COLOR.rgb;
+	BACKLIGHT = transmission.rgb;
+	float erosion_alpha = smoothstep(erode_timing - erosion_edge, erode_timing + erosion_edge, erode_tex);
+	ALPHA = min(erosion_alpha, albedo_tex.a);
+	
+	// Proximity Fade
+	//This no longer works in Godot 4
+	float depth_tex = textureLod(DEPTH_TEXTURE,SCREEN_UV,0.0).r;
+	vec4 world_pos = INV_PROJECTION_MATRIX * vec4(SCREEN_UV*2.0-1.0,depth_tex*2.0-1.0,1.0);
+	world_pos.xyz/=world_pos.w;
+	//ALPHA*=clamp(1.0-smoothstep(world_pos.z+proximity_fade_distance,world_pos.z,VERTEX.z),0.0,1.0);
+}
+"
+
+[sub_resource type="Curve" id="37"]
+_data = [Vector2(0, 0), 0.0, 0.545455, 0, 0, Vector2(1, 1), 1.83471, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="25"]
+curve = SubResource("37")
+
+[sub_resource type="ShaderMaterial" id="38"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("36")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/transmission = Color(0.902344, 0.902344, 0.902344, 1)
+shader_parameter/proximity_fade_distance = 0.25
+shader_parameter/erosion_edge = 0.1
+shader_parameter/texture_albedo = ExtResource("3")
+shader_parameter/texture_erode = ExtResource("6")
+shader_parameter/texture_erode_timing = SubResource("25")
+
+[sub_resource type="Gradient" id="39"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="28"]
+gradient = SubResource("39")
+
+[sub_resource type="Curve" id="40"]
+_data = [Vector2(0, 0), 0.0, 3.11273, 0, 0, Vector2(1, 1), 0.162121, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="30"]
+curve = SubResource("40")
+
+[sub_resource type="ParticleProcessMaterial" id="41"]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector3(2, 1, 0)
+spread = 5.0
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0
+angular_velocity_min = 0.999984
+angular_velocity_max = 2.99998
+gravity = Vector3(0, -0.5, 0)
+scale_curve = SubResource("30")
+color = Color(0.835294, 0.835294, 0.835294, 1)
+color_ramp = SubResource("28")
+
+[sub_resource type="QuadMesh" id="42"]
+
+[sub_resource type="ParticleProcessMaterial" id="43"]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector3(2, 1, 0)
+spread = 5.0
+gravity = Vector3(0, -0.5, 0)
+scale_curve = SubResource("30")
+color = Color(0.835294, 0.835294, 0.835294, 1)
+color_ramp = SubResource("28")
+
+[sub_resource type="ParticleProcessMaterial" id="44"]
+lifetime_randomness = 0.5
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector3(2, 1, 0)
+spread = 5.0
+gravity = Vector3(0, -0.5, 0)
+scale_curve = SubResource("30")
+color = Color(0.835294, 0.835294, 0.835294, 1)
+color_ramp = SubResource("28")
+
+[sub_resource type="Animation" id="10"]
+resource_name = "Attack"
+length = 3.6
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RocksEffectMesh:material_override:shader_parameter/animation_driver")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 2.65, 3.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.85, 0.85]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Chunks:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.55),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Chunks2:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Chunks3:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = false
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("DustParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = false
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DustParticles2:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = false
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DustParticles3:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = false
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.95),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CracksEffectMesh:material_override:shader_parameter/offset")
+tracks/7/interp = 1
+tracks/7/loop_wrap = false
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.35, 2.5),
+"transitions": PackedFloat32Array(0.707107, 1, 1),
+"update": 0,
+"values": [-0.429, 0.0, 0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CracksEffectMesh:material_override:shader_parameter/fade")
+tracks/8/interp = 1
+tracks/8/loop_wrap = false
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.35, 0.5, 1.4, 2.5),
+"transitions": PackedFloat32Array(1, 1, 1, 2, 1),
+"update": 0,
+"values": [0.1, 0.1, 0.0, 0.0, 0.267]
+}
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(3.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="11"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("RocksEffectMesh:material_override:shader_parameter/animation_driver")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.038]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CracksEffectMesh:material_override:shader_parameter/offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.403]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CracksEffectMesh:material_override:shader_parameter/fade")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.221]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6413o"]
+_data = {
+"Attack": SubResource("10"),
+"RESET": SubResource("11")
+}
+
+[node name="GroundDestructionEffect" type="Node3D"]
+
+[node name="RocksEffectMesh" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_qqh2d")
+mesh = ExtResource("8")
+
+[node name="CracksEffectMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.21229, 0.00884724, 0)
+material_override = SubResource("ShaderMaterial_rbw3q")
+mesh = SubResource("45")
+skeleton = NodePath("../..")
+
+[node name="Chunks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07245, 1.00758, 0)
+material_override = SubResource("31")
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB(-1.72344, -14.6753, -5.65166, 21.033, 19.2252, 12.3878)
+draw_order = 2
+process_material = ExtResource("7_rr443")
+draw_pass_1 = SubResource("33")
+
+[node name="Chunks2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.44482, 1.69066, 0)
+material_override = SubResource("31")
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB(-1.87375, -9.92389, -6.13203, 20.9108, 16.4378, 13.8003)
+draw_order = 2
+process_material = ExtResource("7_rr443")
+draw_pass_1 = SubResource("33")
+
+[node name="Chunks3" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.30105, 3.18456, -4.76837e-07)
+material_override = SubResource("31")
+emitting = false
+amount = 35
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.9
+visibility_aabb = AABB(-1.73532, -16.2619, -12.2165, 27.3022, 25.692, 23.8669)
+draw_order = 2
+process_material = ExtResource("7_rr443")
+draw_pass_1 = SubResource("33")
+
+[node name="DustParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2, 0, 0)
+material_override = SubResource("38")
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource("41")
+draw_pass_1 = SubResource("42")
+
+[node name="DustParticles2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+material_override = SubResource("38")
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource("43")
+draw_pass_1 = SubResource("42")
+
+[node name="DustParticles3" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3, 0, 0)
+material_override = SubResource("38")
+emitting = false
+amount = 60
+lifetime = 2.5
+one_shot = true
+explosiveness = 0.9
+draw_order = 2
+process_material = SubResource("44")
+draw_pass_1 = SubResource("42")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_6413o")
+}
+autoplay = "Attack"

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqx3p8jtaixrm"]
+
+[ext_resource type="Script" path="res://main/demo_list.gd" id="1"]
+
+[node name="DemoList" type="ScrollContainer"]
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 666.0
+offset_bottom = 361.0
+script = ExtResource("1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="NoResultsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.439216, 0.482353, 0.662745, 1)
+text = "No results"

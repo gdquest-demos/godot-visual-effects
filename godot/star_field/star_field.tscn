@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://c6u8nw3ec7vgk"]
+
+[ext_resource type="Texture2D" uid="uid://dwhplc0mkhhh" path="res://star_field/star.svg" id="1"]
+
+[sub_resource type="Curve" id="1"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.241936, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 0.0482635), 0.0, 0.0, 0, 0, Vector2(0.745161, 0.990571), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="CurveTexture" id="2"]
+curve = SubResource("1")
+
+[sub_resource type="ParticleProcessMaterial" id="3"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(960, 540, 0)
+angular_velocity_min = -445.5
+angular_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("2")
+
+[node name="StarField" type="GPUParticles2D"]
+position = Vector2(960, 540)
+process_material = SubResource("3")
+texture = ExtResource("1")
+lifetime = 6.0
+preprocess = 6.0
+visibility_rect = Rect2(-960, -540, 1920, 1080)

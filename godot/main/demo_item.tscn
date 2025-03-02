@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv8r5dwptmsl6"]
+
+[ext_resource type="Script" path="res://main/demo_item.gd" id="2"]
+
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.294118, 0.356863, 0.670588, 0.658824)
+
+[sub_resource type="StyleBoxEmpty" id="4"]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.294118, 0.356863, 0.670588, 0.215686)
+
+[sub_resource type="StyleBoxEmpty" id="2"]
+
+[node name="DemoItem" type="Button"]
+custom_minimum_size = Vector2(0, 48)
+offset_right = 406.0
+offset_bottom = 48.0
+size_flags_horizontal = 5
+theme_override_styles/focus = SubResource("3")
+theme_override_styles/disabled = SubResource("4")
+theme_override_styles/hover = SubResource("1")
+theme_override_styles/pressed = SubResource("2")
+theme_override_styles/normal = SubResource("2")
+shortcut_in_tooltip = false
+script = ExtResource("2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "DemoItem"

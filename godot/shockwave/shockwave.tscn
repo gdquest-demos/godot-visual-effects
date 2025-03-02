@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjbpgtip2070b"]
+
+[ext_resource type="Texture2D" uid="uid://ba81x1uxq1juq" path="res://assets/white_ring.png" id="1"]
+
+[sub_resource type="Gradient" id="1"]
+offsets = PackedFloat32Array(0.640927, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="2"]
+gradient = SubResource("1")
+
+[sub_resource type="Curve" id="3"]
+_data = [Vector2(0, 0), 0.0, 2.02287, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="4"]
+curve = SubResource("3")
+
+[sub_resource type="ParticleProcessMaterial" id="5"]
+gravity = Vector3(0, 0, 0)
+scale_min = 7.0
+scale_max = 7.0
+scale_curve = SubResource("4")
+color_ramp = SubResource("2")
+
+[node name="Shockwave" type="GPUParticles2D"]
+amount = 3
+process_material = SubResource("5")
+texture = ExtResource("1")
+lifetime = 2.0

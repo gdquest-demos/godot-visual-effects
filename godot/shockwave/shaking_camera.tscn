@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dt8vub8d14rty"]
+
+[ext_resource type="Script" path="res://shockwave/player_camera.gd" id="1"]
+
+[node name="Camera" type="Camera2D" groups=["Camera3D"]]
+zoom = Vector2(1.2, 1.2)
+position_smoothing_enabled = true
+editor_draw_drag_margin = true
+script = ExtResource("1")
