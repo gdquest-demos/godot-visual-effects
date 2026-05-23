@@ -202,7 +202,7 @@ _data = {
 script/source = "extends Marker2D
 
 
-@export var asteroid_scene: PackedScene = preload(\"res://FireBall/FlyingAsteroid.tscn\")
+@export var asteroid_scene: PackedScene = preload(\"res://fire_ball/flying_asteroid.tscn\")
 
 
 func spawn() -> void:
